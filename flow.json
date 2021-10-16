@@ -6,18 +6,25 @@
 		}
 	},
 	"contracts": {
-		"DappyContract": "./cadence/contracts/DappyContract.cdc",
-		"FUSD": {
-			"source": "./cadence/contracts/FUSD.cdc",
+		"ATTANFT": "./cadence/contracts/ATTANFT.cdc",
+		"NonFungibleToken": {
+			"source": "./cadence/contracts/standard/NonFungibleToken.cdc",
 			"aliases": {
-				"testnet": "0xe223d8a629e49c68"
+				"testnet": "0x631e88ae7f1d7c20"
 			}
 		},
 		"FungibleToken": {
-			"source": "./cadence/contracts/FungibleToken.cdc",
+			"source": "./cadence/contracts/standard/FungibleToken.cdc",
 			"aliases": {
-				"testnet": "9a0766d93b6608b7",
-				"emulator": "ee82856bf20e2aa6"
+				"testnet": "0x9a0766d93b6608b7",
+				"emulator": "0xee82856bf20e2aa6"
+			}
+		},
+		"FlowToken": {
+			"source": "./cadence/contracts/tokens/FlowToken.cdc",
+			"aliases": {
+				"testnet": "0x631e88ae7f1d7c20",
+				"emulator": "0x0ae53cb6e3f42a79"
 			}
 		}
 	},
@@ -29,8 +36,35 @@
 	"accounts": {
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
-			"key": "ae1b44c0f5e8f6992ef2348898a35e50a8b0b9684000da8b1dade1b3bcd6ebee"
+			"keys": "84f82df6790f07b281adb5bbc848bd6298a2de67f94bdfac7a400d5a1b893de5"
+		},
+		"user1": {
+			"address": "01cf0e2f2f715450",
+			"key": "01cfbbe214928c4102081a0a893f12016f39de75b501baac5dd6489fefc58596",
+			"pub": "064abfb9c3b1b5d368eb2f4ba1a9fda47d0a009919e5b8fd85246b141670aaa257aa0d05a6a7084713d90d371ebe9285ac73e07dd35ec91421eed1df76bd788c"
+		},
+		"user2": {
+			"address": "179b6b1cb6755e31",
+			"key": "7f9f6a54e220545e3955be106ac7cc7cbe8b9e34e3a8b91bd68a48b986bfb4d0",
+			"pub": "a86e304b2cb0e6fd0eddcb0d77ebcb9dab1de77d2f7555462c9c928835ab9c76e875de1e7a74fc66f35ee29cf9aa76794ea63685433fadc07543f124f7ddc96d"
+		},
+		"testnet": {
+			"address": "ce02078b8ed640f2",
+			"keys": "6602335ffc217e3fb4a98272137ac6ee1652b4085ad5348b47ce31b7301d5c9c",
+			"pub": "634c7f97fc49862cc76976353847aee79eae04f17361ab29ffa1e89a9d461bdcbb13ebc5c48116f890b383e1edfc9bc215fa0a5daa45b925b6eea43704579938"
 		}
 	},
-	"deployments": {}
+	"deployments": {
+		"emulator": {
+			"emulator-account": [
+				"NonFungibleToken",
+				"ATTANFT"
+			]
+		},
+		"testnet": {
+			"testnet": [
+				"ATTANFT"
+			]
+		}
+	}
 }
