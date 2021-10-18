@@ -22,6 +22,7 @@ export const main = async () => {
 
     await buildAndSendTrx('initCollection', [], user1Authz())
     await buildAndSendTrx('initCollection', [], user2Authz())
+
   } else {
     console.error('local emulator only ')
   }
