@@ -20,7 +20,7 @@ export default function Home() {
     "endtime": "拍賣剩餘時間：",
     "starttime": "拍賣開始時間：",
   }
-  const records = list.list?.records || [];
+  const records = list.list?.pageResult?.records || [];
   let html = '';
   const systemTime = list.list?.systemTime;
 
@@ -29,11 +29,10 @@ export default function Home() {
 					<div>暫無搜索結果</div></li>`;
   } else {
     records?.forEach(function (v, i) {
-      var timeStatus;
-      var geshi = v.primaryPic.substr(v.primaryPic.lastIndexOf('.') + 1);
+      let timeStatus = 0;
+      const geshi = v.primaryPic.substr(v.primaryPic.lastIndexOf('.') + 1);
 
       if (v.storage - v.soldCount > 0) {   //有库存
-
         if (systemTime < v.saleStartTimeMillis) {
           timeStatus = 1;    //未到销售时间
         } else if (systemTime >= v.saleStartTimeMillis && systemTime <= v.saleEndTimeMillis) {
@@ -54,8 +53,7 @@ export default function Home() {
         html += `<li><a class="artwork-mask" href="${'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
         html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
       }
-
-      if (timeStatus == 0) {
+      if (timeStatus === 0) {
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
@@ -116,7 +114,7 @@ export default function Home() {
 										
 										<span>BUSD `+ moneyFormat(v.price) + ` </span>
 									</div>`;
-          html += `<div class="bzy-e-list-info-sale flex">
+        html += `<div class="bzy-e-list-info-sale flex">
 										<span>${artworkText.salesClosed}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
@@ -125,7 +123,7 @@ export default function Home() {
 									</div>
 									<div class="flex btnbox">
 										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-          html += `</div></div></a></li>`;
+        html += `</div></div></a></li>`;
       };
     });
   }

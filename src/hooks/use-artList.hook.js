@@ -7,7 +7,7 @@ export default function useArtList(url) {
     const getList = async () => {
       const res = await fetch(url, { method: 'GET' })
       const listData = await res.json()
-      const artList = listData.data?.pageResult
+      const artList = listData.data
       setList(artList)
     };
     getList()
