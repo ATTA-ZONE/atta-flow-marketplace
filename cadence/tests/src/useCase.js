@@ -46,6 +46,10 @@ export const useCase = async () =>
     })
 
     test('check domain collection with user1Authz and user2Authz', async () => {
+      if (network === 'testnet') {
+        await buildAndSendTrx('initCollection', [], user1Authz())
+        await buildAndSendTrx('initCollection', [], user2Authz())
+      }
       let check = await buildAndExecScript('checkNFTCollection', [fcl.arg(user1Addr, t.Address)])
       expect(check).toBe(true)
 

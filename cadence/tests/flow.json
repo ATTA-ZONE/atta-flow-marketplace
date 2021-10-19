@@ -23,7 +23,7 @@
 		"FlowToken": {
 			"source": "../contracts/tokens/FlowToken.cdc",
 			"aliases": {
-				"testnet": "0x631e88ae7f1d7c20",
+				"testnet": "0x7e60df042a9c0868",
 				"emulator": "0x0ae53cb6e3f42a79"
 			}
 		}
@@ -49,9 +49,9 @@
 			"pub": "a86e304b2cb0e6fd0eddcb0d77ebcb9dab1de77d2f7555462c9c928835ab9c76e875de1e7a74fc66f35ee29cf9aa76794ea63685433fadc07543f124f7ddc96d"
 		},
 		"testnet": {
-			"address": "ce02078b8ed640f2",
-			"keys": "6602335ffc217e3fb4a98272137ac6ee1652b4085ad5348b47ce31b7301d5c9c",
-			"pub": "634c7f97fc49862cc76976353847aee79eae04f17361ab29ffa1e89a9d461bdcbb13ebc5c48116f890b383e1edfc9bc215fa0a5daa45b925b6eea43704579938"
+			"address": "e62308aba7b05365",
+			"keys": "c5014a400f6947c78c6318c94d7a25f3b2718a50a0a1d534d94bb7dc41b3f15c",
+			"pub": "b3684a75017cfaecf68966c656ee986016bb6df6b2b24d15ea8f663e1e017e40289c722a624bde138689e4e538cf5f3096dcd22d8735c680fe6b69d54e592388"
 		}
 	},
 	"deployments": {
