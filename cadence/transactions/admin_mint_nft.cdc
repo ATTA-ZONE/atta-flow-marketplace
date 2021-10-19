@@ -10,7 +10,7 @@ transaction(receiver: Address) {
     }
     
     execute {
-        self.admin!.mintNFT(recipient: self.receiverCap!, metadata:{"test":"test"})
+        self.admin!.mintNFT(recipient: self.receiverCap!, metadata: {"test":"test"})
     }
 }
 
