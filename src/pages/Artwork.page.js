@@ -1,19 +1,18 @@
-import React ,{ useState ,useEffect} from 'react'
+import React ,{ useEffect,useState} from 'react'
 import DappyList from '../components/DappyList'
 import Header from '../components/Header'
 import { useUser } from '../providers/UserProvider'
 import "./Artwork.page.css"
 
 export default function Artwork() {
-	const { collection, createCollection, deleteCollection, userDappies } = useUser()
+	const { userDappies, mintDappy } = useUser()
 	const [languageType,setlanguageType] = useState('TC');
 	const [payTabs,setpayTabs] = useState(['錢包支付']);
-	const [selectarr,setselectarr] = useState([]);
 	const [maxbannum,setmaxbannum] = useState(0);
 	const [curUserOwned,setcurUserOwned] = useState(0);
 	const [oneUserCountLimit,setoneUserCountLimit] = useState(0);
 	const [onceCountLimit,setonceCountLimit] = useState(0);
-	const [busdPrice,setbusdPrice] = useState(10);
+	const [busdPrice,setbusdPrice] = useState(0);
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
@@ -240,6 +239,7 @@ export default function Artwork() {
 	}
 	const getComditInfo = async () => {
 		//商品详情业加载
+		if (!id) {return;}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/info?id=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
@@ -261,14 +261,13 @@ export default function Artwork() {
 			var dom11 = document.querySelector('.details-right-time span:first-child');
 			var dom12 = document.querySelector('.details-right-time-djs');
 			var dom13 = document.querySelector('.details-right-time');
-			// setselectarr(selectarr.push(res.data.edition));
-			window.$selectarr = selectarr;
-			setmaxbannum(res.data.endEdition);
-			sethkdPrice(res.data.hkdPrice);
-			setbusdPrice(res.data.busdPrice);
-			setcurUserOwned(res.data.curUserOwned);
-			setoneUserCountLimit(res.data.oneUserCountLimit);
-			setonceCountLimit(res.data.onceCountLimit);
+			// setmaxbannum(res.data.endEdition);
+			// sethkdPrice(res.data.hkdPrice);
+			setbusdPrice(res.data.price);
+			console.log("11111111111111"+busdPrice);
+			// setcurUserOwned(res.data.curUserOwned);
+			// setoneUserCountLimit(res.data.oneUserCountLimit);
+			// setonceCountLimit(res.data.onceCountLimit);
 			if (geshi == 'mp4') {
 				dom1.style.display = 'block';
 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
@@ -352,7 +351,7 @@ export default function Artwork() {
 		return cookieValue;
 	}
 	const playVideo = (obj, e) => {
-		// e.stopPropagation();
+		e.stopPropagation();
 		// $(obj).siblings('video')[0].pause();
 		// var src = $(obj).siblings('video')[0].src;
 		// $('.video-model video').attr('src', src);
@@ -381,53 +380,6 @@ export default function Artwork() {
 				document.getElementsByClassName('voice')[0].src = './assets/mute.png'
 				break;
 		}
-	}
-	const changenum = (type) => {
-		let str = '';
-		let dom1 = document.querySelector('.busdPrice');
-		let dom2 = document.querySelector('.purchase_num');
-		let dom3 = document.querySelector('.selectarrnum');
-		let dom4 = document.querySelector('.busd-tip');
-		if (type === 1) {
-			if (selectarr.length < 2) {
-				alert(chEnTextHtml[languageType].least);
-				return;
-			} else {
-				selectarr.pop();
-			}
-		}
-		if (type === 2) {
-			if (selectarr.length - 1 < maxbannum) {
-				if (curUserOwned + selectarr.length >= oneUserCountLimit) {
-					alert(chEnTextHtml[languageType].reached);
-					return;
-				}
-				if (selectarr.length >= onceCountLimit) {
-					alert(chEnTextHtml[languageType].limit);
-					return;
-				}
-				selectarr.push(selectarr.length + 1);
-			} else {
-				if (selectarr.length === 1) {
-					alert(chEnTextHtml[languageType].moment);
-					return;
-				} else {
-					alert(chEnTextHtml[languageType].quantity);
-					return;
-				}
-			}
-		}
-		selectarr.forEach((item, index) => {
-			if (index !== 0) {
-				str += '、';
-			}
-			str += item;
-		})
-		let pricebusdt = moneyFormat(busdPrice * selectarr.length);
-		dom1.textContent = 'BUSD ' + moneyFormat(busdPrice * selectarr.length);
-		dom2.textContent = selectarr.length;
-		dom3.textContent = str;
-		dom4.textContent = '-' + busdPrice * selectarr.length;
 	}
 	const formatDuring = (mss) => {
 		var days = parseInt(mss / (1000 * 60 * 60 * 24));
@@ -459,6 +411,8 @@ export default function Artwork() {
 	}
 	const toPay = () => {
 		let self = this;
+		console.log(1111111111);
+		mintDappy(2, 1);
 		// if (($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') || this.accountBalance < this.busdPrice * this.selectarr.length) {
 		// 	$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
 		// 	$('#balanceBtn').attr('disabled', false)
