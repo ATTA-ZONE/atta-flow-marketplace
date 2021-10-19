@@ -253,7 +253,6 @@ export default function Artwork() {
 			var maxeditionnum = res.data.edition > res.data.endEdition ? res.data.endEdition : res.data.edition;
 			var dom1 = document.querySelector('.detail-media');
 			var dom2 = document.querySelector('.order-img');
-			var dom3 = document.querySelector('.order-img img');
 			var dom4 = document.querySelector('.order-title');
 			var dom5 = document.querySelector('.order-price-busd');
 			var dom8 = document.querySelector('.order-introduce');
@@ -273,17 +272,16 @@ export default function Artwork() {
 			if (geshi == 'mp4') {
 				dom1.style.display = 'block';
 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
-					<video className="mohu" style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" muted="muted"></video>`;
-				dom2.innerHTML = html;
+					<video class="mohu" style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" muted="muted"></video>`;
+				dom2.insertAdjacentHTML('beforeend',html);
 			} else {
 				dom1.style.display = 'none';
-				var html = `<img className="bzy-e-list-img" src="` + res.data.primaryPic + `" >
-					<img className="bzy-e-list-img mohu" src="` + res.data.primaryPic + `" >`;
-				dom2.innerHTML = html;
+				var html = `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" >
+					<img class="bzy-e-list-img mohu" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" >`;
+				dom2.insertAdjacentHTML('beforeend',html);
 			}
-			dom3.src = res.data.primaryPic;
 			dom4.textContent = res.data.name;
-			dom5.textContent = 'BUSD ' + moneyFormat(res.data.price);
+			dom5.textContent = 'FLOW ' + moneyFormat(res.data.price);
 			if(languageType == "TC"){
 				dom8.innerHTML = res.data.introduce == '' ? '暫無介紹' : (res.data.introduce.replace(/;\|;/g, '<br>'));
 				dom9.innerHTML = res.data.content == '' ? '暫無更多資訊' : (res.data.content.replace(/;\|;/g, '<br>'));
@@ -673,19 +671,8 @@ export default function Artwork() {
 							<span>@ATTA</span>
 							<div className="details-right-creator-edition">{chEnTextHtml[languageType].version}</div>
 						</div>
-						<div className="countmoneybox">
-							<p className="moneryridebox">
-								{chEnTextHtml[languageType].price}
-								<span className="order-price-busd">BUSD 0 </span>
-							</p>
-							<p className="countetcbox">
-								<img src="./assets/multiply.png" alt="" />
-								<span className="purchase_num">1</span>
-								=
-							</p>
-						</div>
 						<div className="details-right-price flex">
-							<span className="order-price-busd busdPrice" style={opacitystyle}>BUSD 0</span>
+							<span className="order-price-busd busdPrice" style={opacitystyle}>FLOW 0</span>
 						</div>
 						<div className="details-right-btn flex payment-btn-pc" data-status="0" onClick={() => toPay()}>
 							{chEnTextHtml[languageType].purchaseNow}
@@ -745,7 +732,7 @@ export default function Artwork() {
 								<div className="payment-page-right-total">
 									<p>{chEnTextHtml[languageType].pendingPayment}</p>
 									<p className="order-price">
-										<span className="order-price-busd none busdPrice">BUSD 0 </span>
+										<span className="order-price-busd none busdPrice">FLOW 0 </span>
 									</p>
 								</div>
 								<div className="payment-page-right-select modify-ipt-fream">
@@ -811,7 +798,7 @@ export default function Artwork() {
 									<div className="payment-page-right-busd-tit">{chEnTextHtml[languageType].currentUsing}</div>
 									<div className="payment-page-right-busd-con">
 										<span className="busd-balance">{chEnTextHtml[languageType].balance}</span>
-										<span className="busd-ye">BUSD 0</span>
+										<span className="busd-ye">FLOW 0</span>
 										<span className="busd-tip none">0</span>
 									</div>
 								</div>
