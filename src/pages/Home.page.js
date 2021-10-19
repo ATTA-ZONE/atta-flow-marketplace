@@ -52,7 +52,7 @@ export default function Home() {
         timeStatus = 0;    //没有库存
       }
       if (geshi === 'mp4') {
-        html += '<li><i onclick="openVideo(' + i + ')"></i>';
+        html += '<li><i></i>';
         html += `<a href="${v.releaseType == 2 ? 'auctionDetails.html?id=' + v.id : 'artworkDetails.html?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
         html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
@@ -171,8 +171,7 @@ export default function Home() {
 
   return (
     <div className="bzy-e center-85">
-      <ul className={["bzy-e-list", records?.length <= 3 ? 'bzy-e-list-flex' : '', records?.length === 0 ? 'paddTop100' : '']}>
-        <div  dangerouslySetInnerHTML={{__html: html}}></div>
+      <ul dangerouslySetInnerHTML={{__html: html}} className="bzy-e-list">
       </ul>
     </div>
   )
