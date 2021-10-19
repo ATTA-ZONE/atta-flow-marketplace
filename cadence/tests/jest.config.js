@@ -1,5 +1,7 @@
-module.exports = {
-  testEnvironment: "node",
+export default {
+  testEnvironment: 'node',
   verbose: true,
-  coveragePathIgnorePatterns: ["/node_modules/"],
-};
+  coveragePathIgnorePatterns: ['/node_modules/'],
+  transform: {},
+  testTimeout: 30000
+}

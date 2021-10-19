@@ -3,18 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "deploy.test.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "exec":"node scripts/index.js",
+    "init:emulator": "flow project deploy && yarn acc:user1 && yarn acc:user2 && yarn setup:local ",
+    "setup:local":"node scripts/setupLocal.js",
+    "acc:user1": "flow accounts create --key 064abfb9c3b1b5d368eb2f4ba1a9fda47d0a009919e5b8fd85246b141670aaa257aa0d05a6a7084713d90d371ebe9285ac73e07dd35ec91421eed1df76bd788c",
+    "acc:user2": "flow accounts create --key a86e304b2cb0e6fd0eddcb0d77ebcb9dab1de77d2f7555462c9c928835ab9c76e875de1e7a74fc66f35ee29cf9aa76794ea63685433fadc07543f124f7ddc96d"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "elliptic": "^6.5.4",
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@onflow/types": "^0.0.4",
+    "@onflow/util-encode-key": "^0.0.2",
     "babel-jest": "^27.0.6",
-    "flow-js-testing": "^0.1.12",
-    "jest": "^27.0.6"
+    "dotenv": "^10.0.0",
+    "jest": "^27.0.6",
+    "js-sha3": "^0.8.0",
+    "sha3": "^2.1.4"
   }
 }

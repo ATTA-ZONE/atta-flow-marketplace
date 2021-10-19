@@ -28,3 +28,7 @@ userkeys.json
 useraccount.json
 
 publish.sh
+
+cadence/tests/node_modules
+
+.env
