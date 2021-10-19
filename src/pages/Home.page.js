@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="bzy-e center-85">
       <ul className="bzy-e-list">
-        {list.list.map((item) => <li onClick={() => history.push('/artwork')}>{item.name}</li>)}
+        {list.list.map((item) => <li key={item.id} onClick={() => history.push('/artwork')}>{item.name}</li>)}
       </ul>
     </div>
   )
