@@ -23,7 +23,6 @@ export default function Home() {
     "starttime": "拍賣開始時間：",
     "auctionEnd": "競標結束",
   }
-  console.log(list);
   const records = list.list?.records || [];
   let html = '';
   const systemTime = list.list?.systemTime;
