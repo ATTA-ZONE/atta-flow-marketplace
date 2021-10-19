@@ -58,7 +58,7 @@ export default function Home() {
         html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
       } else {
         html += `<li><a class="artwork-mask" href="${v.releaseType == 2 ? 'auctionDetails.html?id=' + v.id : 'artworkDetails.html?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
-        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST+ v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST+ v.primaryPic) + `" >`;
+        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
       }
 
       if (timeStatus == 0) {
@@ -171,7 +171,7 @@ export default function Home() {
 
   return (
     <div className="bzy-e center-85">
-      <ul dangerouslySetInnerHTML={{__html: html}} className="bzy-e-list">
+      <ul dangerouslySetInnerHTML={{ __html: html }} className="bzy-e-list">
       </ul>
     </div>
   )
