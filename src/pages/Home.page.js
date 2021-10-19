@@ -53,11 +53,11 @@ export default function Home() {
       }
       if (geshi === 'mp4') {
         html += '<li><i></i>';
-        html += `<a href="${v.releaseType == 2 ? 'auctionDetails.html?id=' + v.id : 'artworkDetails.html?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
+        html += `<a href="${v.releaseType == 2 ? '' : 'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
         html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
       } else {
-        html += `<li><a class="artwork-mask" href="${v.releaseType == 2 ? 'auctionDetails.html?id=' + v.id : 'artworkDetails.html?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
+        html += `<li><a class="artwork-mask" href="${v.releaseType == 2 ? '' : 'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
         html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
       }
 
