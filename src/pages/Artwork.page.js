@@ -1,5 +1,4 @@
 import React ,{ useState ,useEffect} from 'react'
-import { useHistory } from "react-router-dom"
 import DappyList from '../components/DappyList'
 import Header from '../components/Header'
 import { useUser } from '../providers/UserProvider'
@@ -7,18 +6,19 @@ import "./Artwork.page.css"
 
 export default function Artwork() {
 	const { collection, createCollection, deleteCollection, userDappies } = useUser()
-	const history = useHistory()
 	const [languageType,setlanguageType] = useState('TC');
 	const [payTabs,setpayTabs] = useState(['錢包支付']);
-	const [selectarr] = useState([]);
-	const [maxbannum] = useState(5);
-	const [curUserOwned] = useState(0);
-	const [oneUserCountLimit] = useState(5);
-	const [onceCountLimit] = useState(5);
-	const [busdPrice] = useState(10);
+	const [selectarr,setselectarr] = useState([]);
+	const [maxbannum,setmaxbannum] = useState(0);
+	const [curUserOwned,setcurUserOwned] = useState(0);
+	const [oneUserCountLimit,setoneUserCountLimit] = useState(0);
+	const [onceCountLimit,setonceCountLimit] = useState(0);
+	const [busdPrice,setbusdPrice] = useState(10);
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
+	const [basicId,setbasicId] = useState(0);
+	const [hkdPrice,sethkdPrice] = useState(0);
 	const [chEnTextHtml] = useState({
 		"TC": {
 			home: '首頁',
@@ -30,7 +30,7 @@ export default function Artwork() {
 			myassets: "我的資產",
 			mywallet: "我的錢包",
 			logOut: "登出",
-			version: "第1版，共150版",
+			version: "共50版",
 			select: "已選第",
 			versionTxt: "版",
 			price: "单价：",
@@ -97,7 +97,7 @@ export default function Artwork() {
 			myassets: "My Assets",
 			mywallet: "My Wallet",
 			logOut: "Log out",
-			version: "Edition 1 of 150",
+			version: "Edition 50",
 			select: "Selected",
 			versionTxt: "th edition",
 			price: "Price：",
@@ -176,7 +176,7 @@ export default function Artwork() {
 		}
 		initMediaCss();
 			
-	},[])
+	},[id])
 	const initMediaCss = () => {
 		var dom = document.body;
 		let dom2 = document.querySelector('.details-right-btn');
@@ -240,115 +240,107 @@ export default function Artwork() {
 	}
 	const getComditInfo = async () => {
 		//商品详情业加载
-		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/commodity/info?id=${id}`;
-		const getlist = await fetch(url);
-		getlist.then((res)=>{
-			console.log(res);
-		})
-		// $.ajax({
-		// 	url: base_url + '/v2/commodity/info',
-		// 	data: {
-		// 		id: self.id
-		// 	},
-		// 	success: function (res) {
-		// 		if (res.code == 0) {
-		// 			self.basicId = res.data.basicId
-		// 			var content = res.data.content;
-		// 			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
-		// 			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
-		// 			var systemTime = res.data.systemTime; //当前时间
-		// 			var geshi = res.data.primaryPic.substr(res.data.primaryPic.lastIndexOf('.') + 1);
-		// 			var maxeditionnum = res.data.edition > res.data.endEdition ? res.data.endEdition : res.data.edition;
-		// 			self.selectarr.push(res.data.edition);
-		// 			window.$selectarr = self.selectarr;
-		// 			self.maxbannum = res.data.endEdition;
-		// 			self.hkdPrice = res.data.hkdPrice;
-		// 			self.busdPrice = res.data.price;
-		// 			self.curUserOwned = res.data.curUserOwned;
-		// 			self.oneUserCountLimit = res.data.oneUserCountLimit;
-		// 			self.onceCountLimit = res.data.onceCountLimit;
-		// 			if (geshi == 'mp4') {
-		// 				$('.detail-media').css('display', 'block')
-		// 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
-		// 					<video class="mohu" style="width:100%;" autoplay="autoplay" loop="loop" src="` + res.data.primaryPic + `" muted="muted"></video>`;
+		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/info?id=${id}`;
+		const listData = await fetch(url, { method: 'GET' })
+		const res = await listData.json();
+		if (res.code == 0) {
+			setbasicId(res.data.basicId);
+			var content = res.data.content;
+			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
+			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
+			var systemTime = res.data.systemTime; //当前时间
+			var geshi = res.data.primaryPic.substr(res.data.primaryPic.lastIndexOf('.') + 1);
+			var maxeditionnum = res.data.edition > res.data.endEdition ? res.data.endEdition : res.data.edition;
+			var dom1 = document.querySelector('.detail-media');
+			var dom2 = document.querySelector('.order-img');
+			var dom3 = document.querySelector('.order-img img');
+			var dom4 = document.querySelector('.order-title');
+			var dom5 = document.querySelector('.order-price-busd');
+			var dom8 = document.querySelector('.order-introduce');
+			var dom9 = document.querySelector('.order-content');
+			var dom10 = document.querySelector('.details-right-btn');
+			var dom11 = document.querySelector('.details-right-time span:first-child');
+			var dom12 = document.querySelector('.details-right-time-djs');
+			var dom13 = document.querySelector('.details-right-time');
+			// setselectarr(selectarr.push(res.data.edition));
+			window.$selectarr = selectarr;
+			setmaxbannum(res.data.endEdition);
+			sethkdPrice(res.data.hkdPrice);
+			setbusdPrice(res.data.busdPrice);
+			setcurUserOwned(res.data.curUserOwned);
+			setoneUserCountLimit(res.data.oneUserCountLimit);
+			setonceCountLimit(res.data.onceCountLimit);
+			if (geshi == 'mp4') {
+				dom1.style.display = 'block';
+				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
+					<video className="mohu" style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" muted="muted"></video>`;
+				dom2.innerHTML = html;
+			} else {
+				dom1.style.display = 'none';
+				var html = `<img className="bzy-e-list-img" src="` + res.data.primaryPic + `" >
+					<img className="bzy-e-list-img mohu" src="` + res.data.primaryPic + `" >`;
+				dom2.innerHTML = html;
+			}
+			dom3.src = res.data.primaryPic;
+			dom4.textContent = res.data.name;
+			dom5.textContent = 'BUSD ' + moneyFormat(res.data.price);
+			if(languageType == "TC"){
+				dom8.innerHTML = res.data.introduce == '' ? '暫無介紹' : (res.data.introduce.replace(/;\|;/g, '<br>'));
+				dom9.innerHTML = res.data.content == '' ? '暫無更多資訊' : (res.data.content.replace(/;\|;/g, '<br>'));
+			}else{
+				dom8.innerHTML = res.data.introduce == '' ? 'No introduction' : (res.data.introduce.replace(/;\|;/g, '<br>'));
+				dom9.innerHTML = res.data.content == '' ? 'No more information' : (res.data.content.replace(/;\|;/g, '<br>'));
+			}
+			if (res.data.endEdition - res.data.edition >= 0) { //还有库存
+				if (systemTime < saleStartTimeMillis) {
+					dom10.classList.add('unclick');
+					dom10.textContent = chEnTextHtml[languageType].comSoon;
+					dom10.setAttribute("status","1");
+					var msTime = saleStartTimeMillis - systemTime;
+					var time = formatDuring(msTime);
+					dom11.textContent = chEnTextHtml[languageType].start;
+					dom12.textContent = time;
+					setInterval(function () {
+						var curTime = Date.now() + 1150;
+						var msTime = saleStartTimeMillis - curTime;
+						var time = formatDuring(msTime);
+						dom12.textContent = time;
+					}, 1000);
 
-		// 				$('.order-img').append(html);
-		// 			} else {
-		// 				$('.detail-media').css('display', 'none')
-		// 				var html = `<img class="bzy-e-list-img" src="` + res.data.primaryPic + `" >
-		// 					<img class="bzy-e-list-img mohu" src="` + res.data.primaryPic + `" >`;
-		// 				$('.order-img').append(html);
-		// 			}
-		// 			// $('.order-img img').attr('src',res.data.primaryPic);
-		// 			$('.order-title').text(res.data.name);
-		// 			// $('.order-price-hdk').text('HK$ ' + moneyFormat(res.data.hkdPrice));
-		// 			$('.order-price-busd').text('BUSD ' + moneyFormat(res.data.price));
-		// 			// if (res.data.name == '徐冬冬 牛N.X潮玩 NFT限量版' || res.data.name == 'Xu Dongdong_Nu N.X Trendy Play _Limited') {
-		// 			// 	res.data.edition = 200;
-		// 			// }
-		// 			$('.details-right-creator-edition').text('Edition ' + maxeditionnum + ' of ' + res.data.endEdition);
-		// 			$('.selectarrnum').text(maxeditionnum);
-		// 			if(self.languageType == "TC"){
-		// 				$('.order-introduce').html(res.data.introduce == '' ? '暫無介紹' : (res.data.introduce.replace(/;\|;/g, '<br>')));
-		// 				$('.order-content').html(res.data.content == '' ? '暫無更多資訊' : (res.data.content.replace(/;\|;/g, '<br>')));
-		// 			}else{
-		// 				$('.order-introduce').html(res.data.introduce == '' ? 'No introduction' : (res.data.introduce.replace(/;\|;/g, '<br>')));
-		// 				$('.order-content').html(res.data.content == '' ? 'No more information' : (res.data.content.replace(/;\|;/g, '<br>')));
-		// 			}
-		// 			if (res.data.endEdition - res.data.edition >= 0) { //还有库存
-		// 				if (systemTime < saleStartTimeMillis) {
-		// 					$('.details-right-btn').addClass('unclick')
-		// 					$('.details-right-btn').text(self.chEnTextHtml[self.languageType].comSoon)
-		// 					$('.details-right-btn').data('status', '1')
-		// 					var msTime = saleStartTimeMillis - systemTime;
-		// 					var time = self.formatDuring(msTime);
-		// 					$('.details-right-time span:first-child').text(self.chEnTextHtml[self.languageType].start);
-		// 					$('.details-right-time-djs').text(time);
-		// 					setInterval(function () {
-		// 						var curTime = Date.now() + 1150;
-		// 						var msTime = saleStartTimeMillis - curTime;
-		// 						var time = self.formatDuring(msTime);
-		// 						$('.details-right-time-djs').text(time);
-		// 					}, 1000);
-
-		// 				} else if (systemTime >= saleStartTimeMillis && systemTime <= saleEndTimeMillis) {
-		// 					var msTime = saleEndTimeMillis - systemTime;
-		// 					var time = self.formatDuring(msTime);
-		// 					let ycdjs = time.split('d')[0];
-		// 					if (ycdjs > 1825) {
-		// 						$(".details-right-time").hide();
-		// 					}
-		// 					$('.details-right-time span:first-child').text(self.chEnTextHtml[self.languageType].end);
-		// 					$('.details-right-time-djs').text(time);
-
-		// 					setInterval(function () {
-		// 						var curTime = Date.now() + 1150;
-		// 						var msTime = saleEndTimeMillis - curTime;
-		// 						var time = self.formatDuring(msTime);
-		// 						$('.details-right-time-djs').text(time);
-		// 					}, 1000);
-		// 				} else if (systemTime > saleEndTimeMillis) {
-		// 					$('.details-right-btn').addClass('unclick');
-		// 					$('.details-right-btn').text(self.chEnTextHtml[self.languageType].salesClosed);
-		// 					$('.details-right-btn').data('status', '1')
-		// 					$('.details-right-time span:first-child').css('opacity', '0');
-		// 					$('.details-right-time-djs').text(self.chEnTextHtml[self.languageType].salesClosed);
-		// 				}
-		// 			} else { //没有库存
-		// 				$('.details-right-btn').addClass('unclick');
-		// 				$('.details-right-btn').text(self.chEnTextHtml[self.languageType].sellOut);
-		// 				$('.details-right-btn').data('status', '1');
-		// 				$('.details-right-time span:first-child').css('opacity', '0');
-		// 				$('.details-right-time-djs').text(self.chEnTextHtml[self.languageType].sellOut);
-		// 				$('.details-right-time-djs').css('color', '#cf3737');
-		// 				//去掉标签中的onclick事件
-		// 				$('.details-right-btn').css('pointer-events', 'none');
-		// 			}
-		// 			self.getAccountInfo(res)
-		// 		}
-		// 	}
-		// })
+				} else if (systemTime >= saleStartTimeMillis && systemTime <= saleEndTimeMillis) {
+					var msTime = saleEndTimeMillis - systemTime;
+					var time = formatDuring(msTime);
+					let ycdjs = time.split('d')[0];
+					if (ycdjs > 1825) {
+						dom13.style.display = 'none';
+					}
+					dom11.textContent = chEnTextHtml[languageType].end;
+					dom12.textContent = time;
+					setInterval(function () {
+						var curTime = Date.now() + 1150;
+						var msTime = saleEndTimeMillis - curTime;
+						var time = formatDuring(msTime);
+						dom12.textContent = time;
+					}, 1000);
+				} else if (systemTime > saleEndTimeMillis) {
+					dom10.classList.add('unclick');
+					dom10.textContent = chEnTextHtml[languageType].salesClosed;
+					dom10.setAttribute("status","1");
+					dom11.style.opacity = '0';
+					dom12.textContent = chEnTextHtml[languageType].salesClosed;
+				}
+			} else { //没有库存
+				dom10.classList.add('unclick');
+				dom10.textContent = chEnTextHtml[languageType].sellOut;
+				dom10.setAttribute("status","1");
+				dom11.style.opacity = '0';
+				dom12.textContent = chEnTextHtml[languageType].sellOut;
+				dom12.style.color = '#cf3737';
+				dom10.style.pointerEvents = 'none';
+			}
+		}
 	}
+	
 	const getCookie = (cookieName) => {
 		const strCookie = document.cookie
 		const cookieList = strCookie.split('; ')
@@ -438,6 +430,13 @@ export default function Artwork() {
 		dom2.textContent = selectarr.length;
 		dom3.textContent = str;
 		dom4.textContent = '-' + busdPrice * selectarr.length;
+	}
+	const formatDuring = (mss) => {
+		var days = parseInt(mss / (1000 * 60 * 60 * 24));
+		var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = parseInt((mss % (1000 * 60)) / 1000);
+		return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 	}
 	const moneyFormat = (value) => { // 金额 格式化 
 		if (!value && value !== 0) return '-';
@@ -673,18 +672,6 @@ export default function Artwork() {
 							<div className="details-right-creator-img"><img src="./assets/t8.png" /></div>
 							<span>@ATTA</span>
 							<div className="details-right-creator-edition">{chEnTextHtml[languageType].version}</div>
-						</div>
-						<div className="checknumbox">
-							<div className="purchasenumbox">
-								<button onClick={() => changenum(1)}><img src="./assets/jian.png" alt="" /></button>
-								<span className="purchase_num">1</span>
-								<button onClick={() => changenum(2)}><img src="./assets/jia.png" alt="" /></button>
-							</div>
-							<p className="selectnumbox">
-								{chEnTextHtml[languageType].select}
-								<span className="selectarrnum">1</span>
-								{chEnTextHtml[languageType].versionTxt}
-							</p>
 						</div>
 						<div className="countmoneybox">
 							<p className="moneryridebox">
