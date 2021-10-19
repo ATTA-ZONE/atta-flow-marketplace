@@ -14,14 +14,11 @@ export default function Home() {
     "purchaseNow": "立即購買",
     "preSale": "預售",
     "salesClosed": "銷售已結束",
-    "auctionClosed": "拍賣已結束",
-    "auction": "拍賣商品",
     "ban": "第",
     "ban2": "版",
     "bidding": "當前競價：",
     "endtime": "拍賣剩餘時間：",
     "starttime": "拍賣開始時間：",
-    "auctionEnd": "競標結束",
   }
   const records = list.list?.records || [];
   let html = '';
@@ -35,7 +32,7 @@ export default function Home() {
       var timeStatus;
       var geshi = v.primaryPic.substr(v.primaryPic.lastIndexOf('.') + 1);
 
-      if (v.endEdition - v.edition >= 0) {   //有库存
+      if (v.storage - v.soldCount > 0) {   //有库存
 
         if (systemTime < v.saleStartTimeMillis) {
           timeStatus = 1;    //未到销售时间
@@ -50,11 +47,11 @@ export default function Home() {
       }
       if (geshi === 'mp4') {
         html += '<li><i></i>';
-        html += `<a href="${v.releaseType == 2 ? '' : 'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
+        html += `<a href="${'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
         html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
       } else {
-        html += `<li><a class="artwork-mask" href="${v.releaseType == 2 ? '' : 'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
+        html += `<li><a class="artwork-mask" href="${'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
         html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
       }
 
@@ -75,12 +72,9 @@ export default function Home() {
 									</div>
 									<div class="flex btnbox">
 										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-        if (v.releaseType == 2) {
-          html += `<span class="pmstatus">${artworkText.auction}</span>`;
-        }
         html += `</div></div></a></li>`;
 
-      } else if (timeStatus == 1) {
+      } else if (timeStatus === 1) {
 
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
@@ -97,12 +91,9 @@ export default function Home() {
 									</div>
 									<div class="flex btnbox">
 										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-        if (v.releaseType == 2) {
-          html += `<span class="pmstatus">${artworkText.auction}</span>`;
-        }
         html += `</div></div></a></li>`;
 
-      } else if (timeStatus == 2) {
+      } else if (timeStatus === 2) {
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
@@ -117,32 +108,9 @@ export default function Home() {
 									</div>
 									<div class="flex btnbox">
 										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-        if (v.releaseType == 2) {
-          html += `<span class="pmstatus">${artworkText.auction}</span>`;
-        }
         html += `</div></div></a></li>`;
-      } else if (timeStatus == 3) {
-        if (v.releaseType == 2) {
-          html += `<div class="bzy-e-list-info">
-									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
-									<div class="bzy-e-list-info-price flex">
-										<span>BUSD `+ (v.id == 5 ? moneyFormat(22000) : moneyFormat(v.price)) + ` </span>
-									</div>`;
-          html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText.auctionClosed}</span>
-									</div>
-									<div class="bzy-e-list-info-creator flex">
-										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
-										<span>@ATTA</span>
-									</div>
-									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-          if (v.releaseType == 2) {
-            html += `<span class="pmstatus">${artworkText.auction}</span>`;
-          }
-          html += `</div></div></a></li>`;
-        } else {
-          html += `<div class="bzy-e-list-info">
+      } else if (timeStatus === 3) {
+        html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
@@ -157,11 +125,7 @@ export default function Home() {
 									</div>
 									<div class="flex btnbox">
 										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
-          if (v.releaseType == 2) {
-            html += `<span class="pmstatus">${artworkText.auction}</span>`;
-          }
           html += `</div></div></a></li>`;
-        }
       };
     });
   }
