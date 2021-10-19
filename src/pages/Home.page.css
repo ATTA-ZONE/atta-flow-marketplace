@@ -24,11 +24,6 @@
 	color: #FFFFFF;
 	padding: 7px 19px;
 }
-* {
-	margin: 0;
-	padding: 0;
-	font-family: "SiYuan-light" !important;
-}
 
 ul {
 	list-style: none;
@@ -1091,6 +1086,7 @@ html {
 
 .bzy-e {
 	min-height: 550px;
+	padding-top: 100px;
 }
 
 .bzy-e-list {
