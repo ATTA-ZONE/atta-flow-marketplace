@@ -395,25 +395,8 @@ export default function Artwork() {
 	}
 	const toPay = () => {
 		let address = user?.addr;
-		mintDappy('7.0', address,id);
-		// mintDappy(busdPrice, address,id);
-		// if (($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') || this.accountBalance < this.busdPrice * this.selectarr.length) {
-		// 	$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
-		// 	$('#balanceBtn').attr('disabled', false)
-		// }
-		// $.ajax({
-		// 	url: base_url + '/v2/user/account',
-		// 	success: function (res) {
-		// 		if (res.code == 0) {
-		// 			$('.payment').fadeIn();
-		// 			$('.payment').addClass('payment-active')
-		// 			$('video').addClass('video-hidden');
-		// 			$('.payment-page-left-img video').removeClass('video-hidden')
-		// 		} else {
-		// 			tips(self.chEnTextHtml[self.languageType].noLog);
-		// 		}
-		// 	}
-		// })
+		let busdPriceprice = busdPrice.toFixed(2);
+		mintDappy(busdPriceprice, address,id);
 	}
 	const closeVideo = () => {
 		var dom1 = document.querySelector('.video-mask');
