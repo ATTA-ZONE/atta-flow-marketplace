@@ -41,10 +41,10 @@ export default function useUserDappies(user, collection, getFUSDBalance) {
   }, [])
 
   const mintDappy = async (templateID, amount) => {
-    if (!collection) {
-      alert("You need to enable the collection first. Go to the tab Collection")
-      return
-    }
+    // if (!collection) {
+    //   alert("You need to enable the collection first. Go to the tab Collection")
+    //   return
+    // }
     if (runningTxs) {
       alert("Transactions are still running. Please wait for them to finish first.")
       return
