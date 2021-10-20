@@ -31,14 +31,19 @@ export default function useCollection(user) {
   }, [])
 
   const createCollection = async () => {
-    let res = await mutate({
-      cadence: CREATE_COLLECTION,
-      limit: 55
-
-    })
-    addTx(res)
-    await tx(res).onceSealed()
-    setCollection(true)
+    try {
+      let res = await mutate({
+        cadence: CREATE_COLLECTION,
+        limit: 55
+  
+      })
+      console.log(res,'=====');
+      addTx(res)
+      await tx(res).onceSealed()
+      setCollection(true)
+    } catch (err) {
+      console.log(err,'-----------')
+    }
   }
 
   const deleteCollection = async () => {
