@@ -40,7 +40,7 @@ export default function useUserDappies(user, collection,createCollection, getFUS
     //eslint-disable-next-line
   }, [])
 
-  const mintDappy = async (templateID, amount) => {
+  const mintDappy = async (amount, flowAddress,flowBasicId) => {
     if (!collection) {
       createCollection();
       // alert("You need to enable the collection first. Go to the tab Collection")
@@ -53,12 +53,19 @@ export default function useUserDappies(user, collection,createCollection, getFUS
     try {
       let res = await mutate({
         cadence: MINT_DAPPY,
-        limit: 55,
-        args: (arg, t) => [arg(templateID, t.UInt32), arg(amount, t.UFix64)]
+        limit: 9999,
+        args: (arg, t) => [arg(amount, t.UFix64),arg(flowAddress, t.Address),]
       })
       addTx(res)
-      await tx(res).onceSealed()
-      await addDappy(templateID)
+      let tokenidarr = await tx(res).onceSealed();
+      let templateID = {flowAddress:flowAddress,flowBasicId : flowBasicId};
+      tokenidarr.events.forEach(item=>{
+        if (item.type == "A.e62308aba7b05365.ATTANFT.UserMinted") {
+          templateID.tokenId = item.data.id;
+          templateID.price = item.data.price;
+        }
+      })
+      // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
       console.log(error)

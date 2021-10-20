@@ -1,18 +1,20 @@
 import React ,{ useEffect,useState} from 'react'
 import DappyList from '../components/DappyList'
 import Header from '../components/Header'
+import { useAuth } from '../providers/AuthProvider'
 import { useUser } from '../providers/UserProvider'
 import "./Artwork.page.css"
 
 export default function Artwork() {
+	const { user } = useAuth()
 	const { userDappies, mintDappy } = useUser()
-	const [languageType,setlanguageType] = useState('TC');
-	const [payTabs,setpayTabs] = useState(['錢包支付']);
+	const [languageType,setLanguageType] = useState('TC');
+	const [payTabs,setPayTabs] = useState(['錢包支付']);
 	const [maxbannum,setmaxbannum] = useState(0);
 	const [curUserOwned,setcurUserOwned] = useState(0);
 	const [oneUserCountLimit,setoneUserCountLimit] = useState(0);
 	const [onceCountLimit,setonceCountLimit] = useState(0);
-	const [busdPrice,setbusdPrice] = useState(0);
+	const [busdPrice,setBusdPrice] = useState(0);
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
@@ -147,11 +149,11 @@ export default function Artwork() {
 		}
 	})
 	useEffect (()=>{
-		setlanguageType(getCookie("lang")?getCookie("lang"):'TC');
+		setLanguageType(getCookie("lang")?getCookie("lang"):'TC');
 		if(languageType == "TC"){
-			setpayTabs(['錢包支付'])
+			setPayTabs(['錢包支付'])
 		}else{
-			setpayTabs(['Crypto wallet'])
+			setPayTabs(['Crypto wallet'])
 		}
 		initMediaCss();
 			
@@ -243,8 +245,7 @@ export default function Artwork() {
 			var dom13 = document.querySelector('.details-right-time');
 			// setmaxbannum(res.data.endEdition);
 			// sethkdPrice(res.data.hkdPrice);
-			setbusdPrice(res.data.price);
-			console.log("11111111111111"+busdPrice);
+			setBusdPrice(res.data.price);
 			// setcurUserOwned(res.data.curUserOwned);
 			// setoneUserCountLimit(res.data.oneUserCountLimit);
 			// setonceCountLimit(res.data.onceCountLimit);
@@ -393,9 +394,9 @@ export default function Artwork() {
 		}
 	}
 	const toPay = () => {
-		let self = this;
-		console.log(1111111111);
-		mintDappy(2, 1);
+		let address = user?.addr;
+		mintDappy('7.0', address,id);
+		// mintDappy(busdPrice, address,id);
 		// if (($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') || this.accountBalance < this.busdPrice * this.selectarr.length) {
 		// 	$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
 		// 	$('#balanceBtn').attr('disabled', false)
