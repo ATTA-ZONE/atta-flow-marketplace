@@ -15,7 +15,7 @@ export default function Wallet() {
       </div>
       {!balance ?
         <div className="btn btn-small" onClick={() => createFUSDVault()}>
-          ⚠️ Enable FUSD
+          ⚠️ Enable FLOW
         </div>
         :
         <div className="wallet__item">
