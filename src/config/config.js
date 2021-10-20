@@ -6,5 +6,5 @@ config({
   "0xFungibleToken": process.env.REACT_APP_FT_CONTRACT,
   "0xFlowToken": process.env.REACT_APP_FUSD_CONTRACT,
   "0xATTANFT": process.env.REACT_APP_DAPPY_CONTRACT,
-  "0xNonFungibleToken": process.env.FLOW_NONFUNGIBLE_ADDRESS
+  "0xNonFungibleToken": process.env.REACT_APP_NONFUNGIBLE_ADDRESS
 })
