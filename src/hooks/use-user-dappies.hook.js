@@ -7,7 +7,7 @@ import { userDappyReducer } from '../reducer/userDappyReducer'
 import { useTxs } from '../providers/TxProvider'
 import DappyClass from '../utils/DappyClass'
 
-export default function useUserDappies(user, collection, getFUSDBalance) {
+export default function useUserDappies(user, collection,createCollection, getFUSDBalance) {
   const [state, dispatch] = useReducer(userDappyReducer, {
     oading: false,
     error: false,
@@ -41,10 +41,11 @@ export default function useUserDappies(user, collection, getFUSDBalance) {
   }, [])
 
   const mintDappy = async (templateID, amount) => {
-    // if (!collection) {
-    //   alert("You need to enable the collection first. Go to the tab Collection")
-    //   return
-    // }
+    if (!collection) {
+      createCollection();
+      // alert("You need to enable the collection first. Go to the tab Collection")
+      return
+    }
     if (runningTxs) {
       alert("Transactions are still running. Please wait for them to finish first.")
       return
