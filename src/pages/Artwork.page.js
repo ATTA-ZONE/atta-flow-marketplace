@@ -269,7 +269,7 @@ export default function Artwork() {
 				dom8.innerHTML = res.data.introduce == '' ? 'No introduction' : (res.data.introduce.replace(/;\|;/g, '<br>'));
 				dom9.innerHTML = res.data.content == '' ? 'No more information' : (res.data.content.replace(/;\|;/g, '<br>'));
 			}
-			if (res.data.endEdition - res.data.edition >= 0) { //还有库存
+			if (res.data.storage - res.data.soldCount > 0) { //还有库存
 				if (systemTime < saleStartTimeMillis) {
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].comSoon;
