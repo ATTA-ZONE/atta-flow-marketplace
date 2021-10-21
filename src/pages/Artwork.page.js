@@ -306,6 +306,8 @@ export default function Artwork() {
 					dom10.setAttribute("status","1");
 					dom11.style.opacity = '0';
 					dom12.textContent = chEnTextHtml[languageType].salesClosed;
+					dom12.style.color = '#cf3737';
+					dom10.style.pointerEvents = 'none';
 				}
 			} else { //没有库存
 				dom10.classList.add('unclick');
