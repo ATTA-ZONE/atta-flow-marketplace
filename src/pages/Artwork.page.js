@@ -18,7 +18,7 @@ export default function Artwork() {
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
-	const [basicId,setbasicId] = useState(0);
+	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
 	const [chEnTextHtml] = useState({
 		"TC": {
@@ -226,7 +226,6 @@ export default function Artwork() {
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
 		if (res.code == 0) {
-			setbasicId(res.data.basicId);
 			var content = res.data.content;
 			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
 			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
@@ -246,6 +245,7 @@ export default function Artwork() {
 			// setmaxbannum(res.data.endEdition);
 			// sethkdPrice(res.data.hkdPrice);
 			setBusdPrice(res.data.price);
+			setBasicId(res.data.basicId);
 			// setcurUserOwned(res.data.curUserOwned);
 			// setoneUserCountLimit(res.data.oneUserCountLimit);
 			// setonceCountLimit(res.data.onceCountLimit);
@@ -395,10 +395,17 @@ export default function Artwork() {
 			return intPartFormat;
 		}
 	}
-	const toPay = () => {
-		let address = user?.addr;
-		let busdPriceprice = busdPrice.toFixed(2);
-		mintDappy(busdPriceprice, address,id);
+	const toPay = async () => {
+		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
+		const listData = await fetch(url, { method: 'GET' })
+		const res = await listData.json();
+		if (res.code == 0) {
+			let address = user?.addr;
+			let busdPriceprice = busdPrice.toFixed(2);
+			mintDappy(busdPriceprice, address,basicId);
+		}else{
+			alert(res.message);
+		}
 	}
 	const closeVideo = () => {
 		var dom1 = document.querySelector('.video-mask');
