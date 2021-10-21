@@ -1,15 +1,11 @@
 export const LIST_USER_DAPPIES = `
-  import DappyContract from 0xDappy
+  import NonFungibleToken from 0xNonFungibleToken
+  import ATTANFT from 0xATTANFT
 
-  pub fun main(addr: Address): {UInt64: DappyContract.Template}? {
-    let account = getAccount(addr)
-    
-    if let ref = account.getCapability<&{DappyContract.CollectionPublic}>(DappyContract.CollectionPublicPath)
-                .borrow() {
-                  let dappies = ref.listDappies()
-                  return dappies
-                }
-    
-    return nil
+  pub fun main(address: Address): [UInt64]{
+    let account = getAccount(address)
+    let collection = account.getCapability<&{ATTANFT.ATTACollectionPublic}>(ATTANFT.CollectionPublicPath).borrow() ?? panic("Can not borrow user collection cap")
+    return collection.getIDs()
   }
+
 `
