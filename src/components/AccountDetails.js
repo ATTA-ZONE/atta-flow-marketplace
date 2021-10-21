@@ -25,7 +25,7 @@ export default function Wallet() {
       {!collection ?
         <div className="wallet__item" onClick={() => createCollection()}>⚠️ Enable Collection</div> :
         <>
-          <div className="wallet__item">⚠️ Have Collection</div>
+          
         </>
       }
       <div className="btn btn-small" onClick={() => logOut()}>👋 Logout</div>
