@@ -292,6 +292,9 @@ export default function Artwork() {
 					if (ycdjs > 1825) {
 						dom13.style.display = 'none';
 					}
+					dom10.classList.remove('unclick');
+					dom10.textContent = chEnTextHtml[languageType].purchaseNow;
+					dom10.style.pointerEvents = 'auto';
 					dom11.textContent = chEnTextHtml[languageType].end;
 					dom12.textContent = time;
 					setInterval(function () {
@@ -399,12 +402,17 @@ export default function Artwork() {
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
+		var dom1 = document.querySelector('.details-right-btn');
+		dom1.textContent = '購買中，請稍等';
+		dom1.classList.add('unclick');
+		dom1.style.pointerEvents = 'none';
 		if (res.code == 0) {
 			let address = user?.addr;
 			let busdPriceprice = busdPrice.toFixed(2);
-			mintDappy(busdPriceprice, address,basicId);
+			mintDappy(busdPriceprice, address,basicId,getComditInfo);
 		}else{
 			alert(res.message);
+			getComditInfo();
 		}
 	}
 	const closeVideo = () => {
