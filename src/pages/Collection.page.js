@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
 import { getIntroduce } from '../utils/utils'
-import { useUser } from '../providers/UserProvider'
+import useCollections from '../hooks/use-flow-coolections.hooks'
 
 export default function Collection() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
@@ -16,12 +16,11 @@ export default function Collection() {
   }
   const context = chEnTextHtml.chEnTextHtml
   const lang = 'TC'
-  const flowList = useFlowList(url, postData)
+  //const flowList = useFlowList(url, postData)
 
-  const { collection, createCollection, deleteCollection, userDappies } = useUser()
-
-  console.log(userDappies)
-
+  const data = useCollections()
+  console.log(data,'=-===');
+  const flowList = []
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
   }
