@@ -3056,3 +3056,12 @@ html {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.detail-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+}

@@ -1,24 +1,20 @@
 export const CREATE_FUSD_VAULT = `
   import FungibleToken from 0xFungibleToken
-  import FUSD from 0xFUSD
+  import FlowToken from 0xFlowToken
 
-  transaction {
-    prepare(signer: AuthAccount) {
-      if(signer.borrow<&FUSD.Vault>(from: /storage/fusdVault) != nil) {
-        return
+  transaction() {
+      prepare(signer: AuthAccount) {
+          signer.save(<-FlowToken.createEmptyVault(), to: /storage/flowTokenVault)
+
+          signer.link<&FlowToken.Vault{FungibleToken.Receiver}>(
+          /public/flowTokenReceiver,  target: /storage/flowTokenVault)
+          
+          signer.link<&FlowToken.Vault{FungibleToken.Balance}>(
+            /public/flowTokenBalance,
+            target: /storage/flowTokenVault
+          )
+
       }
-    
-      signer.save(<-FUSD.createEmptyVault(), to: /storage/fusdVault)
 
-      signer.link<&FUSD.Vault{FungibleToken.Receiver}>(
-        /public/fusdReceiver,
-        target: /storage/fusdVault
-      )
-
-      signer.link<&FUSD.Vault{FungibleToken.Balance}>(
-        /public/fusdBalance,
-        target: /storage/fusdVault
-      )
-    }
   }
 `

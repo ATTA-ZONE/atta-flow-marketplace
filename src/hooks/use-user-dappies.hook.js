@@ -7,7 +7,7 @@ import { userDappyReducer } from '../reducer/userDappyReducer'
 import { useTxs } from '../providers/TxProvider'
 import DappyClass from '../utils/DappyClass'
 
-export default function useUserDappies(user, collection, getFUSDBalance) {
+export default function useUserDappies(user, collection,createCollection, getFUSDBalance) {
   const [state, dispatch] = useReducer(userDappyReducer, {
     oading: false,
     error: false,
@@ -40,9 +40,10 @@ export default function useUserDappies(user, collection, getFUSDBalance) {
     //eslint-disable-next-line
   }, [])
 
-  const mintDappy = async (templateID, amount) => {
+  const mintDappy = async (amount, flowAddress,flowBasicId) => {
     if (!collection) {
-      alert("You need to enable the collection first. Go to the tab Collection")
+      createCollection();
+      // alert("You need to enable the collection first. Go to the tab Collection")
       return
     }
     if (runningTxs) {
@@ -52,12 +53,30 @@ export default function useUserDappies(user, collection, getFUSDBalance) {
     try {
       let res = await mutate({
         cadence: MINT_DAPPY,
-        limit: 55,
-        args: (arg, t) => [arg(templateID, t.UInt32), arg(amount, t.UFix64)]
+        limit: 9999,
+        args: (arg, t) => [arg(amount, t.UFix64),arg(flowAddress, t.Address),]
       })
       addTx(res)
-      await tx(res).onceSealed()
-      await addDappy(templateID)
+      let tokenidarr = await tx(res).onceSealed();
+      let templateIDobj = {flowAddress:flowAddress,flowBasicId : flowBasicId};
+      tokenidarr.events.forEach(item=>{
+        if (item.type == "A.e62308aba7b05365.ATTANFT.UserMinted") {
+          templateIDobj.tokenId = item.data.id;
+          templateIDobj.price = item.data.price;
+          templateIDobj.transactionHash = item.transactionId;
+        }
+      })
+      const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/addOrderInfo`;
+      const listData = await fetch(url, { 
+        method: 'POST' ,
+        body : JSON.stringify(templateIDobj),
+        headers: { "Content-Type": "application/json" },
+      })
+      const status = await listData.json();
+      if (status.code == 0) {
+        alert('購買成功')
+      }
+      // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
       console.log(error)

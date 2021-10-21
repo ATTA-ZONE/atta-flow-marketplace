@@ -1,19 +1,20 @@
-import React ,{ useState ,useEffect} from 'react'
+import React ,{ useEffect,useState} from 'react'
 import DappyList from '../components/DappyList'
 import Header from '../components/Header'
+import { useAuth } from '../providers/AuthProvider'
 import { useUser } from '../providers/UserProvider'
 import "./Artwork.page.css"
 
 export default function Artwork() {
-	const { collection, createCollection, deleteCollection, userDappies } = useUser()
-	const [languageType,setlanguageType] = useState('TC');
-	const [payTabs,setpayTabs] = useState(['錢包支付']);
-	const [selectarr,setselectarr] = useState([]);
+	const { user } = useAuth()
+	const { userDappies, mintDappy } = useUser()
+	const [languageType,setLanguageType] = useState('TC');
+	const [payTabs,setPayTabs] = useState(['錢包支付']);
 	const [maxbannum,setmaxbannum] = useState(0);
 	const [curUserOwned,setcurUserOwned] = useState(0);
 	const [oneUserCountLimit,setoneUserCountLimit] = useState(0);
 	const [onceCountLimit,setonceCountLimit] = useState(0);
-	const [busdPrice,setbusdPrice] = useState(10);
+	const [busdPrice,setBusdPrice] = useState(0);
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
@@ -147,32 +148,12 @@ export default function Artwork() {
 			paymentComing: "Function coming soon..."
 		}
 	})
-	var state = {
-		id: '',
-		prev: -1,
-		success_status: -1,
-		walletType: '',
-		accountBalance: 0,
-		hkdPrice: 0,
-		payTabs: ['錢包支付'],
-		// payTabs: ['錢包支付', '信用卡'],
-		selectedPayMethod: 0,
-		basicId: 0,
-		visiable: [],
-		auctionAddress: '',
-		auctionContractInstance: null,
-		userAddress: '',
-		tokenLimits: [],
-		chainId: '',
-		// 中英文切换
-		languageType: "TC",
-	}
 	useEffect (()=>{
-		setlanguageType(getCookie("lang")?getCookie("lang"):'TC');
+		setLanguageType(getCookie("lang")?getCookie("lang"):'TC');
 		if(languageType == "TC"){
-			setpayTabs(['錢包支付'])
+			setPayTabs(['錢包支付'])
 		}else{
-			setpayTabs(['Crypto wallet'])
+			setPayTabs(['Crypto wallet'])
 		}
 		initMediaCss();
 			
@@ -180,19 +161,19 @@ export default function Artwork() {
 	const initMediaCss = () => {
 		var dom = document.body;
 		let dom2 = document.querySelector('.details-right-btn');
-		let dom3 = document.querySelector('.payment-close-mobile');
+		// let dom3 = document.querySelector('.payment-close-mobile');
 		let dom4 = document.querySelector('.payment');
 		let dom5 = document.querySelector('video');
 		let dom6 = document.querySelector('.pre-mask');
-		let dom7 = document.querySelector('.payment-page-right-balance');
+		// let dom7 = document.querySelector('.payment-page-right-balance');
 		var mobile_width = dom.style.width;
 		if (mobile_width <= 992) {
 			dom2.classList.remove("payment-btn-pc");
 			dom2.classList.add("payment-btn-mobile");
-			dom3.onclick = function () {
-				dom4.classList.remove("payment-active");
-				dom5.classList.remove("video-hidden");
-			}
+			// dom3.onclick = function () {
+			// 	dom4.classList.remove("payment-active");
+			// 	dom5.classList.remove("video-hidden");
+			// }
 		}
 		var params = window.location.search.substr(1).split('&')
 		var arr = [];
@@ -223,7 +204,7 @@ export default function Artwork() {
 		} else if (success_status == 0) {
 			alert(chEnTextHtml[languageType].payErr);
 		}
-		dom7.style.display = 'none';
+		// dom7.style.display = 'none';
 		getComditInfo()
 		// self.initAddress()
 	}
@@ -240,6 +221,7 @@ export default function Artwork() {
 	}
 	const getComditInfo = async () => {
 		//商品详情业加载
+		if (!id) {return;}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/info?id=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
@@ -261,14 +243,12 @@ export default function Artwork() {
 			var dom11 = document.querySelector('.details-right-time span:first-child');
 			var dom12 = document.querySelector('.details-right-time-djs');
 			var dom13 = document.querySelector('.details-right-time');
-			// setselectarr(selectarr.push(res.data.edition));
-			window.$selectarr = selectarr;
-			setmaxbannum(res.data.endEdition);
-			sethkdPrice(res.data.hkdPrice);
-			setbusdPrice(res.data.busdPrice);
-			setcurUserOwned(res.data.curUserOwned);
-			setoneUserCountLimit(res.data.oneUserCountLimit);
-			setonceCountLimit(res.data.onceCountLimit);
+			// setmaxbannum(res.data.endEdition);
+			// sethkdPrice(res.data.hkdPrice);
+			setBusdPrice(res.data.price);
+			// setcurUserOwned(res.data.curUserOwned);
+			// setoneUserCountLimit(res.data.oneUserCountLimit);
+			// setonceCountLimit(res.data.onceCountLimit);
 			if (geshi == 'mp4') {
 				dom1.style.display = 'block';
 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
@@ -352,13 +332,16 @@ export default function Artwork() {
 		return cookieValue;
 	}
 	const playVideo = (obj, e) => {
-		// e.stopPropagation();
-		// $(obj).siblings('video')[0].pause();
-		// var src = $(obj).siblings('video')[0].src;
-		// $('.video-model video').attr('src', src);
-		// $('.video-model video')[0].play();
-		// $('.video-mask').fadeIn('fast');
-		// $('.video-model').fadeIn('fast');
+		e.stopPropagation();
+		document.getElementsByTagName('video')[0].pause();
+		var src = document.getElementsByTagName('video')[0].src;
+		var dom1 = document.querySelector('.video-model video');
+		dom1.src = src;
+		document.getElementsByTagName('video')[0].play();
+		var dom2 = document.querySelector('.video-mask');
+		var dom3 = document.querySelector('.video-model');
+		dom2.style.display = 'block';
+		dom3.style.display = 'block';
 	}
 	const FullScreen = () => {
 		var ele = document.getElementsByTagName('video')[0];
@@ -381,53 +364,6 @@ export default function Artwork() {
 				document.getElementsByClassName('voice')[0].src = './assets/mute.png'
 				break;
 		}
-	}
-	const changenum = (type) => {
-		let str = '';
-		let dom1 = document.querySelector('.busdPrice');
-		let dom2 = document.querySelector('.purchase_num');
-		let dom3 = document.querySelector('.selectarrnum');
-		let dom4 = document.querySelector('.busd-tip');
-		if (type === 1) {
-			if (selectarr.length < 2) {
-				alert(chEnTextHtml[languageType].least);
-				return;
-			} else {
-				selectarr.pop();
-			}
-		}
-		if (type === 2) {
-			if (selectarr.length - 1 < maxbannum) {
-				if (curUserOwned + selectarr.length >= oneUserCountLimit) {
-					alert(chEnTextHtml[languageType].reached);
-					return;
-				}
-				if (selectarr.length >= onceCountLimit) {
-					alert(chEnTextHtml[languageType].limit);
-					return;
-				}
-				selectarr.push(selectarr.length + 1);
-			} else {
-				if (selectarr.length === 1) {
-					alert(chEnTextHtml[languageType].moment);
-					return;
-				} else {
-					alert(chEnTextHtml[languageType].quantity);
-					return;
-				}
-			}
-		}
-		selectarr.forEach((item, index) => {
-			if (index !== 0) {
-				str += '、';
-			}
-			str += item;
-		})
-		let pricebusdt = moneyFormat(busdPrice * selectarr.length);
-		dom1.textContent = 'BUSD ' + moneyFormat(busdPrice * selectarr.length);
-		dom2.textContent = selectarr.length;
-		dom3.textContent = str;
-		dom4.textContent = '-' + busdPrice * selectarr.length;
 	}
 	const formatDuring = (mss) => {
 		var days = parseInt(mss / (1000 * 60 * 60 * 24));
@@ -458,201 +394,18 @@ export default function Artwork() {
 		}
 	}
 	const toPay = () => {
-		let self = this;
-		// if (($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') || this.accountBalance < this.busdPrice * this.selectarr.length) {
-		// 	$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
-		// 	$('#balanceBtn').attr('disabled', false)
-		// }
-		// $.ajax({
-		// 	url: base_url + '/v2/user/account',
-		// 	success: function (res) {
-		// 		if (res.code == 0) {
-		// 			$('.payment').fadeIn();
-		// 			$('.payment').addClass('payment-active')
-		// 			$('video').addClass('video-hidden');
-		// 			$('.payment-page-left-img video').removeClass('video-hidden')
-		// 		} else {
-		// 			tips(self.chEnTextHtml[self.languageType].noLog);
-		// 		}
-		// 	}
-		// })
-	}
-	const paymentClose = () => {
-		// $('.payment').hide();
-	}
-	const togglePayMethod = (text) => {
-		// this.selectedPayMethod = text
-		// if (text == 1) {
-		// 	$('.payment-page-right-btn').hide();
-		// 	$('.order-price .order-price-hdk').show();
-		// 	$('.order-price .order-price-busd').hide();
-		// 	$('.payment-page-right-select').show();
-		// 	$('.payment-page-right-busd').hide();
-		// 	$('.payment-page-right-balance').hide()
-		// 	$('.payment-page-right-btn').hide();
-		// 	$('.wallet-payment-desc').hide();
-		// 	$('.payment-tips').hide();
-		// 	$('.payment-page-right-crypto').hide();
-		// 	$('.payment-page-right-total').show();
-		// };
-
-		// if (text == 2) {
-		// 	$('.payment-page-right-btn').show();
-		// 	$('.payment-tips').hide();
-		// 	$('.payment-page-right-crypto').hide();
-		// 	$('.payment-page-right-total').show();
-		// 	$('.payment-page-right-balance').show()
-		// 	$('.payment-page-right-btn button').addClass('can');
-		// 	if (($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') || this.accountBalance < this.busdPrice * this.selectarr.length) {
-		// 		$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
-		// 		$('#balanceBtn').attr('disabled', false)
-		// 	} else {
-		// 		$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].payment + ' >');
-		// 	}
-		// 	$('.order-price .order-price-hdk').hide();
-		// 	$('.order-price .order-price-busd').show();
-		// 	$('.payment-page-right-select').hide();
-		// 	$('.payment-page-right-busd').show();
-		// 	$('.wallet-payment-desc').hide();
-		// }
-		// if (text == 0) {
-		// 	$('.payment-page-right-btn').hide();
-		// 	$('.payment-tips').show();
-		// 	$('.payment-page-right-crypto').show();
-		// 	if (getCookie('isConnect') != 'true') {
-		// 		$('#cryptoBtn').text(this.chEnTextHtml[this.languageType].walletFirst)
-		// 		$('#cryptoBtn').attr('disabled', false)
-		// 	} else {
-		// 		$('#cryptoBtn').text(this.chEnTextHtml[this.languageType].payment + '  ->')
-		// 		$('#cryptoBtn').attr('disabled', false)
-		// 	}
-		// 	$('.payment-page-right-balance').hide()
-		// 	$('.payment-page-right-crypto button').addClass('can');
-		// 	if ($('.busd-tip').text() == '餘額不足' || $('.busd-tip').text() == 'Insufficient balance') {
-		// 		$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].recharge);
-		// 	} else {
-		// 		$('.payment-page-right-btn button').text(this.chEnTextHtml[this.languageType].payment + ' >');
-		// 	}
-		// 	$('.order-price .order-price-hdk').hide();
-		// 	$('.order-price .order-price-busd').show();
-		// 	$('.payment-page-right-select').hide();
-		// 	$('.payment-page-right-busd').hide();
-		// }
-	}
-	const toggleBalanceCheck = () => {
-		var payButton = document.getElementById("balanceBtn");
-		var cryButton = document.getElementById("cryptoBtn");
-		// if ($('#saveBalance').prop('checked')) {
-		// 	payButton.disabled = false;
-		// 	if (getCookie('isConnect') == 'true') {
-		// 		cryButton.disabled = false;
-		// 	}
-		// } else {
-		// 	cryButton.disabled = true;
-		// 	if ($('#balanceBtn').text() == '立即付款 >' || $('#balanceBtn').text() == 'Pay now >') {
-		// 		payButton.disabled = true;
-		// 	}
-		// }
-	}
-	//支付
-	const payBalance = () => {
-		let self = this
-		// var value = $('#balanceBtn').text().trim();
-		// var busd = $('.order-price .order-price-busd').text().trim();
-		// if (self.selectedPayMethod == 1) {
-		// 	if (value == '立即付款 >' || value == 'Pay now >') {
-		// 		$.ajax({
-		// 			url: base_url + '/v2/order/order/pay/usdt',
-		// 			type: 'POST',
-		// 			contentType: 'application/json',
-		// 			dataType: 'json',
-		// 			data: JSON.stringify({
-		// 				configCommodityId: self.id,
-		// 				buyCount: self.selectarr.length,
-		// 				connectStatus: getCookie('isConnect')
-		// 			}),
-		// 			success: function (res) {
-		// 				if (res.code == 0) {
-		// 					success(self.chEnTextHtml[self.languageType].paySuc, 1800);
-		// 					setTimeout(function () {
-		// 						$('.order-number').text(self.chEnTextHtml[self.languageType].number + res.data);
-		// 						$('.payment-page-right-tit').text(self.chEnTextHtml[self.languageType].accomplish);
-		// 						$('.payment-page-right-order').show();
-		// 						$('.payment-page-right-pay').hide();
-		// 						$('.payment-page-right-total').hide();
-		// 						$('.payment-page-right-busd').hide();
-		// 						$('.payment-page-right-balance').hide()
-		// 						$('.payment-page-right-btn button').text(self.chEnTextHtml[self.languageType].asset);
-		// 						$('.payment-page-right-order-je span').text(busd);
-		// 						$('.payment-page-right-order-by span').text(self.chEnTextHtml[self.languageType].balancePayment);
-		// 					}, 1800);
-		// 				} else {
-		// 					error(res.message, 1800);
-		// 				}
-		// 			}
-		// 		})
-		// 	} else if (value == '充值' || value == 'Add funds') {
-		// 		window.location.href = 'mywallet.html?isframe=true';
-		// 	} else if (value == this.chEnTextHtml[this.languageType].asset) {
-		// 		window.location.href = 'myassets.html';
-		// 	}
-		// }
-	}
-	const payCrypto = () => {
-		let self = this
-		// if ($('#cryptoBtn').text() == '去我的資產核對' || $('#cryptoBtn').text() == 'Go to my asset to check') {
-		// 	window.location.href = 'myassets.html';
-		// 	return false
-		// }
-		// if ($('#cryptoBtn').text() == '請先連接錢包  ->' || $('#cryptoBtn').text() == 'Please connect your wallet first  ->') {
-		// 	window.open('connectWallet.html');
-		// 	return false
-		// }
-		// if ($('#cryptoBtn').text() == '立即付款  ->' || $('#cryptoBtn').text() == 'Pay now  ->') {
-		// 	$.ajax({
-		// 		url: base_url + '/v2/commodity/tokenLimit',
-		// 		data: {
-		// 			basicId: self.basicId
-		// 		},
-		// 		success: function (res) {
-		// 			loading();
-		// 			$('#cryptoBtn').attr('disabled', true)
-		// 			self.tokenLimits = res.data.tokenLimit
-		// 			if (getCookie('_wallet_') == 'MetaMask') {
-		// 				self.authUser()
-		// 			} else {
-		// 				self.getOnSellToken()
-		// 			}
-		// 		}
-		// 	})
-		// }
+		let address = user?.addr;
+		let busdPriceprice = busdPrice.toFixed(2);
+		mintDappy(busdPriceprice, address,id);
 	}
 	const closeVideo = () => {
-		// $('.video-mask').hide();
-		// $('.video-model').hide();
-		// $('#save,#savetips').click(function () {
-		// 	var payButton = document.getElementById("pay-button");
-		// 	if ($('#savetips').prop('checked')) {
-		// 		payButton.disabled = !Frames.isCardValid();
-		// 	} else {
-		// 		payButton.disabled = true;
-		// 	}
-		// })
+		var dom1 = document.querySelector('.video-mask');
+		var dom2 = document.querySelector('.video-model');
+		dom1.style.display = 'none';
+		dom2.style.display = 'none';
 	}
 	const opacitystyle = {
 		opacity: 1
-	};
-	const opacitystyle2 = {
-		marginBottom: '20px !important'
-	};
-	const opacitystyle3 = {
-		color: '#FF1313',
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: '10px'
-	};
-	const opacitystyle4 = {
-		borderBottom: 'none !important'
 	};
 	return (
 		<div id="artDetail">
@@ -687,140 +440,6 @@ export default function Artwork() {
 						</div>
 					</div>
 				</div>
-				<div className="payment none">
-					<div className="payment-container flex">
-						<div className="payment-page flex">
-							<div className="payment-page-close payment-close-pc" onClick={() => paymentClose()}><img src="./assets/Close.png" />
-							</div>
-							<div className="payment-page-top none flex">
-								<div className="payment-page-right-tit">{chEnTextHtml[languageType].pay}</div>
-								<div className="payment-close-mobile"><img src="./assets/Close.png" /></div>
-							</div>
-							<div className="payment-page-left">
-								<div className="payment-page-left-tit order-title">----</div>
-								<div className="payment-page-left-creator flex">
-									<div className="details-right-creator-img"><img src="./assets/t8.png" /></div>
-									<span>@ATTA</span>
-									<div className="details-right-creator-edition">{chEnTextHtml[languageType].version}</div>
-								</div>
-								<div className="payment-page-left-img order-img"><img src="" /></div>
-							</div>
-
-							<div className="payment-page-right">
-								<div className="payment-page-right-tit">{chEnTextHtml[languageType].pay}</div>
-								<div className="payment-page-left-tit none payment-page-left-tit-mobile order-title">----</div>
-								<div className="payment-page-left-creator none payment-page-left-creator-mobile flex">
-									<div className="details-right-creator-img"><img src="./assets/t8.png" /></div>
-									<span>@ATTA</span>
-									<div className="details-right-creator-edition">{chEnTextHtml[languageType].version}</div>
-								</div>
-
-								<div className="payment-page-right-order none">
-									<p className="order-number">Order #：<span>----</span></p>
-									<p className="payment-page-right-order-tit">{chEnTextHtml[languageType].paid}</p>
-									<p className="payment-page-right-order-je"><span>----</span></p>
-									<p className="payment-page-right-order-by"><span>{chEnTextHtml[languageType].byCreditCard}</span></p>
-									<p className="payment-page-right-order-card none">----</p>
-								</div>
-								<div className="payment-page-right-pay flex">
-									{
-										payTabs.map((item, index) => {
-											return <span className="selectedPayMethod == index? 'cur':''" onClick={() => togglePayMethod(index)}>{item}</span>
-										})
-									}
-								</div>
-								<div className="payment-page-right-total">
-									<p>{chEnTextHtml[languageType].pendingPayment}</p>
-									<p className="order-price">
-										<span className="order-price-busd none busdPrice">FLOW 0 </span>
-									</p>
-								</div>
-								<div className="payment-page-right-select modify-ipt-fream">
-									<form id="payment-form" method="POST" action="https://merchant.com/charge-card">
-										<div className="payment-form-ipt">
-											<div className="input-container card-number" style={opacitystyle2}>
-												<div className="icon-container">
-													<img id="icon-card-number" src="./assets/card-icons/card.svg" alt="PAN" />
-												</div>
-												<div className="card-number-frame"></div>
-												<div className="icon-container payment-method">
-													<img id="logo-payment-method" />
-												</div>
-												<div className="icon-container">
-													<img id="icon-card-number-error" src="./assets/card-icons/error.svg" />
-												</div>
-											</div>
-											<div className="date-and-code">
-												<div>
-													<div className="input-container expiry-date">
-														<div className="icon-container">
-															<img id="icon-expiry-date" src="./assets/card-icons/exp-date.svg" alt="Expiry date" />
-														</div>
-														<div className="expiry-date-frame"></div>
-														<div className="icon-container">
-															<img id="icon-expiry-date-error" src="./assets/card-icons/error.svg" />
-														</div>
-													</div>
-												</div>
-												<div>
-													<div className="input-container cvv">
-														<div className="icon-container">
-															<img id="icon-cvv" src="./assets/card-icons/cvv.svg" alt="CVV" />
-														</div>
-														<div className="cvv-frame"></div>
-														<div className="icon-container">
-															<img id="icon-cvv-error" src="./assets/card-icons/error.svg" />
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<p className="flex pay-save">
-											<input id="save" type="checkbox" />
-											<label>{chEnTextHtml[languageType].saveFor}</label>
-											{/* <label for="save">{chEnTextHtml[languageType].saveFor}</label> */}
-										</p>
-										<div style={opacitystyle3}>
-											<input id="savetips" type="checkbox" />
-											<span>{chEnTextHtml[languageType].purchasing}</span>
-										</div>
-										<div>
-											<div className="pay-button">
-												<button id="pay-button" disabled="">{chEnTextHtml[languageType].payment}></button>
-											</div>
-											<span className="error-message error-message__card-number"></span>
-											<span className="error-message error-message__expiry-date"></span>
-											<span className="error-message error-message__cvv"></span>
-										</div>
-									</form>
-								</div>
-								<div className="payment-page-right-busd none">
-									<div className="payment-page-right-busd-tit">{chEnTextHtml[languageType].currentUsing}</div>
-									<div className="payment-page-right-busd-con">
-										<span className="busd-balance">{chEnTextHtml[languageType].balance}</span>
-										<span className="busd-ye">FLOW 0</span>
-										<span className="busd-tip none">0</span>
-									</div>
-								</div>
-								<div className="wallet-payment-desc none">{chEnTextHtml[languageType].notStore}</div>
-								<div className="payment-page-right-balance" style={opacitystyle3}>
-									<input id="saveBalance" onClick={() => toggleBalanceCheck()} type="checkbox" />
-									<span>{chEnTextHtml[languageType].purchasing}</span>
-								</div>
-								<div className="payment-page-right-btn none" style={opacitystyle4}>
-									<button id="balanceBtn" onClick={() => payBalance()} disabled="" type="button">{chEnTextHtml[languageType].payment} ></button>
-								</div>
-								<div className="payment-tips none">
-									{chEnTextHtml[languageType].paymenttips}
-								</div>
-								<div className="payment-page-right-crypto none">
-									<button id="cryptoBtn" onClick={() => payCrypto()} disabled="" type="button">{chEnTextHtml[languageType].payment} ></button>
-									<p></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div >
 				<div className="pre-mask none"></div>
 			</div >
 			{/* 播放视频 */}
@@ -835,27 +454,8 @@ export default function Artwork() {
 			</div>
 			{/* 提交成功 */}
 			<div className="hsycms-model-mask" id="mask-success"></div>
-			{/* <div className="hsycms-model hsycms-model-success" id="success">
-				<div className="hsycms-model-icon">
-					<svg width="50" height="50">
-						<circle className="hsycms-alert-svgcircle" cx="25" cy="25" r="24" fill="none" stroke="#ffffff" strokeWidth="2"></circle>
-						<polyline className="hsycms-alert-svggou" fill="none" stroke="#ffffff" strokeWidth="2.5" points="14,25 23,34 36,18" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
-				</div>
-				<div className="hsycms-model-text">{chEnTextHtml[languageType].regSuc}</div>
-			</div> */}
 			{/* 提交失败 */}
 			<div className="hsycms-model-mask" id="mask-error"></div>
-			{/* <div className="hsycms-model hsycms-model-error" id="error">
-				<div className="hsycms-model-icon">
-					<svg width="50" height="50">
-						<circle className="hsycms-alert-svgcircle" cx="25" cy="25" r="24" fill="none" stroke="#f54655" strokeWidth="2"></circle>
-						<polyline className="hsycms-alert-svgca1" fill="none" stroke="#f54655" strokeWidth="2.5" points="18,17 32,35" strokeLinecap="round" strokeLinejoin="round" />
-						<polyline className="hsycms-alert-svgca2" fill="none" stroke="#f54655" strokeWidth="2.5" points="18,35 32,17" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
-				</div>
-				<div className="hsycms-model-text">{chEnTextHtml[languageType].operationFailed}</div>
-			</div> */}
 		</div >
 	)
 }
