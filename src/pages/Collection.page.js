@@ -4,9 +4,12 @@ import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
 import { getIntroduce } from '../utils/utils'
 import useCollections from '../hooks/use-flow-coolections.hooks'
+import useCurrentUser from '../hooks/use-current-user.hook'
 
 export default function Collection() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
+
+  const [user] = useCurrentUser()
 
   const postData = {
     current: 1,
@@ -18,8 +21,9 @@ export default function Collection() {
   const lang = 'TC'
   //const flowList = useFlowList(url, postData)
 
-  const data = useCollections()
+  const data = useCollections(user?.addr)
   console.log(data,'=-===');
+  
   const flowList = []
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
