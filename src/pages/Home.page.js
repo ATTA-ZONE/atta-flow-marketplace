@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Home.page.css"
-import useArtList from '../hooks/use-artList.hook.js'
+import useArtList from '../hooks/use-artList.hook'
 import { moneyFormat } from '../utils/utils'
 
 export default function Home() {
