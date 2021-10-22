@@ -3,26 +3,18 @@ import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
 import { getIntroduce } from '../utils/utils'
-import useCollections from '../hooks/use-flow-coolections.hooks'
 import useCurrentUser from '../hooks/use-current-user.hook'
 import {LIST_DAPPY_TEMPLATES} from '../flow/get-user-collections.script'
 import { query } from '@onflow/fcl'
 
 export default function Collection() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
-  const [Id, setId] = useState()
+  const [Id, setId] = useState([])
 
   const [user] = useCurrentUser()
 
-  const postData = {
-    current: 1,
-    pageSize: 20,
-    lang: 'TC',
-    tokenIds: []
-  }
   const context = chEnTextHtml.chEnTextHtml
   const lang = 'TC'
-  //const flowList = useFlowList(url, postData)
 
   const getIds = async () => {
     if (user?.addr) {
@@ -31,7 +23,6 @@ export default function Collection() {
           cadence: LIST_DAPPY_TEMPLATES,
           args: (arg, t) => [arg(user?.addr, t.Address)]
         })
-        console.log(res,'------');
         setId(res)
       } catch (error) {
         console.log(error);
@@ -40,8 +31,17 @@ export default function Collection() {
   }
 
   getIds()
+
+  const postData = {
+    current: 1,
+    pageSize: 20,
+    lang: 'TC',
+    tokenIds: Id
+  }
+
+  const flowList = useFlowList(url, postData)
+  console.log(flowList);
   
-  const flowList = []
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
   }
@@ -54,7 +54,7 @@ export default function Collection() {
       />
 
       <ul>
-        {flowList?.map(item => <li>
+        {flowList.list?.pageResult?.records?.map(item => <li>
           <div className="flex between mobilflex">
             <>
               {
