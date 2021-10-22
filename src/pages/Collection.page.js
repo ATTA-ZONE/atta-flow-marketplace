@@ -10,7 +10,6 @@ export default function Collection() {
   const lang = 'TC'
 
   const flowList = useFlowList(url)
-  console.log(flowList,'====');
   
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)

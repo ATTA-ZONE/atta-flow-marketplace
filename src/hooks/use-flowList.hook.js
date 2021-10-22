@@ -27,6 +27,7 @@ export default function useFlowList(url) {
         })
       })
       const listData = await res.json()
+      console.log(listData,'=====');
       const artList = listData.data
       setList(artList)
     };
