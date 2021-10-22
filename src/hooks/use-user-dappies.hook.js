@@ -81,6 +81,7 @@ export default function useUserDappies(user, collection,createCollection, getFUS
       // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
+      alert('購買失败');
       getComditInfo();
       console.log(error)
     }
