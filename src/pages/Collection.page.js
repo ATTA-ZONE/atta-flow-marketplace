@@ -23,36 +23,36 @@ export default function Collection() {
       />
 
       <ul>
-        {flowList.list?.pageResult?.records?.map(item => <li>
+        {flowList.list?.pageResult?.records?.map(item => <li key={item.name}>
           <div className="flex between mobilflex">
             <>
               {
-                getFormat(item) === 'mp4' ? (<div class="my-assets-left">
-                  <video style={{ width: "100%" }} autoplay="autoplay" loop="loop" src={item.primaryPic} muted="muted"></video>
-                  <video class="mohu" style={{ width: "100%" }} autoplay="autoplay" loop="loop" src={item.primaryPic}
+                getFormat(item) === 'mp4' ? (<div className="my-assets-left">
+                  <video style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={item.primaryPic} muted="muted"></video>
+                  <video className="mohu" style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={item.primaryPic}
                     muted="muted"></video>
                 </div>) : (
-                  <div class="my-assets-left">
+                  <div className="my-assets-left">
                     <img src={item.primaryPic} alt='' />
-                    <img class="mohu" src={item.primaryPic} alt='' />
+                    <img className="mohu" src={item.primaryPic} alt='' />
                   </div>
                 )}
             </>
-            <div class="my-assets-right">
-              <div class="my-assets-right-tit">{item.name}</div>
-              <div class="my-assets-right-creator flex">
-                <div class="details-right-creator-img"><img src="./images/t8.png" alt='' /></div>
+            <div className="my-assets-right">
+              <div className="my-assets-right-tit">{item.name}</div>
+              <div className="my-assets-right-creator flex">
+                <div className="details-right-creator-img"><img src="./images/t8.png" alt='' /></div>
                 <span>@ATTA</span>
-                <div class="my-assets-right-creator-edition">{context[lang].common + item.endEdition + context[lang].ban}</div>
+                <div className="my-assets-right-creator-edition">{context[lang].common + item.endEdition + context[lang].ban}</div>
               </div>
-              <div class="details-right-des-tit">{context[lang].productdescription}</div>
-              <div class="details-right-des" v-html="getIntroduce(item,'desc',context[lang].nointroduction)">
+              <div className="details-right-des-tit">{context[lang].productdescription}</div>
+              <div className="details-right-des" v-html="getIntroduce(item,'desc',context[lang].nointroduction)">
               </div>
-              <div class="details-right-additional">
-                <p class="details-right-additional-more order-content" dangerouslySetInnerHTML={{ __html: getIntroduce(item, 'detail', context[lang].noinformation) }}>
+              <div className="details-right-additional">
+                <p className="details-right-additional-more order-content" dangerouslySetInnerHTML={{ __html: getIntroduce(item, 'detail', context[lang].noinformation) }}>
                 </p>
               </div>
-              <div class="my-assets-right-price">
+              <div className="my-assets-right-price">
               </div>
 
             </div>
