@@ -59,7 +59,7 @@ export default function Collection() {
                 </div>
                 <div className="my-assets-right-price">
                   <div className="flex my-assets-right-download"><a className="flex download"
-                    href={item.attachment} download={item.attachment} rel="noreferrer">{context[lang].downloadFile}</a></div>
+                    href={process.env.REACT_APP_DAPPY_ARTLIST_TEST+item.attachment} target="_blank" download rel="noreferrer">{context[lang].downloadFile}</a></div>
                 </div>
               </div>
             </div>

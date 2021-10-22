@@ -10,12 +10,10 @@ export default function useFlowList(url) {
 
   useEffect(() => {
     const getList = async () => {
+      if (!user?.addr) return
       let ids = await query({
         cadence: LIST_DAPPY_TEMPLATES,
-        args: (arg, t) => {
-          console.log(user.addr, '===');
-          return [fcl.arg(user?.addr, t.Address)]
-        }
+        args: (arg, t) => [arg(user?.addr, t.Address)]
       })
       const postData = {
         current: 1,
