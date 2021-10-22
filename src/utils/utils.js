@@ -27,3 +27,10 @@ export const moneyFormat = (value) => { // 金额 格式化
   }
 }
 
+export const getIntroduce = (item,content, str) => {
+  if (content === 'desc') {
+    return item.introduce ? item.introduce.replace(/;\|;/g, '<br/>') : str
+  } else {
+    return item.content ? item.content.replace(/;\|;/g, '<br/>') : str
+  }
+}

@@ -18,7 +18,7 @@ export default function Artwork() {
 	const [id,setid] = useState("");
 	const [prev,setprev] = useState(-1);
 	const [success_status,setsuccess_status] = useState(-1);
-	const [basicId,setbasicId] = useState(0);
+	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
 	const [chEnTextHtml] = useState({
 		"TC": {
@@ -226,7 +226,6 @@ export default function Artwork() {
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
 		if (res.code == 0) {
-			setbasicId(res.data.basicId);
 			var content = res.data.content;
 			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
 			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
@@ -246,6 +245,7 @@ export default function Artwork() {
 			// setmaxbannum(res.data.endEdition);
 			// sethkdPrice(res.data.hkdPrice);
 			setBusdPrice(res.data.price);
+			setBasicId(res.data.basicId);
 			// setcurUserOwned(res.data.curUserOwned);
 			// setoneUserCountLimit(res.data.oneUserCountLimit);
 			// setonceCountLimit(res.data.onceCountLimit);
@@ -269,7 +269,7 @@ export default function Artwork() {
 				dom8.innerHTML = res.data.introduce == '' ? 'No introduction' : (res.data.introduce.replace(/;\|;/g, '<br>'));
 				dom9.innerHTML = res.data.content == '' ? 'No more information' : (res.data.content.replace(/;\|;/g, '<br>'));
 			}
-			if (res.data.endEdition - res.data.edition >= 0) { //还有库存
+			if (res.data.storage - res.data.soldCount > 0) { //还有库存
 				if (systemTime < saleStartTimeMillis) {
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].comSoon;
@@ -292,6 +292,9 @@ export default function Artwork() {
 					if (ycdjs > 1825) {
 						dom13.style.display = 'none';
 					}
+					dom10.classList.remove('unclick');
+					dom10.textContent = chEnTextHtml[languageType].purchaseNow;
+					dom10.style.pointerEvents = 'auto';
 					dom11.textContent = chEnTextHtml[languageType].end;
 					dom12.textContent = time;
 					setInterval(function () {
@@ -306,6 +309,8 @@ export default function Artwork() {
 					dom10.setAttribute("status","1");
 					dom11.style.opacity = '0';
 					dom12.textContent = chEnTextHtml[languageType].salesClosed;
+					dom12.style.color = '#cf3737';
+					dom10.style.pointerEvents = 'none';
 				}
 			} else { //没有库存
 				dom10.classList.add('unclick');
@@ -393,10 +398,22 @@ export default function Artwork() {
 			return intPartFormat;
 		}
 	}
-	const toPay = () => {
-		let address = user?.addr;
-		let busdPriceprice = busdPrice.toFixed(2);
-		mintDappy(busdPriceprice, address,id);
+	const toPay = async () => {
+		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
+		const listData = await fetch(url, { method: 'GET' })
+		const res = await listData.json();
+		var dom1 = document.querySelector('.details-right-btn');
+		dom1.textContent = '購買中，請稍等';
+		dom1.classList.add('unclick');
+		dom1.style.pointerEvents = 'none';
+		if (res.code == 0) {
+			let address = user?.addr;
+			let busdPriceprice = busdPrice.toFixed(2);
+			mintDappy(busdPriceprice, address,basicId,getComditInfo);
+		}else{
+			alert(res.message);
+			getComditInfo();
+		}
 	}
 	const closeVideo = () => {
 		var dom1 = document.querySelector('.video-mask');

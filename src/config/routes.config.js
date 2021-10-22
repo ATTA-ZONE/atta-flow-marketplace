@@ -1,7 +1,5 @@
 import PackDetails from '../pages/PackDetails.page'
 import Collection from '../pages/Collection.page'
-import Dappies from '../pages/Dappies.page'
-import Packs from '../pages/Packs.page'
 import Home from '../pages/Home.page'
 import Designer from '../pages/Designer.page'
 import Artwork from '../pages/Artwork.page'
@@ -13,7 +11,7 @@ export const ROUTES = [
   // { name: "Packs", path: '/packs', component: Packs, nav: true },
   { name: "PackDetails", path: '/packs/:packID', component: PackDetails, nav: false },
   { name: "Designer", path: '/designer', component: Designer, nav: false },
-  // { name: "Artwork", path: '/artwork', component: Artwork, nav: true }
+  { name: "Artwork", path: '/artwork', component: Artwork, nav: false }
 
 ]
 

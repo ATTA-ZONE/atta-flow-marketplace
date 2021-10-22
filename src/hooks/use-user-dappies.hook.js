@@ -23,6 +23,7 @@ export default function useUserDappies(user, collection,createCollection, getFUS
           cadence: LIST_USER_DAPPIES,
           args: (arg, t) => [arg(user?.addr, t.Address)]
         })
+        console.log(res, '--------');
         let mappedDappies = []
 
         for (let key in res) {
@@ -40,7 +41,7 @@ export default function useUserDappies(user, collection,createCollection, getFUS
     //eslint-disable-next-line
   }, [])
 
-  const mintDappy = async (amount, flowAddress,flowBasicId) => {
+  const mintDappy = async (amount, flowAddress,flowBasicId,getComditInfo) => {
     if (!collection) {
       createCollection();
       // alert("You need to enable the collection first. Go to the tab Collection")
@@ -74,11 +75,13 @@ export default function useUserDappies(user, collection,createCollection, getFUS
       })
       const status = await listData.json();
       if (status.code == 0) {
-        alert('購買成功')
+        alert('購買成功');
+        getComditInfo();
       }
       // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
+      getComditInfo();
       console.log(error)
     }
   }
