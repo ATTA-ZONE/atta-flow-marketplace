@@ -12,7 +12,10 @@ export default function useFlowList(url) {
     const getList = async () => {
       let ids = await query({
         cadence: LIST_DAPPY_TEMPLATES,
-        args: (arg, t) => [fcl.arg(user?.addr, t.Address)]
+        args: (arg, t) => {
+          console.log(user.addr, '===');
+          return [fcl.arg(user?.addr, t.Address)]
+        }
       })
       const postData = {
         current: 1,

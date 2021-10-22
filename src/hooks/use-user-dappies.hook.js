@@ -23,7 +23,6 @@ export default function useUserDappies(user, collection,createCollection, getFUS
           cadence: LIST_USER_DAPPIES,
           args: (arg, t) => [arg(user?.addr, t.Address)]
         })
-        console.log(res, '--------');
         let mappedDappies = []
 
         for (let key in res) {
