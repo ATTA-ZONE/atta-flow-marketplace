@@ -16,6 +16,20 @@ export default function Collection() {
     return process.env.REACT_APP_DAPPY_ARTLIST_TEST + str
   }
 
+  const fetchMedia = (url) => {
+    fetch(url).then((res) => {
+      res.blob().then((blob) => {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const filename = url;
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(blobUrl);
+      });
+    });
+  }
+
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
   }
@@ -58,8 +72,7 @@ export default function Collection() {
                   </p>
                 </div>
                 <div className="my-assets-right-price">
-                  <div className="flex my-assets-right-download"><a className="flex download"
-                    href={process.env.REACT_APP_DAPPY_ARTLIST_TEST+item.attachment} target="_blank" download rel="noreferrer">{context[lang].downloadFile}</a></div>
+                  <div className="flex my-assets-right-download"><a className="flex download" onClick={()=>fetchMedia(process.env.REACT_APP_DAPPY_ARTLIST_TEST + item.attachment)}>{context[lang].downloadFile}</a></div>
                 </div>
               </div>
             </div>
