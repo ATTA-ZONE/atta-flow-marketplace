@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {LIST_DAPPY_TEMPLATES} from '../flow/get-user-collections.script'
+import { LIST_DAPPY_TEMPLATES } from '../flow/get-user-collections.script'
 import { query } from '@onflow/fcl'
 import * as fcl from "@onflow/fcl"
 import useCurrentUser from '../hooks/use-current-user.hook'
@@ -28,7 +28,6 @@ export default function useFlowList(url) {
         })
       })
       const listData = await res.json()
-      console.log(listData,'=====');
       const artList = listData.data
       setList(artList)
     };

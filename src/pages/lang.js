@@ -49,8 +49,10 @@ export const chEnTextHtml = {
       empowermodify_words3 : "Notice:  授權需支付少量GAS費",
       empowermodify_words4 : "否",
       empowermodify_words5 : "是",
+      quantity: '數量'
     },
     "EN":{
+      quantity: 'quantity',
       bootomtips : 'NFT minting will be done by 11:59 am on every workday for all the NFT sold before this time.',
       common : "Total editions ",
       ban : "",

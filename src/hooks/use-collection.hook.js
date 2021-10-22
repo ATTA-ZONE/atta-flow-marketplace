@@ -37,7 +37,6 @@ export default function useCollection(user) {
         limit: 55
   
       })
-      console.log(res,'=====');
       addTx(res)
       await tx(res).onceSealed()
       setCollection(true)
