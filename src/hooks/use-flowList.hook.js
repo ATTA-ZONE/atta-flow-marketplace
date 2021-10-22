@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {LIST_DAPPY_TEMPLATES} from '../flow/get-user-collections.script'
 import { query } from '@onflow/fcl'
+import * as fcl from "@onflow/fcl"
 import useCurrentUser from '../hooks/use-current-user.hook'
 
 export default function useFlowList(url) {
@@ -11,7 +12,7 @@ export default function useFlowList(url) {
     const getList = async () => {
       let ids = await query({
         cadence: LIST_DAPPY_TEMPLATES,
-        args: (arg, t) => [arg(user?.addr, t.Address)]
+        args: (arg, t) => [fcl.arg(user?.addr, t.Address)]
       })
       const postData = {
         current: 1,
