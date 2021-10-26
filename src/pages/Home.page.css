@@ -110,6 +110,7 @@ html {
 }
 
 .header {
+	padding-top: 30px;
 	height: 80px;
 	align-items: center;
 	justify-content: space-between;
@@ -131,11 +132,22 @@ html {
 }
 
 .header-left ul li {
-	border-bottom: 1px solid #141414;
 	padding: 0 10px;
 	padding-bottom: 10px;
 	transition: all 0.3s;
 	margin: 0 10px;
+	position: relative;
+}
+
+.header .flow-children {
+	position: absolute;
+	left: 0;
+	top: 30px;
+	text-align: left;
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 10px;
+	line-height: 2;
+	cursor: pointer;
 }
 
 .header-left ul li a {
@@ -1086,7 +1098,7 @@ html {
 
 .bzy-e {
 	min-height: 550px;
-	padding-top: 100px;
+	padding-top: 20px;
 }
 
 .bzy-e-list {
