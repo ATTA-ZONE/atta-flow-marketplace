@@ -1116,10 +1116,9 @@ html {
 	background:url('https://www.bazhuayu.io/mobile/tc/images/videoPlay.png') no-repeat;
 	background-size:100%;
 	position:absolute;
-	top:0;
+	top:15px;
 	right: 15px;
 	z-index: 1000;
-	margin-top: calc(100% - 270px);
 	cursor: pointer;
 }
 .artwork-mask {
