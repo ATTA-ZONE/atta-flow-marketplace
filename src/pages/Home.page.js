@@ -48,10 +48,10 @@ export default function Home() {
         html += '<li><i></i>';
         html += `<a href="${'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
-        html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
+        html += `<video class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic + `" ></video>`;
       } else {
         html += `<li><a class="artwork-mask" href="${'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
-        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
+        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic) + `" >`;
       }
       if (timeStatus === 0) {
         html += `<div class="bzy-e-list-info">
