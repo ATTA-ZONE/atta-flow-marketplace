@@ -9,16 +9,10 @@ export default function Home() {
 
   const artworkText = {
     "noResult": "暫無搜索結果",
-    "xdd": "徐冬冬 牛N.X潮玩 NFT限量版",
     "sellOut": "已售罄",
     "purchaseNow": "立即購買",
     "preSale": "預售",
-    "salesClosed": "銷售已結束",
-    "ban": "第",
-    "ban2": "版",
-    "bidding": "當前競價：",
-    "endtime": "拍賣剩餘時間：",
-    "starttime": "拍賣開始時間：",
+    "salesClosed": "銷售已結束"
   }
   const records = list.list?.pageResult?.records || [];
   let html = '';
@@ -57,7 +51,6 @@ export default function Home() {
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
-
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 

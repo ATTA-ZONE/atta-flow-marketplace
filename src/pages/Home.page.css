@@ -2425,6 +2425,7 @@ html {
 	width: 465px;
 	height: 465px;
 	position: relative;
+	margin-right: 1%;
 }
 
 .my-assets ul li .my-assets-left img ,.modify-form .my-assets-left img{
