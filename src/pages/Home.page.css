@@ -1119,7 +1119,7 @@ html {
 	top:0;
 	right: 15px;
 	z-index: 1000;
-	margin-top: calc(100% - 50px);
+	margin-top: calc(100% - 250px);
 	cursor: pointer;
 }
 .artwork-mask {

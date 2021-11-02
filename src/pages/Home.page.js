@@ -58,7 +58,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
         html += `<div class="bzy-e-list-info-sale flex">
@@ -78,7 +78,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
 										<span>${artworkText.preSale}</span>
@@ -96,7 +96,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
         html += `
@@ -112,7 +112,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
 										<span>${artworkText.salesClosed}</span>
