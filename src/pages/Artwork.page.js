@@ -222,7 +222,7 @@ export default function Artwork() {
 	const getComditInfo = async () => {
 		//商品详情业加载
 		if (!id) {return;}
-		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/info?id=${id}`;
+		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/info?id=${id}&forceLang=${languageType}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
 		if (res.code == 0) {

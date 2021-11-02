@@ -2,13 +2,13 @@ import "./Collection.page.css"
 import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
-import { getIntroduce } from '../utils/utils'
+import { getIntroduce, getCookie } from '../utils/utils'
 
 export default function Collection() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
 
   const context = chEnTextHtml.chEnTextHtml
-  const lang = 'TC'
+  const lang = getCookie("lang")
 
   const flowList = useFlowList(url)
 

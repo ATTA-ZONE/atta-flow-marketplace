@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { LIST_DAPPY_TEMPLATES } from '../flow/get-user-collections.script'
 import { query } from '@onflow/fcl'
-import * as fcl from "@onflow/fcl"
+import {getCookie} from '../utils/utils'
 import useCurrentUser from '../hooks/use-current-user.hook'
 
 export default function useFlowList(url) {
@@ -18,7 +18,7 @@ export default function useFlowList(url) {
       const postData = {
         current: 1,
         pageSize: 20,
-        lang: 'TC',
+        lang: getCookie("lang"),
         tokenIds: ids
       }
       const res = await fetch(url, {

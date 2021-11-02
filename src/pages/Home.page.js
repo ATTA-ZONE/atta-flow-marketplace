@@ -1,24 +1,29 @@
 import React from 'react'
 import "./Home.page.css"
 import useArtList from '../hooks/use-artList.hook'
-import { moneyFormat } from '../utils/utils'
+import { moneyFormat, getCookie } from '../utils/utils'
 
 export default function Home() {
-  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1`
+  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${getCookie("lang")}`
   const list = useArtList(url)
 
+  const lang = getCookie("lang")
+
   const artworkText = {
-    "noResult": "暫無搜索結果",
-    "xdd": "徐冬冬 牛N.X潮玩 NFT限量版",
-    "sellOut": "已售罄",
-    "purchaseNow": "立即購買",
-    "preSale": "預售",
-    "salesClosed": "銷售已結束",
-    "ban": "第",
-    "ban2": "版",
-    "bidding": "當前競價：",
-    "endtime": "拍賣剩餘時間：",
-    "starttime": "拍賣開始時間：",
+    'TC': {
+      "noResult": "暫無搜索結果",
+      "sellOut": "已售罄",
+      "purchaseNow": "立即購買",
+      "preSale": "預售",
+      "salesClosed": "銷售已結束"
+    },
+    'EN': {
+      "noResults":"There is nothing here",
+      "sellOut": "Sold out",
+      "purchaseNow": "Purchase Now",
+      "preSale": "Pre-sale",
+      "salesClosed": "Sales ended"
+    }
   }
   const records = list.list?.pageResult?.records || [];
   let html = '';
@@ -48,28 +53,27 @@ export default function Home() {
         html += '<li><i></i>';
         html += `<a href="${'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
-        html += `<img class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic + `" >`;
+        html += `<video class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic + `" ></video>`;
       } else {
         html += `<li><a class="artwork-mask" href="${'artwork?id=' + v.id}"><div class="artwork-mask-wrap"></div>`;
-        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic) + `" >`;
+        html += `<img class="bzy-e-list-img" src="` + (v.secondPic ? process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic : process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.secondPic) + `" >`;
       }
       if (timeStatus === 0) {
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
-
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
         html += `<div class="bzy-e-list-info-sale flex">
-										<span style="color:#CF3737;">${artworkText.sellOut}</span>
+										<span style="color:#CF3737;">${artworkText[lang].sellOut}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
 
       } else if (timeStatus === 1) {
@@ -78,17 +82,17 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText.preSale}</span>
+										<span>${artworkText[lang].preSale}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
 
       } else if (timeStatus === 2) {
@@ -96,7 +100,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
         html += `
@@ -105,24 +109,24 @@ export default function Home() {
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
       } else if (timeStatus === 3) {
         html += `<div class="bzy-e-list-info">
 									<div class="bzy-e-list-info-tit">`+ v.name + `</div>
 									<div class="bzy-e-list-info-price flex">
 										
-										<span>BUSD `+ moneyFormat(v.price) + ` </span>
+										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText.salesClosed}</span>
+										<span>${artworkText[lang].salesClosed}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
       };
     });

@@ -1,6 +1,6 @@
 .wallet__popup {
   position: absolute;
-  left: 1rem;
+  right: 1rem;
   top: 1rem;
 }
 
@@ -8,6 +8,7 @@
   font-family: 'Monument Light';
   font-size: .8rem;
   text-align: left;
+  margin: 0 10px;
 }
 
 @media (max-width: 700px) {
