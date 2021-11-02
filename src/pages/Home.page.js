@@ -1,18 +1,29 @@
 import React from 'react'
 import "./Home.page.css"
 import useArtList from '../hooks/use-artList.hook'
-import { moneyFormat } from '../utils/utils'
+import { moneyFormat, getCookie } from '../utils/utils'
 
 export default function Home() {
-  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1`
+  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${getCookie("lang")}`
   const list = useArtList(url)
 
+  const lang = getCookie("lang")
+
   const artworkText = {
-    "noResult": "暫無搜索結果",
-    "sellOut": "已售罄",
-    "purchaseNow": "立即購買",
-    "preSale": "預售",
-    "salesClosed": "銷售已結束"
+    'TC': {
+      "noResult": "暫無搜索結果",
+      "sellOut": "已售罄",
+      "purchaseNow": "立即購買",
+      "preSale": "預售",
+      "salesClosed": "銷售已結束"
+    },
+    'EN': {
+      "noResults":"There is nothing here",
+      "sellOut": "Sold out",
+      "purchaseNow": "Purchase Now",
+      "preSale": "Pre-sale",
+      "salesClosed": "Sales ended"
+    }
   }
   const records = list.list?.pageResult?.records || [];
   let html = '';
@@ -55,14 +66,14 @@ export default function Home() {
 									</div>`;
 
         html += `<div class="bzy-e-list-info-sale flex">
-										<span style="color:#CF3737;">${artworkText.sellOut}</span>
+										<span style="color:#CF3737;">${artworkText[lang].sellOut}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
 
       } else if (timeStatus === 1) {
@@ -74,14 +85,14 @@ export default function Home() {
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText.preSale}</span>
+										<span>${artworkText[lang].preSale}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
 
       } else if (timeStatus === 2) {
@@ -98,7 +109,7 @@ export default function Home() {
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
       } else if (timeStatus === 3) {
         html += `<div class="bzy-e-list-info">
@@ -108,14 +119,14 @@ export default function Home() {
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
         html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText.salesClosed}</span>
+										<span>${artworkText[lang].salesClosed}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
 										<span>@ATTA</span>
 									</div>
 									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText.purchaseNow}  -></span>`;
+										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
         html += `</div></div></a></li>`;
       };
     });

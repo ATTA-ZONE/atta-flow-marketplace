@@ -2,6 +2,7 @@ import React,{ useState} from 'react'
 import useCurrentUser from '../hooks/use-current-user.hook'
 import { useHistory } from "react-router-dom"
 import { useUser } from '../providers/UserProvider'
+import {setCookie} from '../utils/utils'
 
 import "./Navbar.css"
 
@@ -20,6 +21,12 @@ export default function Navbar() {
   const handleMouseOut = () => {
     setModalIsOpen('none')
   }
+
+  const changeLang = (str) => {
+    setCookie('lang',str)
+    window.location.reload()
+  }
+
   return (
     <>
       <header className="header center-85 flex header-fixed">
@@ -70,9 +77,9 @@ export default function Navbar() {
           }
 
           <p className="switchlanguagebox">
-            <span className="language-change-en">EN</span>
+            <a href onClick={() => changeLang('EN')}className="language-change-en">EN</a>
             <span style={{ margin: '0 16px' }}>|</span>
-            <span className="language-change-ch">繁</span>
+            <a href onClick={() => changeLang('TC')}className="language-change-ch">繁</a>
           </p>
         </div>
       </header>
