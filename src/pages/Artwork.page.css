@@ -110,7 +110,6 @@ html {
 }
 
 .header-left ul li {
-	border-bottom: 1px solid #141414;
 	padding: 0 10px;
 	padding-bottom: 10px;
 	transition: all 0.3s;

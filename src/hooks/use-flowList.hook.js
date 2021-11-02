@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import {LIST_DAPPY_TEMPLATES} from '../flow/get-user-collections.script'
+import { LIST_DAPPY_TEMPLATES } from '../flow/get-user-collections.script'
 import { query } from '@onflow/fcl'
+import {getCookie} from '../utils/utils'
 import useCurrentUser from '../hooks/use-current-user.hook'
 
 export default function useFlowList(url) {
@@ -9,6 +10,7 @@ export default function useFlowList(url) {
 
   useEffect(() => {
     const getList = async () => {
+      if (!user?.addr) return
       let ids = await query({
         cadence: LIST_DAPPY_TEMPLATES,
         args: (arg, t) => [arg(user?.addr, t.Address)]
@@ -16,7 +18,7 @@ export default function useFlowList(url) {
       const postData = {
         current: 1,
         pageSize: 20,
-        lang: 'TC',
+        lang: getCookie("lang"),
         tokenIds: ids
       }
       const res = await fetch(url, {
@@ -27,7 +29,6 @@ export default function useFlowList(url) {
         })
       })
       const listData = await res.json()
-      console.log(listData,'=====');
       const artList = listData.data
       setList(artList)
     };

@@ -7,7 +7,7 @@ export const chEnTextHtml = {
       productdescription : "商品描述",
       nointroduction : "暫無介紹",
       noinformation : "暫無更多資訊",
-      down : "下載原始文件副本",
+      downloadFile : "下載原始文件副本",
       currentholdings : "當前持有可鑄造版號：",
       notyet : "暫無",
       mint : "鑄造中",
@@ -49,8 +49,10 @@ export const chEnTextHtml = {
       empowermodify_words3 : "Notice:  授權需支付少量GAS費",
       empowermodify_words4 : "否",
       empowermodify_words5 : "是",
+      quantity: '數量'
     },
     "EN":{
+      quantity: 'quantity',
       bootomtips : 'NFT minting will be done by 11:59 am on every workday for all the NFT sold before this time.',
       common : "Total editions ",
       ban : "",
@@ -58,7 +60,7 @@ export const chEnTextHtml = {
       productdescription : "Description",
       nointroduction : "No Introduction",
       noinformation : "No more information",
-      down : "Download the original copy",
+      downloadFile : "Download the original copy",
       currentholdings : "Current mintable editions：",
       notyet : "Null",
       mint : "Minting ",
