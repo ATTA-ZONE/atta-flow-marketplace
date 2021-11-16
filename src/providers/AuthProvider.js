@@ -9,18 +9,15 @@ export default function AuthProvider({ children }) {
   const [user, loggedIn, tools] = useCurrentUser()
 
   if (!user || !loggedIn) return (
-    <>
-      <Header
-        title={<><span className="highlight">Crypto</span>Dappy</>}
-        subtitle={<>The brand new <span className="highlight">collectible game</span> on the blockchain</>}
-      />
+    <div className="app">
+      <Header/>
       <div
-        style={{ display: "inline-block" }}
+        style={{ display: "inline-block",marginTop: '100px' }}
         className="btn btn-bg rounded"
         onClick={() => tools?.logIn()}>
         Sign In to start
       </div>
-    </>
+    </div>
   )
 
   return (

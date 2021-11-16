@@ -32,3 +32,4 @@ publish.sh
 cadence/tests/node_modules
 
 .env
+yarn.lock

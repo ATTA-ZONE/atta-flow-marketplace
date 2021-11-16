@@ -1,11 +1,11 @@
 export const CREATE_COLLECTION = `
-  import DappyContract from 0xDappy
-  
-  transaction {
-    prepare(acct: AuthAccount) {
-      let collection <- DappyContract.createEmptyCollection()
-      acct.save<@DappyContract.Collection>(<-collection, to: DappyContract.CollectionStoragePath)
-      acct.link<&{DappyContract.CollectionPublic}>(DappyContract.CollectionPublicPath, target: DappyContract.CollectionStoragePath)
-    }
+  import ATTANFT from 0xATTANFT
+  import NonFungibleToken from 0xNonFungibleToken
+
+  transaction() {
+      prepare(account: AuthAccount) {
+          account.save<@NonFungibleToken.Collection>(<- ATTANFT.createEmptyCollection(), to: ATTANFT.CollectionStoragePath)
+          account.link<&ATTANFT.Collection{NonFungibleToken.CollectionPublic, NonFungibleToken.Receiver, ATTANFT.ATTACollectionPublic}>(ATTANFT.CollectionPublicPath, target: ATTANFT.CollectionStoragePath)
+      }
   }
 `

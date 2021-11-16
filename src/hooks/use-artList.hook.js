@@ -1,33 +1,17 @@
-import {
-  useState,
-  useEffect
-} from 'react'
+import { useEffect, useState } from 'react'
 
-export const useGetArtList = () => {
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState
-
+export default function useArtList(url) {
+  const [list, setList] = useState([])
+  
   useEffect(() => {
-    const url = process.env.REACT_APP_DAPPY_ARTLIST_TEST + '/list'
-    const postdata = {
-      current: 1,
-      pageSize: 20,
-      channelId: 1
-    }
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url,postdata);
-        console.log(response);
-        setData(response)
-      } catch (error) {
-        console.log("error", error);
-      }
+    const getList = async () => {
+      const res = await fetch(url, { method: 'GET' })
+      const listData = await res.json()
+      const artList = listData.data
+      setList(artList)
     };
+    getList()
+  }, [url])
 
-    fetchData();
-  })
-
-  setLoading(false)
-  return data
-
+  return { list }
 }

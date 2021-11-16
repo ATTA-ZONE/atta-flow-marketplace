@@ -110,7 +110,6 @@ html {
 }
 
 .header-left ul li {
-	border-bottom: 1px solid #141414;
 	padding: 0 10px;
 	padding-bottom: 10px;
 	transition: all 0.3s;
@@ -3055,4 +3054,13 @@ html {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+.detail-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
 }

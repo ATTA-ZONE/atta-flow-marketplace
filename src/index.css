@@ -8,8 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background: #DA4453; 
-  background: -webkit-linear-gradient(to right, #89216B, #DA4453); 
-  background: linear-gradient(to right, #89216B, #DA4453);
+  background: #141414; 
   overflow-x: hidden;
   font-family: "Acumin Regular";
   color: white;
@@ -26,8 +25,8 @@ code {
 .app {
   text-align: center;
   background: #DA4453; 
-  background: -webkit-linear-gradient(to right, #89216B, #DA4453); 
-  background: linear-gradient(to right, #89216B, #DA4453);
+  min-height: 100vh;
+  background: #141414; 
 }
 
 .app__title {
@@ -39,7 +38,8 @@ code {
 }
 
 .app__subtitle {
-  font-family: "Monument Light";
+  font-family: "Monument Light" !important;
+  margin: 30px 0;
 }
 
 .highlight {
