@@ -8,7 +8,7 @@ export default function Collection() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
 
   const context = chEnTextHtml.chEnTextHtml
-  const lang = getCookie("lang")
+  const lang = getCookie("lang") || 'TC'
 
   const flowList = useFlowList(url)
 

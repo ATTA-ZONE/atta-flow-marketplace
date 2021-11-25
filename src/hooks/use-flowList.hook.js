@@ -18,7 +18,7 @@ export default function useFlowList(url) {
       const postData = {
         current: 1,
         pageSize: 20,
-        lang: getCookie("lang"),
+        lang: getCookie("lang") || 'TC',
         tokenIds: ids
       }
       const res = await fetch(url, {

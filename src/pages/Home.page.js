@@ -7,7 +7,7 @@ export default function Home() {
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${getCookie("lang")}`
   const list = useArtList(url)
 
-  const lang = getCookie("lang")
+  const lang = getCookie("lang") || 'TC'
   if (!lang) {
     setCookie('lang', 'TC')
   }
