@@ -75,13 +75,13 @@ export default function useUserDappies(user, collection,createCollection, getFUS
       const status = await listData.json();
       if (status.code == 0) {
         alert('購買成功');
-        getComditInfo();
+        window.location.reload()
       }
       // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
       alert('購買失败');
-      getComditInfo();
+      window.location.reload()
       console.log(error)
     }
   }

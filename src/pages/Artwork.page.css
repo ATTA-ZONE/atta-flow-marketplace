@@ -711,6 +711,7 @@ html {
 
 .details-left {
 	width: 50%;
+	margin-top: 30px;
 	position: relative;
 }
 
@@ -799,6 +800,7 @@ html {
 	color: #fff;
 	word-break: break-all;
 	margin-bottom: 40px;
+	text-align: left;
 }
 
 .details-right-price {
@@ -931,6 +933,7 @@ html {
 	line-height: 1.5;
 	color: #fff;
 	opacity: 0.4;
+	text-align: left;
 }
 
 .details-right-des-top {
