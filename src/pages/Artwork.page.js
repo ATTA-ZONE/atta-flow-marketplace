@@ -226,12 +226,11 @@ export default function Artwork() {
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
 		if (res.code == 0) {
-			var content = res.data.content;
 			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
 			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
 			var systemTime = res.data.systemTime; //当前时间
 			var geshi = res.data.primaryPic.substr(res.data.primaryPic.lastIndexOf('.') + 1);
-			var maxeditionnum = res.data.edition > res.data.endEdition ? res.data.endEdition : res.data.edition;
+
 			var dom1 = document.querySelector('.detail-media');
 			var dom2 = document.querySelector('.order-img');
 			var dom4 = document.querySelector('.order-title');
@@ -242,13 +241,8 @@ export default function Artwork() {
 			var dom11 = document.querySelector('.details-right-time span:first-child');
 			var dom12 = document.querySelector('.details-right-time-djs');
 			var dom13 = document.querySelector('.details-right-time');
-			// setmaxbannum(res.data.endEdition);
-			// sethkdPrice(res.data.hkdPrice);
 			setBusdPrice(res.data.price);
 			setBasicId(res.data.basicId);
-			// setcurUserOwned(res.data.curUserOwned);
-			// setoneUserCountLimit(res.data.oneUserCountLimit);
-			// setonceCountLimit(res.data.onceCountLimit);
 			if (geshi == 'mp4') {
 				dom1.style.display = 'block';
 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
@@ -431,8 +425,8 @@ export default function Artwork() {
 				<div className="details center-80 flex">
 					<div className="details-left order-img">
 						<div onClick={(e) => playVideo(this, e)} className="detail-mask"></div>
-						<img className="full-screen detail-media" onClick={() => FullScreen()} src="./assets/fullscreen.png" />
-						<img onClick={() => toggleVideo()} className="voice detail-media" src="./assets/mute.png" />
+						<img className="full-screen detail-media" onClick={() => FullScreen()} src="./assets/fullscreen.png" alt='' />
+						<img onClick={() => toggleVideo()} className="voice detail-media" src="./assets/mute.png" alt='' />
 					</div>
 					<div className="details-right">
 						<div className="details-right-tit order-title">----</div>

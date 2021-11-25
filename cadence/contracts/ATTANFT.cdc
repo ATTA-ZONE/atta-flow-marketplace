@@ -152,24 +152,30 @@ pub contract ATTANFT: NonFungibleToken {
         return <- create Collection()
     }
 
+    // buy ATTA NFT with FLOW token
+    // public function that anyone can call to buy a ATTA NFT with set price
+    //
     pub fun buyATTA(paymentVault: @FungibleToken.Vault): @ATTANFT.NFT {
         pre {
             self.pause == false : "Mint pause."
             self.mintPrice > 0.0 : "Price not set yet."
         }
-        
+        // get user payment amount
         let paymentAmount = paymentVault.balance
-
+        
+        // check the amount enough or not
         if self.mintPrice > paymentAmount {
             panic("Not enough amount to mint a ATTA NFT")
         }
-
+        // borrpw admin resource to receieve fund
         let admin = ATTANFT.account.borrow<&ATTANFT.Admin>(from: ATTANFT.AdminStoragePath) ?? panic("Could not borrow admin client")
         
+        // keep the fund with admin resource's vault 
         admin.depositVault(paymentVault: <- paymentVault)
         
         emit UserMinted(id: ATTANFT.totalSupply, price: ATTANFT.mintPrice)
 
+        // mint NFT and return
         let nft <- create ATTANFT.NFT(initID: ATTANFT.totalSupply, metadata: {})
 
         ATTANFT.totalSupply = ATTANFT.totalSupply + (1 as UInt64)
@@ -177,12 +183,15 @@ pub contract ATTANFT: NonFungibleToken {
         return <- nft
     }
 
-
+    // admin resource store in the contract owner's account with private path
+    // this is a private resource that keep the mint and vault function for the admin
+    //
     pub resource Admin {
 
+        // vault receieve FLOW token 
         priv var vault: @FungibleToken.Vault
 
-
+        // mint NFT without pay any FLOW for admin only
         pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, metadata: {String:String}? ) {
             emit Minted(id: ATTANFT.totalSupply, metadata: metadata ?? {})
 
@@ -192,26 +201,30 @@ pub contract ATTANFT: NonFungibleToken {
             ATTANFT.totalSupply = ATTANFT.totalSupply + (1 as UInt64)
         }
 
+        // deposite FLOW when user buy NFT with `buyATTA` function
         pub fun depositVault(paymentVault: @FungibleToken.Vault) {
             self.vault.deposit(from: <- paymentVault )
         }
 
-
+        // global pause status, for emergency
         pub fun setPause(_ flag: Bool) {
             ATTANFT.pause = flag
             emit PauseStateChanged(flag: flag)
         }
 
+        // baseURI field for the NFT metadata ,maintenaed off-chain
         pub fun setBaseURI(_ uri: String) {
             ATTANFT.baseURI = uri
             emit BaseURIChanged(uri: uri)
         }
 
+        // set the NFT price to sell, user can buy nft by buyATTA function when price > 0 
         pub fun setPrice(_ price: UFix64) {
             ATTANFT.mintPrice = price
             emit MintPriceChanged(price: price)
         }
 
+        // query FLOW vault balance of admin vault
         pub fun getVaultBalance():UFix64 {
             pre {
                 self.vault != nil : "Vault not init yet..."
@@ -219,6 +232,7 @@ pub contract ATTANFT: NonFungibleToken {
            return self.vault.balance
         }
 
+        // withdraw FLOW from admin's flow vault
         pub fun withdrawVault(amount: UFix64): @FungibleToken.Vault {
             pre {
                 self.vault != nil : "Vault not init yet..."
@@ -238,19 +252,22 @@ pub contract ATTANFT: NonFungibleToken {
 
     }
 
+    // query price 
     pub fun getPrice(): UFix64{
         return self.mintPrice
     }
 
+    // query pause status
     pub fun isPause(): Bool{
         return self.pause
     }
 
+    // query the BaseURI 
     pub fun getBaseURI(): String{
         return self.baseURI
     }
 
-    
+    // query admin FLOW balance with pub function
     pub fun getVaultBalance(): UFix64 {
 
         let admin = ATTANFT.account.borrow<&ATTANFT.Admin>(from: ATTANFT.AdminStoragePath) ?? panic("Could not borrow admin client")
