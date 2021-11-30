@@ -3,10 +3,11 @@ import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
 import { getIntroduce, getCookie } from '../utils/utils'
+import { useUser } from '../providers/UserProvider'
 
 export default function Collection() {
+  const { collection } = useUser()
   const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/getFlowNFTInfo`
-
   const context = chEnTextHtml.chEnTextHtml
   const lang = getCookie("lang") || 'TC'
 
@@ -40,7 +41,8 @@ export default function Collection() {
         title={<>My<span className="highlight">Dappies</span></>}
         subtitle={<>Here are the <span className="highlight">Dappies and Packs</span> you have collected</>}
       />
-      <div className="my-assets">
+      {!collection? '':
+      (<div className="my-assets">
         <ul className="flows-wrap">
           {flowList.list?.pageResult?.records?.map(item => <li key={item.name}>
             <div className="flex between mobilflex">
@@ -78,7 +80,7 @@ export default function Collection() {
             </div>
           </li>)}
         </ul>
-      </div>
+      </div>)}
     </>
   )
 }
