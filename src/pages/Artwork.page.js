@@ -31,7 +31,7 @@ export default function Artwork() {
 			myassets: "我的資產",
 			mywallet: "我的錢包",
 			logOut: "登出",
-			version: "共50版",
+			version: "共100版",
 			select: "已選第",
 			versionTxt: "版",
 			price: "单价：",
