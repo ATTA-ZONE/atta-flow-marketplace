@@ -67,12 +67,7 @@ export default function Collection() {
                   <div className="my-assets-right-creator-edition">{context[lang].quantity + ': ' + item.totalTokenList.length}</div>
                 </div>
                 <div className="details-right-des-tit">{context[lang].productdescription}</div>
-                <div className="details-right-des" v-html="getIntroduce(item,'desc',context[lang].nointroduction)">
-                </div>
-                <div className="details-right-additional">
-                  <p className="details-right-additional-more order-content" dangerouslySetInnerHTML={{ __html: getIntroduce(item, 'detail', context[lang].noinformation) }}>
-                  </p>
-                </div>
+                {item.introduce? (<div className="details-right-des" >{item.introduce}</div>):(<div className="details-right-des" v-html="getIntroduce(item,'desc',context[lang].nointroduction)"></div>)}
                 <div className="my-assets-right-price">
                   <div className="flex my-assets-right-download"><a className="flex download" onClick={()=>fetchMedia(process.env.REACT_APP_DAPPY_ARTLIST_TEST + item.attachment)}>{context[lang].downloadFile}</a></div>
                 </div>
