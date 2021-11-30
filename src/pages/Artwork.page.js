@@ -7,7 +7,7 @@ import "./Artwork.page.css"
 
 export default function Artwork() {
 	const { user } = useAuth()
-	const { userDappies, mintDappy } = useUser()
+	const { userDappies, mintDappy ,balance} = useUser()
 	const [languageType,setLanguageType] = useState('TC');
 	const [payTabs,setPayTabs] = useState(['錢包支付']);
 	const [maxbannum,setmaxbannum] = useState(0);
@@ -393,6 +393,11 @@ export default function Artwork() {
 		}
 	}
 	const toPay = async () => {
+		let busdPriceprice = busdPrice.toFixed(2);
+		if (balance * 1< busdPriceprice * 1) {
+			alert('餘額不足');
+			return;
+		}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
@@ -402,7 +407,6 @@ export default function Artwork() {
 		dom1.style.pointerEvents = 'none';
 		if (res.code == 0) {
 			let address = user?.addr;
-			let busdPriceprice = busdPrice.toFixed(2);
 			mintDappy(busdPriceprice, address,basicId,getComditInfo);
 		}else{
 			alert(res.message);
