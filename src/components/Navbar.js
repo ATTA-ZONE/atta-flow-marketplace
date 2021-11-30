@@ -98,9 +98,9 @@ export default function Navbar() {
           }
 
           <p className="switchlanguagebox">
-            <a href onClick={() => changeLang('EN')}className="language-change-en">EN</a>
+            <a onClick={() => changeLang('EN')}className="language-change-en">EN</a>
             <span style={{ margin: '0 16px' }}>|</span>
-            <a href onClick={() => changeLang('TC')}className="language-change-ch">繁</a>
+            <a onClick={() => changeLang('TC')}className="language-change-ch">繁</a>
           </p>
         </div>
       </header>
