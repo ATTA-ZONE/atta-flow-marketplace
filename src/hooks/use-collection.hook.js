@@ -40,6 +40,8 @@ export default function useCollection(user) {
       addTx(res)
       await tx(res).onceSealed()
       setCollection(true)
+      alert('auth success')
+      window.location.reload()
     } catch (err) {
       console.log(err,'-----------')
     }

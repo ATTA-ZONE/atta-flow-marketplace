@@ -1,5 +1,5 @@
 #!/bin/bash
-export ACCESS_API=https://flow-access-mainnet.portto.io
+export ACCESS_API=https://access-mainnet-beta.onflow.org
 export WALLET_DISCOVERY=https://flow-wallet.blocto.app/authn
 export FT_CONTRACT=0xf233dcee88fe0abe
 export FUSD_CONTRACT=0x1654653399040a61
