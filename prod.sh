@@ -18,6 +18,6 @@ export REACT_APP_FT_CONTRACT=${FT_CONTRACT}
 export REACT_APP_FUSD_CONTRACT=${FUSD_CONTRACT}
 export REACT_APP_DAPPY_CONTRACT=${DAPPY_CONTRACT}
 
-export REACT_APP_DAPPY_ARTLIST_TEST=https://bazhuayu.io
+export REACT_APP_DAPPY_ARTLIST_TEST=https://www.bazhuayu.io
 
 npm run start
