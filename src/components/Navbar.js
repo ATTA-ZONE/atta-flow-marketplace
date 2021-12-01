@@ -33,7 +33,7 @@ export default function Navbar() {
       blindbox: "MYSTERY BOX",
       flow: "Flow NFT",
       flownft: "Tyloo NFTs",
-      Collections : "My collections"
+      Collections : "My Flow Collections"
     }
   })
 
@@ -52,6 +52,7 @@ export default function Navbar() {
     }
     setShowMobileMask(false) 
   })
+
   const handleMouseOver = (e) => {
     setModalIsOpen('block')
   }
