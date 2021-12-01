@@ -3067,3 +3067,11 @@ html {
     height: 100%;
     z-index: 6;
 }
+@media only screen and (max-width: 992px){
+	.details.center-80.flex{
+		flex-direction: column;
+	}
+	.details.center-80.flex .details-left,.details.center-80.flex .details-right{
+		width: 100%;
+	}
+}
