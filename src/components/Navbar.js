@@ -43,8 +43,11 @@ export default function Navbar() {
 
   const [modalIsOpen, setModalIsOpen] = useState('none');
 
-  window.addEventListener('resize',()=>{
+  useEffect(()=>{
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
+  })
+
+  window.addEventListener('resize',()=>{
     if (window.innerWidth > 900) {
       setIsmobile(false) 
     } else {

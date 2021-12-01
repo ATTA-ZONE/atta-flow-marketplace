@@ -1,5 +1,4 @@
 import "./Collection.page.css"
-import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
 import { getCookie } from '../utils/utils'
@@ -37,10 +36,6 @@ export default function Collection() {
 
   return (
     <>
-      <Header
-        title={<>My<span className="highlight">Dappies</span></>}
-        subtitle={<>Here are the <span className="highlight">Dappies and Packs</span> you have collected</>}
-      />
       {!collection? '':
       (<div className="my-assets">
         <ul className="flows-wrap">
@@ -68,9 +63,9 @@ export default function Collection() {
                 </div>
                 <div className="details-right-des-tit">{context[lang].productdescription}</div>
                 {item.introduce? (<div className="details-right-des" >{item.introduce}</div>):(<div className="details-right-des">{context[lang].nointroduction}</div>)}
-                <div className="my-assets-right-price">
+                {/* <div className="my-assets-right-price">
                   <div className="flex my-assets-right-download"><a className="flex download" onClick={()=>fetchMedia(process.env.REACT_APP_DAPPY_ARTLIST_TEST + item.attachment)}>{context[lang].downloadFile}</a></div>
-                </div>
+                </div> */}
               </div>
             </div>
           </li>)}
