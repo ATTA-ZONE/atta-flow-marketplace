@@ -2,7 +2,7 @@ import "./Collection.page.css"
 import Header from '../components/Header'
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
-import { getIntroduce, getCookie } from '../utils/utils'
+import { getCookie } from '../utils/utils'
 import { useUser } from '../providers/UserProvider'
 
 export default function Collection() {
@@ -67,7 +67,7 @@ export default function Collection() {
                   <div className="my-assets-right-creator-edition">{context[lang].quantity + ': ' + item.totalTokenList.length}</div>
                 </div>
                 <div className="details-right-des-tit">{context[lang].productdescription}</div>
-                {item.introduce? (<div className="details-right-des" >{item.introduce}</div>):(<div className="details-right-des" v-html="getIntroduce(item,'desc',context[lang].nointroduction)"></div>)}
+                {item.introduce? (<div className="details-right-des" >{item.introduce}</div>):(<div className="details-right-des">{context[lang].nointroduction}</div>)}
                 <div className="my-assets-right-price">
                   <div className="flex my-assets-right-download"><a className="flex download" onClick={()=>fetchMedia(process.env.REACT_APP_DAPPY_ARTLIST_TEST + item.attachment)}>{context[lang].downloadFile}</a></div>
                 </div>
