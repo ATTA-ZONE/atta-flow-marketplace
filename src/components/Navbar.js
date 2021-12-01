@@ -22,7 +22,7 @@ export default function Navbar() {
       specialTool: "無限制電競大會",
       blindbox: "盲盒",
       flow: "Flow NFT",
-      home: "天禄战队NFT",
+      flownft: "天禄战队NFT",
       Collections : "我的Flow藏品"
     },
     "EN": {
@@ -32,7 +32,7 @@ export default function Navbar() {
       specialTool: "INFINITY ESPORTS TOURNAMENT",
       blindbox: "MYSTERY BOX",
       flow: "Flow NFT",
-      home: "Tyloo NFTs",
+      flownft: "Tyloo NFTs",
       Collections : "My collections"
     }
   })
@@ -93,7 +93,7 @@ export default function Navbar() {
                 onMouseLeave={handleMouseOut}>
                 <a className="language-tc">{chEnTextHtml[languageType].flow}</a>
                 <div className="flow-children" style={{ display: modalIsOpen }}>
-                  <div onClick={() => history.push('/')}>{chEnTextHtml[languageType].home}</div>
+                  <div onClick={() => history.push('/')}>{chEnTextHtml[languageType].flownft}</div>
                   <div onClick={() => history.push('./collection')}>{chEnTextHtml[languageType].Collections}</div>
                 </div>
               </li>
