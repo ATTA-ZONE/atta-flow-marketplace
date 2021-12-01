@@ -53,7 +53,7 @@ export default function Home() {
         timeStatus = 0;    //没有库存
       }
       if (geshi === 'mp4') {
-        html += '<li><i></i>';
+        html += '<li>';
         html += `<a href="${'artwork?id=' + v.id}" class="artwork-mask videoPlay" ><div class="artwork-mask-wrap"></div>`;
 
         html += `<video class="bzy-e-list-img" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + v.primaryPic + `" ></video>`;

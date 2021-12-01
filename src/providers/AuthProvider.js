@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
   const stylecss = {
     marginTop: '20px',
     fontSize: '14px',
-    color: '#ccc'
+    color: '#9567ff'
   }
   if (!user || !loggedIn) return (
     <div className="app">
