@@ -21,6 +21,9 @@ export default function Navbar() {
       COLLECTIONS: "明星藏品",
       specialTool: "無限制電競大會",
       blindbox: "盲盒",
+      flow: "Flow NFT",
+      home: "天禄战队NFT",
+      Collections : "我的Flow藏品"
     },
     "EN": {
       home: "HOME",
@@ -28,6 +31,9 @@ export default function Navbar() {
       COLLECTIONS: "COLLECTIONS",
       specialTool: "INFINITY ESPORTS TOURNAMENT",
       blindbox: "MYSTERY BOX",
+      flow: "Flow NFT",
+      home: "Tyloo NFTs",
+      Collections : "My Flow Collections"
     }
   })
 
@@ -45,7 +51,7 @@ export default function Navbar() {
     } else {
       setIsmobile(true)
     }
-  }, [])
+  }, [window.innerWidth])
 
   const handleMouseOver = (e) => {
     setModalIsOpen('block')
@@ -68,8 +74,7 @@ export default function Navbar() {
           <a className="header-left-logo" target="_blank" href="https://www.bazhuayu.io/mobile/tc/index.html" rel="noreferrer"><img src="https://www.bazhuayu.io/mobile/tc/images/Brand.png" alt='' /></a>
           <img onClick={()=>handleSetShowMobileMask()} className="header-close" src="https://www.bazhuayu.io/mobile/tc/images/Close.png" alt='' />
           
-          {
-            !showMobileMask ? '' : (<ul className="nav-header">
+          <ul className="nav-header">
               <li>
                 <a className="language-tc" target="_blank" href="https://www.bazhuayu.io/mobile/tc/index.html" rel="noreferrer">{chEnTextHtml[languageType].home}</a>
               </li>
@@ -87,18 +92,15 @@ export default function Navbar() {
               </li>
               <li className="current" onMouseOver={handleMouseOver}
                 onMouseLeave={handleMouseOut}>
-                <a className="language-tc">FLOW</a>
+                <a className="language-tc">{chEnTextHtml[languageType].flow}</a>
                 <div className="flow-children" style={{ display: modalIsOpen }}>
-                  <div onClick={() => history.push('/')}>Home</div>
-                  <div onClick={() => history.push('./collection')}>Collections</div>
+                  <div onClick={() => history.push('/')}>{chEnTextHtml[languageType].home}</div>
+                  <div onClick={() => history.push('./collection')}>{chEnTextHtml[languageType].Collections}</div>
                 </div>
               </li>
-            </ul>)
-          }
-
+            </ul>
         </div>
-        {
-          !showMobileMask ? '' : (<div className="header-right">
+        <div className="header-right">
           {!user || !loggedIn ? (<div className="header-dl flex"><span className="header-right-login flex" onClick={() => tools?.logIn()}>登入</span></div>) : ''}
           <div className="wallet__item">
             👛 {user?.addr}
@@ -121,9 +123,7 @@ export default function Navbar() {
             <span style={{ margin: '0 16px' }}>|</span>
             <a onClick={() => changeLang('TC')} className="language-change-ch">繁</a>
           </p>
-        </div>)
-        }
-        
+        </div>
       </header>):(
         <div className="mobile-head">
           <a className="mobile-head-logo" target="_blank" href="https://www.bazhuayu.io/mobile/tc/index.html" rel="noreferrer"><img src="https://www.bazhuayu.io/mobile/tc/images/Brand.png" alt='' /></a>
