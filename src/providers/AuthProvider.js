@@ -25,7 +25,7 @@ export default function AuthProvider({ children }) {
       </div>
       {
         lang == "TC" ?
-        <p style={stylecss}>对Blocto钱包不熟悉？点击 <a style={stylecss} href='https://bbzx2018.feishu.cn/docs/doccnWw7iPRq3JxQYNbaEhUDhUf'>URL</a> 了解。</p>
+        <p style={stylecss}>對Blocto錢包不熟悉？點擊 <a style={stylecss} href='https://bbzx2018.feishu.cn/docs/doccnWw7iPRq3JxQYNbaEhUDhUf'>這裡</a> 了解。</p>
         :
         <p style={stylecss}>Unfamiliar with Blocto? Click <a style={stylecss} href='https://bbzx2018.feishu.cn/docs/doccnWw7iPRq3JxQYNbaEhUDhUf'>here</a> to know more.</p>
       }
