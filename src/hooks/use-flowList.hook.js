@@ -36,7 +36,7 @@ export default function useFlowList(url) {
       setList(artList)
     };
     getList()
-  }, [url, user?.addr])
+  }, [url, user?.addr, collection])
 
   return { list }
 }
