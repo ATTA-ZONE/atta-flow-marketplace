@@ -33,12 +33,11 @@ export default function Navbar() {
       blindbox: "MYSTERY BOX",
       flow: "Flow NFT",
       home: "Tyloo NFTs",
-      Collections : "My Flow Collections"
+      Collections : "My collections"
     }
   })
 
   const handleSetShowMobileMask = () => {
-    console.log(showMobileMask);
     setShowMobileMask(!showMobileMask)
   }
 
@@ -47,10 +46,11 @@ export default function Navbar() {
   useEffect(() => {
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
     if (window.innerWidth > 900) {
-      setIsmobile(false)
+      setIsmobile(false) 
     } else {
       setIsmobile(true)
     }
+    setShowMobileMask(false)
   }, [window.innerWidth])
 
   const handleMouseOver = (e) => {
@@ -108,7 +108,7 @@ export default function Navbar() {
           {!collection ?
             <div className="wallet__item" onClick={() => createCollection()}>⚠️ Enable Collection</div> : <></>
           }
-          {!balance ?
+          {/* {!balance ?
             <div className="btn btn-small" onClick={() => createFUSDVault()}>
               ⚠️ Enable FLOW
             </div>
@@ -116,7 +116,7 @@ export default function Navbar() {
             <div className="wallet__item">
               💰 FLOW: {balance.slice(0, -6)}
             </div>
-          }
+          } */}
 
           <p className="switchlanguagebox">
             <a onClick={() => changeLang('EN')} className="language-change-en">EN</a>
