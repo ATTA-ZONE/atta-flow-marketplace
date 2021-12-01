@@ -43,16 +43,15 @@ export default function Navbar() {
 
   const [modalIsOpen, setModalIsOpen] = useState('none');
 
-  useEffect(() => {
+  window.addEventListener('resize',()=>{
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
     if (window.innerWidth > 900) {
       setIsmobile(false) 
     } else {
       setIsmobile(true)
     }
-    setShowMobileMask(false)
-  }, [window.innerWidth])
-
+    setShowMobileMask(false) 
+  })
   const handleMouseOver = (e) => {
     setModalIsOpen('block')
   }

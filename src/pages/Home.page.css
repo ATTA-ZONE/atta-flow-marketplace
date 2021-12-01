@@ -163,6 +163,7 @@ html {
 	padding: 10px;
 	line-height: 2;
 	cursor: pointer;
+	width: max-content;
 }
 
 .header-left ul li a {
