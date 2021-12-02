@@ -111,7 +111,7 @@ export default function Navbar() {
           {!collection ?
             <div className="wallet__item" onClick={() => createCollection()}>⚠️ Enable Collection</div> : <></>
           }
-          {/* {!balance ?
+          {!balance ?
             <div className="btn btn-small" onClick={() => createFUSDVault()}>
               ⚠️ Enable FLOW
             </div>
@@ -119,7 +119,7 @@ export default function Navbar() {
             <div className="wallet__item">
               💰 FLOW: {balance.slice(0, -6)}
             </div>
-          } */}
+          }
 
           <p className="switchlanguagebox">
             <a onClick={() => changeLang('EN')} className="language-change-en">EN</a>
