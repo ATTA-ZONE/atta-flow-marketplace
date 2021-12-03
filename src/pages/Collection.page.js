@@ -1,3 +1,4 @@
+import { useState} from 'react'
 import "./Collection.page.css"
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
@@ -16,14 +17,14 @@ export default function Collection() {
     return process.env.REACT_APP_DAPPY_ARTLIST_TEST + str
   }
 
-  const artworkText = {
+  const [chText] = useState({
     'TC': {
       "noResult": "您尚未獲得任何藏品。"
     },
     'EN': {
       "noResult":"You don't have any NFTs yet."
     }
-  }
+  })
   
   const fetchMedia = (url) => {
     fetch(url).then((res) => {
@@ -45,7 +46,7 @@ export default function Collection() {
 
   return (
     <>
-      {!collection || flowList.list?.pageResult?.records.length < 1 ? (<div className="noResultTip">{artworkText[lang].noResult}</div>) :
+      {!collection || flowList.list?.pageResult?.records.length < 1 ? (<div className="noResultTip">{chText[lang].noResult}</div>) :
         (<div className="my-assets">
           <ul className="flows-wrap">
             {flowList.list?.pageResult?.records?.map(item => <li key={item.name}>
