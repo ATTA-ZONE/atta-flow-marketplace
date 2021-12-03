@@ -3911,6 +3911,8 @@ html {
 
 .flow-banner img {
 	width: 100%;
+	display: block;
+	margin-bottom: 70px;
 }
 
 @media only screen and (max-width: 767px) {

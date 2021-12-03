@@ -22,7 +22,7 @@ export default function Home() {
       "bannerInfo": "TYLOO IEM EXLUSIVE NFT 系列以 IEM 大賽中 TYLOO 各個隊員的精彩擊殺集錦為內容製成，此 NFT 收集了5位战队成员的精彩擊殺瞬間，以具有品牌屬性的動態視頻為標準製成了 TYLOO IEM 賽事奪冠紀念 NFT。"
     },
     'EN': {
-      "noResults":"There is nothing here",
+      "noResult":"There is nothing here",
       "sellOut": "Sold out",
       "purchaseNow": "Purchase Now",
       "preSale": "Pre-sale",
@@ -36,7 +36,7 @@ export default function Home() {
 
   if (records?.length === 0) {
     html += `<li class="nothing-artwork">
-					<div>暫無搜索結果</div></li>`;
+					<div>${artworkText[lang].noResult}</div></li>`;
   } else {
     records?.forEach(function (v, i) {
       let timeStatus = 0;
@@ -142,9 +142,9 @@ export default function Home() {
   return (
     <>
       <div className="flow-banner">
+        <img src="./assets/banner.png" alt=''/>
         <span className='flow-banner-title'>TYLOO IEM EXCLUSIVE NFT</span>
         <div className='flow-banner-head'>{artworkText[lang].bannerInfo}</div>
-        <img src="./assets/banner.png" alt=''/>
       </div>
       <div className="bzy-e center-85">
         <ul dangerouslySetInnerHTML={{ __html: html }} className="bzy-e-list">
