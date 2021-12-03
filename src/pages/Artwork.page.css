@@ -3067,6 +3067,25 @@ html {
     height: 100%;
     z-index: 6;
 }
+.masktopay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	z-index: 100;
+	background: rgba(0,0,0,0.7);
+}
+.masktopay img{
+	width: 50px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
 @media only screen and (max-width: 992px){
 	.details.center-80.flex{
 		flex-direction: column;
