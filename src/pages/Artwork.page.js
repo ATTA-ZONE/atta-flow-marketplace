@@ -410,7 +410,7 @@ export default function Artwork() {
 			mintDappy(busdPriceprice, address,basicId,getComditInfo);
 		}else{
 			alert(res.message);
-			getComditInfo();
+			window.location.reload();
 		}
 	}
 	const closeVideo = () => {
