@@ -25,7 +25,7 @@ export default function Artwork() {
 		"TC": {
 			home: '首頁',
 			logOut: "登出",
-			version: "共50版",
+			version: "共100版",
 			select: "已選第",
 			versionTxt: "版",
 			price: "单价：",
@@ -78,7 +78,7 @@ export default function Artwork() {
 			switchNet: "Please switch network first",
 			home: 'HOME',
 			logOut: "Log out",
-			version: "Edition 50",
+			version: "Edition 100",
 			select: "Selected",
 			versionTxt: "th edition",
 			price: "Price：",
