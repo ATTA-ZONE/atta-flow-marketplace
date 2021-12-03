@@ -1333,7 +1333,6 @@ html {
 	font-weight: normal;
 	font-size: 14px;
 	color: #fff;
-	opacity: 0.7;
 }
 
 .bzy-e-list-info-btn {
@@ -3886,6 +3885,34 @@ html {
 	display: none;
 }
 
+.flow-banner {
+	width: 100%;
+}
+.flow-banner-title {
+	font-size: 58px;
+	font-family: 'Hanson' !important;
+}
+@font-face {
+  font-family: 'Hanson';
+  src: url("./fonts/Hanson-Bold.otf");
+}
+@font-face {
+  font-family: 'Pingfang';
+  src: url("./fonts/PingFangTC.ttf");
+}
+.flow-banner-head {
+	width: 80%;
+	max-width: 930px;
+	margin: 36px auto 70px;
+	font-size: 22px;
+	text-align: center;
+	font-family: 'Pingfang' !important;
+}
+
+.flow-banner img {
+	width: 100%;
+}
+
 @media only screen and (max-width: 767px) {
 	.header-close {
 		display: block;
@@ -3894,6 +3921,14 @@ html {
 		right: 20px;
 		z-index: 10000;
 		width: 30px;
+	}
+	.flow-banner-title {
+		font-size: 20px;
+	}
+	.flow-banner-head {
+		width: 90%;
+		margin: 10px auto 30px;
+		font-size: 12px;
 	}
 	.bzy-d-e {
 		justify-content: center;
