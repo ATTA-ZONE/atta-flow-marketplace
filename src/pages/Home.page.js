@@ -74,10 +74,9 @@ export default function Home() {
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
-									</div>
-									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
-        html += `</div></div></a></li>`;
+                    <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+									</div>`;
+        html += `</div></a></li>`;
 
       } else if (timeStatus === 1) {
 
@@ -91,11 +90,12 @@ export default function Home() {
 										<span>${artworkText[lang].preSale}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
-										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
-										<span>@ATTA</span>
-									</div>
-									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
+                  <div>
+                    <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
+                    <span>@ATTA</span>
+                  </div>
+                  <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+									</div>`;
         html += `</div></div></a></li>`;
 
       } else if (timeStatus === 2) {
@@ -108,11 +108,12 @@ export default function Home() {
 
         html += `
 									<div class="bzy-e-list-info-creator flex">
-										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
-										<span>@ATTA</span>
-									</div>
-									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
+                  <div>
+                    <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
+                    <span>@ATTA</span>
+                  </div>
+                  <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+									</div>`;
         html += `</div></div></a></li>`;
       } else if (timeStatus === 3) {
         html += `<div class="bzy-e-list-info">
@@ -125,11 +126,12 @@ export default function Home() {
 										<span>${artworkText[lang].salesClosed}</span>
 									</div>
 									<div class="bzy-e-list-info-creator flex">
-										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" ></div>
-										<span>@ATTA</span>
-									</div>
-									<div class="flex btnbox">
-										<span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>`;
+                  <div>
+                    <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
+                    <span>@ATTA</span>
+                  </div>
+                  <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+									</div>`;
         html += `</div></div></a></li>`;
       };
     });
