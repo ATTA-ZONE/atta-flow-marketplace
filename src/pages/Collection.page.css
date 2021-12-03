@@ -3,3 +3,37 @@
   margin: auto;
   padding: 30px 0;
 }
+
+.mobilflex {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 767px) {
+  .mobilflex {
+    display: block;
+  }
+  .flows-wrap {
+    width: 100%;
+  }
+  .my-assets-left {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 0 40px;
+  }
+  .my-assets-right {
+    padding: 0 10px;
+    box-sizing: border-box;
+    width: 100% !important;
+  }
+  .my-assets-right-tit {
+    font-size: 20px !important;
+  }
+  .my-assets-right-creator {
+    justify-content: center;
+  }
+  .details-right-des {
+    text-align: center !important;
+  }
+}
