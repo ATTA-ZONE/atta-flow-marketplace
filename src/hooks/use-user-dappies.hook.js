@@ -6,6 +6,7 @@ import { MINT_DAPPY } from '../flow/mint-dappy.tx'
 import { userDappyReducer } from '../reducer/userDappyReducer'
 import { useTxs } from '../providers/TxProvider'
 import DappyClass from '../utils/DappyClass'
+import { getCookie } from '../utils/utils'
 
 export default function useUserDappies(user, collection,createCollection, getFUSDBalance) {
   const [state, dispatch] = useReducer(userDappyReducer, {
@@ -13,7 +14,8 @@ export default function useUserDappies(user, collection,createCollection, getFUS
     error: false,
     data: []
   })
-  const { addTx, runningTxs } = useTxs()
+  const { addTx, runningTxs } = useTxs();
+  const lang = getCookie("lang") || 'TC'
 
   useEffect(() => {
     const fetchUserDappies = async () => {
@@ -74,13 +76,13 @@ export default function useUserDappies(user, collection,createCollection, getFUS
       })
       const status = await listData.json();
       if (status.code == 0) {
-        alert('購買成功');
+        alert(lang == 'TC' ? '購買成功' : 'Successful purchase');
         window.location.reload()
       }
       // await addDappy(templateID)
       await getFUSDBalance()
     } catch (error) {
-      alert('購買失败');
+      alert(lang == 'TC' ? '購買失败' : 'Failed purchase ');
       window.location.reload()
       console.log(error)
     }

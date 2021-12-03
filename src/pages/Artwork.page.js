@@ -20,6 +20,7 @@ export default function Artwork() {
 	const [success_status,setsuccess_status] = useState(-1);
 	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
+	const [isloading,setIsloading] = useState(false);
 	const [chEnTextHtml] = useState({
 		"TC": {
 			home: '首頁',
@@ -43,7 +44,7 @@ export default function Artwork() {
 			operationFailed: "操作失败",
 			// js部分
 			maximum: "已達到最大購買數量",
-			purchaseSuc: "购买成功",
+			purchaseSuc: "購買成功",
 			seconds: "預計10秒內到賬",
 			comSoon: "即將開售",
 			start: "銷售開始於：",
@@ -355,6 +356,7 @@ export default function Artwork() {
 		dom1.textContent = '購買中，請稍等';
 		dom1.classList.add('unclick');
 		dom1.style.pointerEvents = 'none';
+		setIsloading(true);
 		if (res.code == 0) {
 			let address = user?.addr;
 			mintDappy(busdPriceprice, address,basicId,getComditInfo);
@@ -421,6 +423,13 @@ export default function Artwork() {
 			<div className="hsycms-model-mask" id="mask-success"></div>
 			{/* 提交失败 */}
 			<div className="hsycms-model-mask" id="mask-error"></div>
+			{
+				isloading && 
+				<div className='masktopay'>
+					<img src='./assets/loading.gif'/>
+				</div>
+			}
+			
 		</div >
 	)
 }
