@@ -70,9 +70,7 @@ export default function Home() {
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span style="color:#CF3737;">${artworkText[lang].sellOut}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
@@ -88,9 +86,7 @@ export default function Home() {
 										
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText[lang].preSale}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
                   <div>
                     <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
@@ -124,9 +120,7 @@ export default function Home() {
 										
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText[lang].salesClosed}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
                   <div>
                     <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
