@@ -20,16 +20,10 @@ export default function Artwork() {
 	const [success_status,setsuccess_status] = useState(-1);
 	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
+	const [isloading,setIsloading] = useState(false);
 	const [chEnTextHtml] = useState({
 		"TC": {
 			home: '首頁',
-			auction: '拍賣',
-			noConnectWallet: "未連接錢包",
-			login: "登入/註冊",
-			myaccount: "我的帳戶",
-			myorders: "我的訂單",
-			myassets: "我的資產",
-			mywallet: "我的錢包",
 			logOut: "登出",
 			version: "共100版",
 			select: "已選第",
@@ -43,19 +37,14 @@ export default function Artwork() {
 			payErr: "支付失敗",
 			paid: "您的付款金額為",
 			byCreditCard: "信用卡支付",
-			pendingPayment: "這是待付款，您的付款金額為：",
 			saveFor: "保存以備將來購買",
-			purchasing: "由於您購買的是數字作品，一經售出概不退換",
 			payment: "立即付款",
-			currentUsing: "正在使用",
 			balance: "餘額",
-			notStore: "我們不會儲存您的錢包密鑰，未經您的授權，也無法使用您電子錢包中的貨幣。",
-			paymenttips: "注意：喚起錢包支付時，由Metamask的限制，價格顯示為0，但您實際支付的金額與售賣商品價格一致。",
 			regSuc: "注册成功",
 			operationFailed: "操作失败",
 			// js部分
 			maximum: "已達到最大購買數量",
-			purchaseSuc: "购买成功",
+			purchaseSuc: "購買成功",
 			seconds: "預計10秒內到賬",
 			comSoon: "即將開售",
 			start: "銷售開始於：",
@@ -80,7 +69,6 @@ export default function Artwork() {
 			switchNet: "請先切換網絡",
 			walletFirst: "請先連接錢包  ->",
 			paymentComing: "錢包直連支付功能準備中...",
-			metaTips: "注意：喚起錢包支付時，由Metamask的限制，價格顯示為0，但您實際支付的金額與售賣商品價格一致。",
 			netVer: '當前主網: ',
 			switchNetVision: "切换"
 		},
@@ -88,15 +76,7 @@ export default function Artwork() {
 			switchNetVision: "Switch",
 			netVer: 'Current network: ',
 			switchNet: "Please switch network first",
-			metaTips: "Please note: Due to the limitation of Metamask, it is normal that the price will show 0 when you are using Metamask to process payment. But actually, you are paying the right price.",
 			home: 'HOME',
-			auction: 'AUCTION',
-			noConnectWallet: "Connect Wallet",
-			login: "Login/Sign up",
-			myaccount: "My Account",
-			myorders: "My Orders",
-			myassets: "My Assets",
-			mywallet: "My Wallet",
 			logOut: "Log out",
 			version: "Edition 50",
 			select: "Selected",
@@ -110,14 +90,9 @@ export default function Artwork() {
 			payErr: "Payment failed",
 			paid: "Your paid",
 			byCreditCard: "By credit card",
-			pendingPayment: "Your pending payment is：",
 			saveFor: "Save for future purchase",
-			purchasing: "Since you're purchasing a digital creation, all sales are final.",
-			currentUsing: "Current using",
 			payment: "Pay now",
 			balance: "Balance",
-			notStore: "We will not store your wallet key, nor can we use the currency in your wallet without your authorization.",
-			paymenttips: "Please note: Due to the limitation of Metamask, it is normal that the price will show 0 when you are using Metamask to process payment. But actually, you are paying the right price.",
 			regSuc: "registration success",
 			operationFailed: "operation failed",
 			// js部分
@@ -161,19 +136,11 @@ export default function Artwork() {
 	const initMediaCss = () => {
 		var dom = document.body;
 		let dom2 = document.querySelector('.details-right-btn');
-		// let dom3 = document.querySelector('.payment-close-mobile');
-		let dom4 = document.querySelector('.payment');
-		let dom5 = document.querySelector('video');
 		let dom6 = document.querySelector('.pre-mask');
-		// let dom7 = document.querySelector('.payment-page-right-balance');
 		var mobile_width = dom.style.width;
 		if (mobile_width <= 992) {
 			dom2.classList.remove("payment-btn-pc");
 			dom2.classList.add("payment-btn-mobile");
-			// dom3.onclick = function () {
-			// 	dom4.classList.remove("payment-active");
-			// 	dom5.classList.remove("video-hidden");
-			// }
 		}
 		var params = window.location.search.substr(1).split('&')
 		var arr = [];
@@ -198,26 +165,10 @@ export default function Artwork() {
 		}
 		if (success_status == 1) {
 			alert(chEnTextHtml[languageType].paySuc);
-			setTimeout(function () {
-				saveconfirm();
-			}, 1800)
 		} else if (success_status == 0) {
 			alert(chEnTextHtml[languageType].payErr);
 		}
-		// dom7.style.display = 'none';
 		getComditInfo()
-		// self.initAddress()
-	}
-	const saveconfirm = () =>{
-		var r= window.confirm(chEnTextHtml[languageType].asset)
-		if (r==true){
-			alert(chEnTextHtml[languageType].confirm);
-			setTimeout(function () {
-				window.location.href = 'myassets.html';
-			}, 1500)
-		}else{
-			alert(chEnTextHtml[languageType].cancel) 
-		}
 	}
 	const getComditInfo = async () => {
 		//商品详情业加载
@@ -395,7 +346,7 @@ export default function Artwork() {
 	const toPay = async () => {
 		let busdPriceprice = busdPrice.toFixed(2);
 		if (balance * 1< busdPriceprice * 1) {
-			alert('餘額不足');
+			alert(chEnTextHtml[languageType].balanceInsufficient);
 			return;
 		}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
@@ -405,6 +356,7 @@ export default function Artwork() {
 		dom1.textContent = '購買中，請稍等';
 		dom1.classList.add('unclick');
 		dom1.style.pointerEvents = 'none';
+		setIsloading(true);
 		if (res.code == 0) {
 			let address = user?.addr;
 			mintDappy(busdPriceprice, address,basicId,getComditInfo);
@@ -471,6 +423,13 @@ export default function Artwork() {
 			<div className="hsycms-model-mask" id="mask-success"></div>
 			{/* 提交失败 */}
 			<div className="hsycms-model-mask" id="mask-error"></div>
+			{
+				isloading && 
+				<div className='masktopay'>
+					<img src='./assets/loading.gif'/>
+				</div>
+			}
+			
 		</div >
 	)
 }

@@ -12,8 +12,9 @@ export default function Navbar() {
   const { balance, createFUSDVault } = useUser()
   const { collection, createCollection } = useUser()
   const [languageType, setLanguageType] = useState('TC');
-  const [showMobileMask, setShowMobileMask] = useState(false);
+  const [showmobilemask, setShowmobilemask] = useState(false);
   const [ismobile, setIsmobile] = useState();
+  const [ishidedom, setIshidedom] = useState(false);
   const [chEnTextHtml] = useState({
     "TC": {
       home: "首頁",
@@ -38,30 +39,44 @@ export default function Navbar() {
   })
 
   const handleSetShowMobileMask = () => {
-    setShowMobileMask(!showMobileMask)
+    setShowmobilemask(!showmobilemask);
   }
 
   const [modalIsOpen, setModalIsOpen] = useState('none');
 
   useEffect(()=>{
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
-  })
+    fyfun();
+  },[])
 
   window.addEventListener('resize',()=>{
+    fyfun();
+  })
+  const fyfun = () =>{
     if (window.innerWidth > 900) {
       setIsmobile(false) 
     } else {
       setIsmobile(true)
     }
-    setShowMobileMask(false) 
-  })
-
+    setShowmobilemask(false) 
+  }
   const handleMouseOver = (e) => {
     setModalIsOpen('block')
+    if (window.innerWidth > 900) {
+      setIshidedom(false);
+    }else{
+      setIshidedom(true);
+    }
+  }
+
+  const toPage = (str) => {
+    history.push(str)
+    setShowmobilemask(false)
   }
 
   const handleMouseOut = () => {
     setModalIsOpen('none')
+    setIshidedom(false);
   }
 
   const changeLang = (str) => {
@@ -72,7 +87,7 @@ export default function Navbar() {
   return (
     <>
       {
-        showMobileMask || !ismobile ? (<header className="header center-85 header-fixed">
+        showmobilemask || !ismobile ? (<header className="header center-85 header-fixed">
         <div className="header-left">
           <a className="header-left-logo" target="_blank" href="https://www.bazhuayu.io/mobile/tc/index.html" rel="noreferrer"><img src="https://www.bazhuayu.io/mobile/tc/images/Brand.png" alt='' /></a>
           <img onClick={()=>handleSetShowMobileMask()} className="header-close" src="https://www.bazhuayu.io/mobile/tc/images/Close.png" alt='' />
@@ -94,11 +109,11 @@ export default function Navbar() {
                 <a className="language-tc" target="_blank" href="https://www.bazhuayu.io/mobile/tc/specialitem.html" rel="noreferrer">{chEnTextHtml[languageType].specialTool}</a>
               </li>
               <li className="current" onMouseOver={handleMouseOver}
-                onMouseLeave={handleMouseOut}>
+                onMouseLeave={handleMouseOut} style={{height : ishidedom ? '100px' : 'auto'}}>
                 <a className="language-tc">{chEnTextHtml[languageType].flow}</a>
                 <div className="flow-children" style={{ display: modalIsOpen }}>
-                  <div onClick={() => history.push('/')}>{chEnTextHtml[languageType].flownft}</div>
-                  <div onClick={() => history.push('./collection')}>{chEnTextHtml[languageType].Collections}</div>
+                  <div onClick={() => toPage('/')}>{chEnTextHtml[languageType].flownft}</div>
+                  <div onClick={() => toPage('collection')}>{chEnTextHtml[languageType].Collections}</div>
                 </div>
               </li>
             </ul>

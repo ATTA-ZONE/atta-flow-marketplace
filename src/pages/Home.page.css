@@ -1207,8 +1207,11 @@ html {
 
 .bzy-e-list li a {
 	display: flex;
+	height: 520px;
+	display: block;
 	flex-direction: column;
 	align-items: center;
+	background: #282828;
 }
 
 .bzy-e-list .nothing-artwork {
@@ -1246,6 +1249,7 @@ html {
 .bzy-e-list-info {
 	display: block;
 	width: 100%;
+	height: 260px;
 	background: #282828;
 	padding: 24px;
 	box-sizing: border-box;
@@ -1306,18 +1310,21 @@ html {
 }
 
 .bzy-e-list-info-creator {
-	margin-bottom: 20px;
-}
-
-.bzy-e-list-info-creator div {
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	margin-right: 10px;
+	position: absolute;
+	bottom: 20px;
+	left: 24px;
+	width: 90%;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .bzy-e-list-info-creator div img {
-	width: 100%;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	border-radius: 50%;
+	margin-right: 10px;
+	vertical-align: middle;
 }
 
 .bzy-e-list-info-creator span {
@@ -1325,9 +1332,7 @@ html {
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
-	line-height: 150%;
 	color: #fff;
-	opacity: 0.7;
 }
 
 .bzy-e-list-info-btn {
@@ -3880,6 +3885,34 @@ html {
 	display: none;
 }
 
+.flow-banner {
+	width: 100%;
+}
+.flow-banner-title {
+	font-size: 58px;
+	font-family: 'Hanson' !important;
+}
+@font-face {
+  font-family: 'Hanson';
+  src: url("./fonts/Hanson-Bold.otf");
+}
+@font-face {
+  font-family: 'Pingfang';
+  src: url("./fonts/PingFangTC.ttf");
+}
+.flow-banner-head {
+	width: 80%;
+	max-width: 930px;
+	margin: 36px auto 70px;
+	font-size: 22px;
+	text-align: center;
+	font-family: 'Pingfang' !important;
+}
+
+.flow-banner img {
+	width: 100%;
+}
+
 @media only screen and (max-width: 767px) {
 	.header-close {
 		display: block;
@@ -3888,6 +3921,14 @@ html {
 		right: 20px;
 		z-index: 10000;
 		width: 30px;
+	}
+	.flow-banner-title {
+		font-size: 20px;
+	}
+	.flow-banner-head {
+		width: 90%;
+		margin: 10px auto 30px;
+		font-size: 12px;
 	}
 	.bzy-d-e {
 		justify-content: center;
