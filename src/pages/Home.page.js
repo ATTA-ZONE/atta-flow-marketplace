@@ -27,7 +27,7 @@ export default function Home() {
       "purchaseNow": "Purchase Now",
       "preSale": "Coming soon",
       "salesClosed": "Sales ended",
-      "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the killings highlights of the TYLOO players in the IEM competition. To commemorate TYLOO's championship, these NFTs are unique showdown of each of the five team members' killing highlights during the tournament by integrating dynamic videos with brand attributes."
+      "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the killings highlights of the TYLOO players in the IEM competition. To commemorate TYLOO's championship, these NFTs are unique showdown of each of the five team members' killing highlights during the tournament by integrating motion graphics with brand attributes."
     }
   })
   const records = list.list?.pageResult?.records || [];
