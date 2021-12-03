@@ -1,5 +1,6 @@
 .flows-wrap {
-  width: 1500px;
+  width: 90%;
+  max-width: 1500px;
   margin: auto;
   padding: 30px 0;
 }
