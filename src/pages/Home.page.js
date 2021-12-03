@@ -25,7 +25,7 @@ export default function Home() {
       "noResults":"There is nothing here",
       "sellOut": "Sold out",
       "purchaseNow": "Purchase Now",
-      "preSale": "Pre-sale",
+      "preSale": "Coming soon",
       "salesClosed": "Sales ended",
       "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the highlights of the wonderful killings of the TYLOO players in the IEM competition. These NFTs collect the wonderful moments of 5 team members, and uses the dynamic video with brand attributes as the standard to make TYLOO IEM The championship commemorates the NFT."
     }
