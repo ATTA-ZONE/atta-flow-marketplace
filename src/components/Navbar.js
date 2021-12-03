@@ -67,7 +67,6 @@ export default function Navbar() {
     }else{
       setIshidedom(true);
     }
-    console.log(ishidedom);
   }
 
   const toPage = (str) => {
@@ -77,6 +76,7 @@ export default function Navbar() {
 
   const handleMouseOut = () => {
     setModalIsOpen('none')
+    setIshidedom(false);
   }
 
   const changeLang = (str) => {
