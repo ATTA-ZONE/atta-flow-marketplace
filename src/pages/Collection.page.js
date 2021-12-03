@@ -16,6 +16,15 @@ export default function Collection() {
     return process.env.REACT_APP_DAPPY_ARTLIST_TEST + str
   }
 
+  const artworkText = {
+    'TC': {
+      "noResult": "您尚未獲得任何藏品。"
+    },
+    'EN': {
+      "noResult":"You don't have any NFTs yet."
+    }
+  }
+  
   const fetchMedia = (url) => {
     fetch(url).then((res) => {
       res.blob().then((blob) => {
@@ -36,7 +45,7 @@ export default function Collection() {
 
   return (
     <>
-      {!collection ? '' :
+      {!collection || flowList.list?.pageResult?.records.length < 1 ? (<div className="noResultTip">{artworkText[lang].noResult}</div>) :
         (<div className="my-assets">
           <ul className="flows-wrap">
             {flowList.list?.pageResult?.records?.map(item => <li key={item.name}>

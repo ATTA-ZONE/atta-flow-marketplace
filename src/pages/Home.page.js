@@ -17,15 +17,15 @@ export default function Home() {
       "noResult": "暫無搜索結果",
       "sellOut": "已售罄",
       "purchaseNow": "立即購買",
-      "preSale": "預售",
+      "preSale": "即将開售",
       "salesClosed": "銷售已結束",
       "bannerInfo": "TYLOO IEM EXLUSIVE NFT 系列以 IEM 大賽中 TYLOO 各個隊員的精彩擊殺集錦為內容製成，此 NFT 收集了5位战队成员的精彩擊殺瞬間，以具有品牌屬性的動態視頻為標準製成了 TYLOO IEM 賽事奪冠紀念 NFT。"
     },
     'EN': {
-      "noResults":"There is nothing here",
+      "noResult":"There is nothing here",
       "sellOut": "Sold out",
       "purchaseNow": "Purchase Now",
-      "preSale": "Pre-sale",
+      "preSale": "Coming soon",
       "salesClosed": "Sales ended",
       "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the highlights of the wonderful killings of the TYLOO players in the IEM competition. These NFTs collect the wonderful moments of 5 team members, and uses the dynamic video with brand attributes as the standard to make TYLOO IEM The championship commemorates the NFT."
     }
@@ -36,7 +36,7 @@ export default function Home() {
 
   if (records?.length === 0) {
     html += `<li class="nothing-artwork">
-					<div>暫無搜索結果</div></li>`;
+					<div>${artworkText[lang].noResult}</div></li>`;
   } else {
     records?.forEach(function (v, i) {
       let timeStatus = 0;
@@ -70,9 +70,7 @@ export default function Home() {
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
 
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span style="color:#CF3737;">${artworkText[lang].sellOut}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
@@ -88,15 +86,13 @@ export default function Home() {
 										
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText[lang].preSale}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
                   <div>
                     <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
                     <span>@ATTA</span>
                   </div>
-                  <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+                  <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].preSale}  -></span>
 									</div>`;
         html += `</div></div></a></li>`;
 
@@ -124,9 +120,7 @@ export default function Home() {
 										
 										<span>FLOW `+ moneyFormat(v.price) + ` </span>
 									</div>`;
-        html += `<div class="bzy-e-list-info-sale flex">
-										<span>${artworkText[lang].salesClosed}</span>
-									</div>
+        html += `
 									<div class="bzy-e-list-info-creator flex">
                   <div>
                     <img src="https://www.bazhuayu.io/mobile/tc/images/t8.png" />
@@ -142,9 +136,9 @@ export default function Home() {
   return (
     <>
       <div className="flow-banner">
+        <img src="./assets/banner.png" alt=''/>
         <span className='flow-banner-title'>TYLOO IEM EXCLUSIVE NFT</span>
         <div className='flow-banner-head'>{artworkText[lang].bannerInfo}</div>
-        <img src="./assets/banner.png" alt=''/>
       </div>
       <div className="bzy-e center-85">
         <ul dangerouslySetInnerHTML={{ __html: html }} className="bzy-e-list">
