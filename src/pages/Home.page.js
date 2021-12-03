@@ -138,9 +138,16 @@ export default function Home() {
   }
 
   return (
-    <div className="bzy-e center-85">
-      <ul dangerouslySetInnerHTML={{ __html: html }} className="bzy-e-list">
-      </ul>
-    </div>
+    <>
+      <div className="flow-banner">
+        <span className='flow-banner-title'>TYLOO IEM EXCLUSIVE NFT</span>
+        <div className='flow-banner-head'>TYLOO IEM EXLUSIVE NFT 系列以 IEM 大賽中 TYLOO 各個隊員的精彩擊殺集錦為內容製成，此 NFT 收集了5位战队成员的精彩擊殺瞬間，以具有品牌屬性的動態視頻為標準製成了 TYLOO IEM 賽事奪冠紀念 NFT。</div>
+        <img src="./assets/banner.png" alt=''/>
+      </div>
+      <div className="bzy-e center-85">
+        <ul dangerouslySetInnerHTML={{ __html: html }} className="bzy-e-list">
+        </ul>
+      </div>
+    </>
   )
 }
