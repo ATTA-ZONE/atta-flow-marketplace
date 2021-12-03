@@ -21,11 +21,12 @@ export default function Artwork() {
 	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
 	const [isloading,setIsloading] = useState(false);
+	const [isclickbtn,setIsclickbtn] = useState(0);//1 沒有庫存  2 還未開始 3 活動中 4 已結束
 	const [chEnTextHtml] = useState({
 		"TC": {
 			home: '首頁',
 			logOut: "登出",
-			version: "共50版",
+			version: "共100版",
 			select: "已選第",
 			versionTxt: "版",
 			price: "单价：",
@@ -78,7 +79,7 @@ export default function Artwork() {
 			switchNet: "Please switch network first",
 			home: 'HOME',
 			logOut: "Log out",
-			version: "Edition 50",
+			version: "Edition 100",
 			select: "Selected",
 			versionTxt: "th edition",
 			price: "Price：",
@@ -216,6 +217,7 @@ export default function Artwork() {
 			}
 			if (res.data.storage - res.data.soldCount > 0) { //还有库存
 				if (systemTime < saleStartTimeMillis) {
+					setIsclickbtn(2);
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].comSoon;
 					dom10.setAttribute("status","1");
@@ -231,6 +233,7 @@ export default function Artwork() {
 					}, 1000);
 
 				} else if (systemTime >= saleStartTimeMillis && systemTime <= saleEndTimeMillis) {
+					setIsclickbtn(3);
 					var msTime = saleEndTimeMillis - systemTime;
 					var time = formatDuring(msTime);
 					let ycdjs = time.split('d')[0];
@@ -249,6 +252,7 @@ export default function Artwork() {
 						dom12.textContent = time;
 					}, 1000);
 				} else if (systemTime > saleEndTimeMillis) {
+					setIsclickbtn(4);
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].salesClosed;
 					dom10.setAttribute("status","1");
@@ -258,6 +262,7 @@ export default function Artwork() {
 					dom10.style.pointerEvents = 'none';
 				}
 			} else { //没有库存
+				setIsclickbtn(1);
 				dom10.classList.add('unclick');
 				dom10.textContent = chEnTextHtml[languageType].sellOut;
 				dom10.setAttribute("status","1");
@@ -347,6 +352,9 @@ export default function Artwork() {
 		let busdPriceprice = busdPrice.toFixed(2);
 		if (balance * 1< busdPriceprice * 1) {
 			alert(chEnTextHtml[languageType].balanceInsufficient);
+			return;
+		}
+		if (isclickbtn != 3) {
 			return;
 		}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;

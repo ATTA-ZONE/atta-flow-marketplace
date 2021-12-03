@@ -27,6 +27,7 @@ code {
   background: #DA4453; 
   min-height: 100vh;
   background: #141414; 
+  padding-bottom: 50px;
 }
 
 .app__title {

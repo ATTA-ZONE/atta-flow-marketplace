@@ -23,7 +23,7 @@ export default function Navbar() {
       specialTool: "無限制電競大會",
       blindbox: "盲盒",
       flow: "Flow NFT",
-      flownft: "天禄战队NFT",
+      flownft: "天祿戰隊NFT",
       Collections : "我的Flow藏品"
     },
     "EN": {
