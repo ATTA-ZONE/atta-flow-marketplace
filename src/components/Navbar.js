@@ -12,7 +12,7 @@ export default function Navbar() {
   const { balance, createFUSDVault } = useUser()
   const { collection, createCollection } = useUser()
   const [languageType, setLanguageType] = useState('TC');
-  const [showMobileMask, setShowMobileMask] = useState(false);
+  const [showmobilemask, setShowmobilemask] = useState(false);
   const [ismobile, setIsmobile] = useState();
   const [chEnTextHtml] = useState({
     "TC": {
@@ -38,13 +38,18 @@ export default function Navbar() {
   })
 
   const handleSetShowMobileMask = () => {
-    setShowMobileMask(!showMobileMask)
+    setShowmobilemask(!showmobilemask);
   }
 
   const [modalIsOpen, setModalIsOpen] = useState('none');
 
   useEffect(()=>{
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
+    if (window.innerWidth > 900) {
+      setIsmobile(false) 
+    } else {
+      setIsmobile(true)
+    }
   })
 
   window.addEventListener('resize',()=>{
@@ -53,7 +58,7 @@ export default function Navbar() {
     } else {
       setIsmobile(true)
     }
-    setShowMobileMask(false) 
+    setShowmobilemask(false) 
   })
 
   const handleMouseOver = (e) => {
@@ -72,7 +77,7 @@ export default function Navbar() {
   return (
     <>
       {
-        showMobileMask || !ismobile ? (<header className="header center-85 header-fixed">
+        showmobilemask || !ismobile ? (<header className="header center-85 header-fixed">
         <div className="header-left">
           <a className="header-left-logo" target="_blank" href="https://www.bazhuayu.io/mobile/tc/index.html" rel="noreferrer"><img src="https://www.bazhuayu.io/mobile/tc/images/Brand.png" alt='' /></a>
           <img onClick={()=>handleSetShowMobileMask()} className="header-close" src="https://www.bazhuayu.io/mobile/tc/images/Close.png" alt='' />

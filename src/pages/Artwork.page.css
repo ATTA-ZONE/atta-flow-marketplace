@@ -3087,10 +3087,28 @@ html {
 	margin: auto;
 }
 @media only screen and (max-width: 992px){
+	.details{
+		margin-top: 20px;
+	}
 	.details.center-80.flex{
 		flex-direction: column;
 	}
 	.details.center-80.flex .details-left,.details.center-80.flex .details-right{
 		width: 100%;
+	}
+	.details-right-tit.order-title{
+		font-size: 20px;
+	}
+	.details-right-creator.flex{
+		padding: 15px 0;
+	}
+	.details-right-price.flex,.details-right-tit.order-title,.details-right-creator.flex{
+		margin-bottom: 20px;
+	}
+	.full-screen.detail-media{
+		width: 20px !important;
+	}
+	.voice.detail-media{
+		width: 23px !important;
 	}
 }
