@@ -47,7 +47,7 @@ export default function Navbar() {
   useEffect(()=>{
     setLanguageType(getCookie("lang") ? getCookie("lang") : 'TC');
     fyfun();
-  })
+  },[])
 
   window.addEventListener('resize',()=>{
     fyfun();
@@ -68,6 +68,11 @@ export default function Navbar() {
       setIshidedom(true);
     }
     console.log(ishidedom);
+  }
+
+  const toPage = (str) => {
+    history.push(str)
+    setShowmobilemask(false)
   }
 
   const handleMouseOut = () => {
@@ -107,8 +112,8 @@ export default function Navbar() {
                 onMouseLeave={handleMouseOut} style={{height : ishidedom ? '100px' : 'auto'}}>
                 <a className="language-tc">{chEnTextHtml[languageType].flow}</a>
                 <div className="flow-children" style={{ display: modalIsOpen }}>
-                  <div onClick={() => history.push('/')}>{chEnTextHtml[languageType].flownft}</div>
-                  <div onClick={() => history.push('./collection')}>{chEnTextHtml[languageType].Collections}</div>
+                  <div onClick={() => toPage('/')}>{chEnTextHtml[languageType].flownft}</div>
+                  <div onClick={() => toPage('collection')}>{chEnTextHtml[languageType].Collections}</div>
                 </div>
               </li>
             </ul>
