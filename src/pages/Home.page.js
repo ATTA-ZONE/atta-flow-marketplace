@@ -9,7 +9,7 @@ export default function Home() {
     setCookie('lang', 'TC')
   }
 
-  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${getCookie("lang")}`
+  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${lang}`
   const list = useArtList(url)
 
   const [artworkText] = useState({
