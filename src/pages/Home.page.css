@@ -1,3 +1,7 @@
+.language-change-en, .language-change-ch {
+	color: #fff;
+	cursor: pointer;
+}
 .header-image {
   width: 100%;
   cursor: pointer;
