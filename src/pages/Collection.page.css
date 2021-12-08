@@ -5,6 +5,15 @@
   padding: 30px 0;
 }
 
+.collect-voice {
+  width: 20px !important;
+  height: 20px !important;
+  position: absolute !important;
+  top: 26%;
+  right: 10px;
+  z-index: 5 !important;
+}
+
 .mobilflex {
   display: flex;
   align-items: center;

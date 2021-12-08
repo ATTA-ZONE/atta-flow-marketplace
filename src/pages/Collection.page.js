@@ -40,6 +40,21 @@ export default function Collection() {
     });
   }
 
+  const toggleVideoMute = (e) => {
+    e.target.style.display='none'
+    e.target.parentNode.children[0].style.display='block'
+    const video = e.target.parentNode.children[2]
+    video.play()
+    video.muted=false
+  }
+  const closeVideo = (e) => {
+    e.target.style.display='none'
+    e.target.parentNode.children[1].style.display='block'
+    const video = e.target.parentNode.children[2]
+    video.pause()
+    video.muted=true
+  }
+
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
   }
@@ -53,8 +68,10 @@ export default function Collection() {
               <div className="mobilflex">
                 {
                   getFormat(item) === 'mp4' ? (<div className="my-assets-left">
-                    <video style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={formatUrl(item.primaryPic)} muted="muted"></video>
-                    <video className="mohu" style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={formatUrl(item.primaryPic)}
+                    <img className="collect-voice" onClick={(e)=>closeVideo(e)} src="https://bazhuayu.io/mobile/tc/images/videoEnd.png"/>
+                    <img className="collect-voice" onClick={(e)=>toggleVideoMute(e)} src="https://bazhuayu.io/mobile/tc/images/videoPlay.png"/>
+                    <video style={{ width: "100%" }} loop="loop" src={formatUrl(item.primaryPic)} muted="muted"></video>
+                    <video className="mohu" style={{ width: "100%" }} loop="loop" src={formatUrl(item.primaryPic)}
                       muted="muted"></video>
                   </div>) : (
                     <div className="my-assets-left">
