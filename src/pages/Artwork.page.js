@@ -7,7 +7,7 @@ import "./Artwork.page.css"
 
 export default function Artwork() {
 	const { user } = useAuth()
-	const { userDappies, mintDappy ,balance} = useUser()
+	const { userDappies, mintDappy ,balance,collection,createCollection} = useUser()
 	const [languageType,setLanguageType] = useState('TC');
 	const [payTabs,setPayTabs] = useState(['錢包支付']);
 	const [maxbannum,setmaxbannum] = useState(0);
@@ -71,7 +71,8 @@ export default function Artwork() {
 			walletFirst: "請先連接錢包  ->",
 			paymentComing: "錢包直連支付功能準備中...",
 			netVer: '當前主網: ',
-			switchNetVision: "切换"
+			switchNetVision: "切换",
+			tipscomfig : '由於您是首次在FLOW鏈上購買NFT，需進行授權。點擊確認進入授權流程。'
 		},
 		"EN": {
 			switchNetVision: "Switch",
@@ -121,7 +122,8 @@ export default function Artwork() {
 			accomplish: "complete",
 			payment: "Pay now",
 			walletFirst: "Please connect your wallet first  ->",
-			paymentComing: "Function coming soon..."
+			paymentComing: "Function coming soon...",
+			tipscomfig : 'Since you are buying NFTs on the FLOW chain for the first time, authorization is required. Click OK to enter the authorization process.'
 		}
 	})
 	useEffect (()=>{
@@ -349,6 +351,13 @@ export default function Artwork() {
 		}
 	}
 	const toPay = async () => {
+		if (!collection) {
+			var r=window.confirm(chEnTextHtml[languageType].tipscomfig)
+			if (r==true){
+				createCollection();
+			}
+			return;
+		}
 		let busdPriceprice = busdPrice.toFixed(2);
 		if (balance * 1< busdPriceprice * 1) {
 			alert(chEnTextHtml[languageType].balanceInsufficient);
