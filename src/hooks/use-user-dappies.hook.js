@@ -61,8 +61,9 @@ export default function useUserDappies(user, collection,createCollection, getFUS
       addTx(res)
       let tokenidarr = await tx(res).onceSealed();
       let templateIDobj = {flowAddress:flowAddress,flowBasicId : flowBasicId};
+      let stringbl = process.env.REACT_APP_DAPPY_ARTLIST_TEST == 'https://www.bazhuayu.io' ? 'A.094576f73b77e289.ATTANFT.UserMinted' : 'A.e62308aba7b05365.ATTANFT.UserMinted';
       tokenidarr.events.forEach(item=>{
-        if (item.type == "A.e62308aba7b05365.ATTANFT.UserMinted") {
+        if (item.type == stringbl) {
           templateIDobj.tokenId = item.data.id;
           templateIDobj.price = item.data.price;
           templateIDobj.transactionHash = item.transactionId;
