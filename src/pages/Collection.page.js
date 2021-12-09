@@ -1,3 +1,4 @@
+import { useState} from 'react'
 import "./Collection.page.css"
 import useFlowList from '../hooks/use-flowList.hook'
 import * as chEnTextHtml from './lang.js'
@@ -16,14 +17,14 @@ export default function Collection() {
     return process.env.REACT_APP_DAPPY_ARTLIST_TEST + str
   }
 
-  const artworkText = {
+  const [chText] = useState({
     'TC': {
       "noResult": "您尚未獲得任何藏品。"
     },
     'EN': {
       "noResult":"You don't have any NFTs yet."
     }
-  }
+  })
   
   const fetchMedia = (url) => {
     fetch(url).then((res) => {
@@ -39,21 +40,38 @@ export default function Collection() {
     });
   }
 
+  const toggleVideoMute = (e) => {
+    e.target.style.display='none'
+    e.target.parentNode.children[0].style.display='block'
+    const video = e.target.parentNode.children[2]
+    video.play()
+    video.muted=false
+  }
+  const closeVideo = (e) => {
+    e.target.style.display='none'
+    e.target.parentNode.children[1].style.display='block'
+    const video = e.target.parentNode.children[2]
+    video.pause()
+    video.muted=true
+  }
+
   const getFormat = (item) => {
     return item.primaryPic.substr(item.primaryPic.lastIndexOf('.') + 1)
   }
 
   return (
     <>
-      {!collection || flowList.list?.pageResult?.records.length < 1 ? (<div className="noResultTip">{artworkText[lang].noResult}</div>) :
+      {!collection || flowList.list?.pageResult?.records.length < 1 ? (<div className="noResultTip">{chText[lang].noResult}</div>) :
         (<div className="my-assets">
           <ul className="flows-wrap">
             {flowList.list?.pageResult?.records?.map(item => <li key={item.name}>
               <div className="mobilflex">
                 {
                   getFormat(item) === 'mp4' ? (<div className="my-assets-left">
-                    <video style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={formatUrl(item.primaryPic)} muted="muted"></video>
-                    <video className="mohu" style={{ width: "100%" }} autoPlay="autoplay" loop="loop" src={formatUrl(item.primaryPic)}
+                    <img className="collect-voice" onClick={(e)=>closeVideo(e)} src="https://bazhuayu.io/mobile/tc/images/videoEnd.png"/>
+                    <img className="collect-voice" onClick={(e)=>toggleVideoMute(e)} src="https://bazhuayu.io/mobile/tc/images/videoPlay.png"/>
+                    <video style={{ width: "100%" }} loop="loop" src={formatUrl(item.primaryPic)} muted="muted"></video>
+                    <video className="mohu" style={{ width: "100%" }} loop="loop" src={formatUrl(item.primaryPic)}
                       muted="muted"></video>
                   </div>) : (
                     <div className="my-assets-left">

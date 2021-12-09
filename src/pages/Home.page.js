@@ -1,18 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./Home.page.css"
 import useArtList from '../hooks/use-artList.hook'
 import { moneyFormat, getCookie, setCookie } from '../utils/utils'
 
 export default function Home() {
-  const lang = getCookie("lang")
+  const lang = getCookie("lang") || 'TC'
   if (!lang) {
     setCookie('lang', 'TC')
   }
 
-  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${getCookie("lang")}`
+  const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/list?current=1&pageSize=20&channelId=1&lang=${lang}`
   const list = useArtList(url)
 
-  const artworkText = {
+  const [artworkText] = useState({
     'TC': {
       "noResult": "暫無搜索結果",
       "sellOut": "已售罄",
@@ -27,9 +27,9 @@ export default function Home() {
       "purchaseNow": "Purchase Now",
       "preSale": "Coming soon",
       "salesClosed": "Sales ended",
-      "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the highlights of the wonderful killings of the TYLOO players in the IEM competition. These NFTs collect the wonderful moments of 5 team members, and uses the dynamic video with brand attributes as the standard to make TYLOO IEM The championship commemorates the NFT."
+      "bannerInfo": "The TYLOO IEM EXLUSIVE NFT series is made with the killings highlights of the TYLOO players in the IEM competition. To commemorate TYLOO's championship, these NFTs are unique showdown of each of the five team members' killing highlights during the tournament by integrating motion graphics with brand attributes."
     }
-  }
+  })
   const records = list.list?.pageResult?.records || [];
   let html = '';
   const systemTime = list.list?.systemTime;

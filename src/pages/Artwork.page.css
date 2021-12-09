@@ -798,7 +798,7 @@ html {
 	font-size: 48px;
 	line-height: 130%;
 	color: #fff;
-	word-break: break-all;
+	word-break: break-word;
 	margin-bottom: 40px;
 	text-align: left;
 }
