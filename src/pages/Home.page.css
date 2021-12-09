@@ -1260,7 +1260,7 @@ html {
 }
 
 .bzy-e-list-info-tit {
-	height: 100px;
+	height: 120px;
 	overflow: hidden;
 	font-family: Aeonik TRIAL;
 	font-style: normal;
@@ -1268,7 +1268,6 @@ html {
 	font-size: 24px;
 	line-height: 120%;
 	color: #fff;
-	margin-bottom: 20px;
 	word-break: break-word;
 	text-align: left;
 }
