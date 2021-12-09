@@ -351,10 +351,13 @@ export default function Artwork() {
 		}
 	}
 	const toPay = async () => {
+		var dom1 = document.querySelector('.details-right-btn');
 		if (!collection) {
 			var r=window.confirm(chEnTextHtml[languageType].tipscomfig)
 			if (r==true){
-				createCollection();
+				createCollection(sussesfun,errorfun);
+				dom1.classList.add('unclick');
+				dom1.style.pointerEvents = 'none';
 			}
 			return;
 		}
@@ -369,7 +372,7 @@ export default function Artwork() {
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
-		var dom1 = document.querySelector('.details-right-btn');
+		
 		dom1.textContent = '購買中，請稍等';
 		dom1.classList.add('unclick');
 		dom1.style.pointerEvents = 'none';
@@ -381,6 +384,13 @@ export default function Artwork() {
 			alert(res.message);
 			window.location.reload();
 		}
+	}
+	const sussesfun = () =>{
+	}
+	const errorfun = () =>{
+		var dom1 = document.querySelector('.details-right-btn');
+		dom1.classList.remove('unclick');
+		dom1.style.pointerEvents = 'auto';
 	}
 	const closeVideo = () => {
 		var dom1 = document.querySelector('.video-mask');
