@@ -74,7 +74,7 @@ export default function Home() {
 									<div class="bzy-e-list-info-creator flex">
 										<div><img src="https://www.bazhuayu.io/mobile/tc/images/t8.png"></div>
 										<span>@ATTA</span>
-                    <span class="bzy-e-list-info-btn ljgmbtn">${artworkText[lang].purchaseNow}  -></span>
+                    <span class="bzy-e-list-info-btn ljgmbtn" style="border-color:#CF3737">${artworkText[lang].sellOut}  -></span>
 									</div>`;
         html += `</div></a></li>`;
 
