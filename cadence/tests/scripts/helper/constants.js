@@ -43,6 +43,7 @@ export const paths = {
     getNFTData: buildPath('get_nft_data.cdc', 'script'),
     getTotalSupply: buildPath('get_total_supply.cdc', 'script'),
     getUserNFTIds: buildPath('get_user_nft_ids.cdc', 'script'),
+    getUserNFTs: buildPath('get_user_nfts.cdc', 'script'),
     getVaultBal: buildPath('get_vault_bal.cdc', 'script'),
   },
   transactions: {

@@ -2,12 +2,12 @@ import { sign } from './crypto.js'
 import fcl from '@onflow/fcl'
 
 // local
-// export const user1Addr = '0x01cf0e2f2f715450'
-// export const user2Addr = '0x179b6b1cb6755e31'
+export const user1Addr = '0x01cf0e2f2f715450'
+export const user2Addr = '0x179b6b1cb6755e31'
 
 // testnet
-export const user1Addr = '0xe019db120b43fff5'
-export const user2Addr = '0x047e62cf1ab9ff2a'
+// export const user1Addr = '0xe019db120b43fff5'
+// export const user2Addr = '0x047e62cf1ab9ff2a'
 
 export async function authz(account) {
   return {

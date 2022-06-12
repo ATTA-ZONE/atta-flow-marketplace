@@ -8,7 +8,9 @@ import fcl from '@onflow/fcl'
 
 export const main = async () => {
   fclInit()
-  
+   // query ATTANFT total supply
+   const res = await buildAndExecScript('getUserNFTs', [fcl.arg('0xf8d6e0586b0a20c7', t.Address)])
+   console.log('total: ', res)
 }
 
 main()
