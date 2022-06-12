@@ -30,7 +30,7 @@ export default function useCollection(user) {
     //eslint-disable-next-line
   }, [])
 
-  const createCollection = async () => {
+  const createCollection = async (sussesfun = null ,errorfun = null) => {
     try {
       let res = await mutate({
         cadence: CREATE_COLLECTION,
@@ -40,7 +40,15 @@ export default function useCollection(user) {
       addTx(res)
       await tx(res).onceSealed()
       setCollection(true)
+      alert('auth success')
+      window.location.reload();
+      if (sussesfun != null) {
+        sussesfun();
+      }
     } catch (err) {
+      if (errorfun != null) {
+        errorfun();
+      }
       console.log(err,'-----------')
     }
   }

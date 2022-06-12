@@ -1,3 +1,7 @@
+.language-change-en, .language-change-ch {
+	color: #fff;
+	cursor: pointer;
+}
 .header-image {
   width: 100%;
   cursor: pointer;
@@ -115,11 +119,25 @@ html {
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 20px;
+	display: flex;
 }
 
 .header-left {
 	justify-content: space-between;
 	align-items: center;
+	display: flex;
+}
+
+.mobile-head {
+	height: 60px;
+}
+
+.mobile-head-logo img {
+	width: 160px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 10000;
 }
 
 .header-left-logo img {
@@ -128,6 +146,7 @@ html {
 
 .header-left ul {
 	margin-left: 20px;
+	display: flex;
 	justify-content: space-between;
 }
 
@@ -144,10 +163,11 @@ html {
 	left: 0;
 	top: 30px;
 	text-align: left;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.9);
 	padding: 10px;
 	line-height: 2;
 	cursor: pointer;
+	width: max-content;
 }
 
 .header-left ul li a {
@@ -177,6 +197,7 @@ html {
 	justify-content: space-between;
 	align-items: center;
 	height: 100%;
+	display: flex;
 }
 
 .header-dl {
@@ -1105,6 +1126,7 @@ html {
 	column-count: 3;
 	column-gap: 48px;
 }
+
 .bzy-e-list li >i.unplay{
 	background:url('https://www.bazhuayu.io/mobile/tc/images/videoEnd.png') no-repeat;
 	background-size:100%;
@@ -1189,8 +1211,10 @@ html {
 
 .bzy-e-list li a {
 	display: flex;
+	display: block;
 	flex-direction: column;
 	align-items: center;
+	background: #282828;
 }
 
 .bzy-e-list .nothing-artwork {
@@ -1229,21 +1253,22 @@ html {
 	display: block;
 	width: 100%;
 	background: #282828;
-	padding: 24px;
+	padding: 24px 24px 70px;
 	box-sizing: border-box;
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
 
 .bzy-e-list-info-tit {
+	height: 120px;
+	overflow: hidden;
 	font-family: Aeonik TRIAL;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 24px;
 	line-height: 120%;
 	color: #fff;
-	margin-bottom: 20px;
-	word-break: break-all;
+	word-break: break-word;
 	text-align: left;
 }
 
@@ -1288,18 +1313,21 @@ html {
 }
 
 .bzy-e-list-info-creator {
-	margin-bottom: 20px;
-}
-
-.bzy-e-list-info-creator div {
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	margin-right: 10px;
+	position: absolute;
+	bottom: 20px;
+	left: 24px;
+	width: 90%;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .bzy-e-list-info-creator div img {
-	width: 100%;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	border-radius: 50%;
+	margin-right: 10px;
+	vertical-align: middle;
 }
 
 .bzy-e-list-info-creator span {
@@ -1307,9 +1335,7 @@ html {
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
-	line-height: 150%;
 	color: #fff;
-	opacity: 0.7;
 }
 
 .bzy-e-list-info-btn {
@@ -3858,12 +3884,113 @@ html {
 	border-radius: 5px;
 	margin-top: 50px;
 }
+.header-close {
+	display: none;
+}
+
+.flow-banner {
+	width: 100%;
+}
+.flow-banner-title {
+	font-size: 58px;
+	font-family: 'Hanson' !important;
+}
+@font-face {
+  font-family: 'Hanson';
+  src: url("./fonts/Hanson-Bold.otf");
+}
+@font-face {
+  font-family: 'Pingfang';
+  src: url("./fonts/PingFangTC.ttf");
+}
+.flow-banner-head {
+	width: 80%;
+	max-width: 930px;
+	margin: 36px auto 70px;
+	font-size: 22px;
+	text-align: center;
+	font-family: 'Pingfang' !important;
+}
+
+.flow-banner img {
+	width: 100%;
+	display: block;
+	margin-bottom: 70px;
+}
 
 @media only screen and (max-width: 767px) {
+	.header-close {
+		display: block;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		z-index: 10000;
+		width: 30px;
+	}
+	.flow-banner-title {
+		font-size: 20px;
+	}
+	.flow-banner-head {
+		width: 90%;
+		margin: 10px auto 30px;
+		font-size: 12px;
+	}
 	.bzy-d-e {
 		justify-content: center;
 		padding: 30px 0 70px 0;
 		flex-wrap: wrap;
+	}
+	.header {	
+		height: 100vh !important;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 9999;
+		padding: 20px;
+		box-sizing: border-box;
+		background: rgba(0, 0, 0, 1);
+	}
+	.header-left {
+		text-align: left;
+	}
+	.header-left-logo {
+		width: 100% !important;
+		box-sizing: border-box;
+		margin-left: 0 !important;
+	}
+	.header-left ul {
+		display: block !important;
+		width: 100% !important;
+		box-sizing: border-box;
+		margin-left: 0 !important;
+	}
+	.header-left ul li {
+		padding-bottom: 20px !important;
+		margin-left: 0 !important;
+		padding-left: 0 !important;
+	}
+	.header-left-logo {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		display: block;
+		border-bottom: 1px solid #666;
+	}
+	.header, .header-left, .header-right {
+		display: block;
+		width: 100% !important;
+		overflow: hidden !important;
+	}
+	.header-right {
+		padding: 10px 0;
+		height: auto !important;
+	}
+	.wallet__item {
+		margin-bottom: 20px;
+		margin-left: 0 !important;
+	}
+	.switchlanguagebox {
+		text-align: left;
+		margin-left: 0 !important;
 	}
 
 	.bzy-e-lf {
@@ -3881,6 +4008,9 @@ html {
 
 	.bzy-e-rt .bzy-e-rt-info {
 		font-size: 14px;
+	}
+	.bzy-e-list {
+		column-count: 1;
 	}
 
 	.paymenttypebox,
@@ -3965,12 +4095,6 @@ html {
 	}
 }
 
-@media screen and (min-width:992px) and (max-width:1199px) {
-	.index-banner {
-		min-height: 500px;
-	}
-}
-
 @media screen and (min-width:1200px) and (max-width:1599px) {
 	.index-banner {
 		min-height: 450px;
@@ -3978,53 +4102,6 @@ html {
 
 	.banner-left-tit {
 		font-size: 52px;
-	}
-}
-
-@media screen and (min-width:1600px) and (max-width:1800px) {
-	.index-banner {
-		min-height: 485px;
-	}
-}
-
-@media screen and (min-width:1801px) and (max-width:1919px) {
-	.index-banner {
-		min-height: 542px;
-	}
-}
-
-@media screen and (min-width:1920px) {
-	.index-banner {
-		min-height: 554px;
-	}
-}
-
-@media screen and (max-width:992px) {
-	.banner-m {
-		margin-top: 60px;
-	}
-}
-
-@media screen and (max-width:991px) {
-	.banner-m {
-		display: block;
-		position: relative;
-		padding-bottom: 20px;
-	}
-
-	.banner {
-		display: none;
-	}
-
-}
-
-@media screen and (min-width:992px) {
-	.banner-m {
-		display: none;
-	}
-
-	.banner {
-		display: flex;
 	}
 }
 

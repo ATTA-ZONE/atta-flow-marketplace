@@ -7,7 +7,7 @@ import "./Artwork.page.css"
 
 export default function Artwork() {
 	const { user } = useAuth()
-	const { userDappies, mintDappy } = useUser()
+	const { userDappies, mintDappy ,balance,collection,createCollection} = useUser()
 	const [languageType,setLanguageType] = useState('TC');
 	const [payTabs,setPayTabs] = useState(['錢包支付']);
 	const [maxbannum,setmaxbannum] = useState(0);
@@ -20,18 +20,13 @@ export default function Artwork() {
 	const [success_status,setsuccess_status] = useState(-1);
 	const [basicId,setBasicId] = useState(0);
 	const [hkdPrice,sethkdPrice] = useState(0);
+	const [isloading,setIsloading] = useState(false);
+	const [isclickbtn,setIsclickbtn] = useState(0);//1 沒有庫存  2 還未開始 3 活動中 4 已結束
 	const [chEnTextHtml] = useState({
 		"TC": {
 			home: '首頁',
-			auction: '拍賣',
-			noConnectWallet: "未連接錢包",
-			login: "登入/註冊",
-			myaccount: "我的帳戶",
-			myorders: "我的訂單",
-			myassets: "我的資產",
-			mywallet: "我的錢包",
 			logOut: "登出",
-			version: "共50版",
+			version: "共100版",
 			select: "已選第",
 			versionTxt: "版",
 			price: "单价：",
@@ -43,19 +38,14 @@ export default function Artwork() {
 			payErr: "支付失敗",
 			paid: "您的付款金額為",
 			byCreditCard: "信用卡支付",
-			pendingPayment: "這是待付款，您的付款金額為：",
 			saveFor: "保存以備將來購買",
-			purchasing: "由於您購買的是數字作品，一經售出概不退換",
 			payment: "立即付款",
-			currentUsing: "正在使用",
 			balance: "餘額",
-			notStore: "我們不會儲存您的錢包密鑰，未經您的授權，也無法使用您電子錢包中的貨幣。",
-			paymenttips: "注意：喚起錢包支付時，由Metamask的限制，價格顯示為0，但您實際支付的金額與售賣商品價格一致。",
 			regSuc: "注册成功",
 			operationFailed: "操作失败",
 			// js部分
 			maximum: "已達到最大購買數量",
-			purchaseSuc: "购买成功",
+			purchaseSuc: "購買成功",
 			seconds: "預計10秒內到賬",
 			comSoon: "即將開售",
 			start: "銷售開始於：",
@@ -80,25 +70,17 @@ export default function Artwork() {
 			switchNet: "請先切換網絡",
 			walletFirst: "請先連接錢包  ->",
 			paymentComing: "錢包直連支付功能準備中...",
-			metaTips: "注意：喚起錢包支付時，由Metamask的限制，價格顯示為0，但您實際支付的金額與售賣商品價格一致。",
 			netVer: '當前主網: ',
-			switchNetVision: "切换"
+			switchNetVision: "切换",
+			tipscomfig : '由於您是首次在FLOW鏈上購買NFT，需進行授權。點擊確認進入授權流程。'
 		},
 		"EN": {
 			switchNetVision: "Switch",
 			netVer: 'Current network: ',
 			switchNet: "Please switch network first",
-			metaTips: "Please note: Due to the limitation of Metamask, it is normal that the price will show 0 when you are using Metamask to process payment. But actually, you are paying the right price.",
 			home: 'HOME',
-			auction: 'AUCTION',
-			noConnectWallet: "Connect Wallet",
-			login: "Login/Sign up",
-			myaccount: "My Account",
-			myorders: "My Orders",
-			myassets: "My Assets",
-			mywallet: "My Wallet",
 			logOut: "Log out",
-			version: "Edition 50",
+			version: "Edition 100",
 			select: "Selected",
 			versionTxt: "th edition",
 			price: "Price：",
@@ -110,14 +92,9 @@ export default function Artwork() {
 			payErr: "Payment failed",
 			paid: "Your paid",
 			byCreditCard: "By credit card",
-			pendingPayment: "Your pending payment is：",
 			saveFor: "Save for future purchase",
-			purchasing: "Since you're purchasing a digital creation, all sales are final.",
-			currentUsing: "Current using",
 			payment: "Pay now",
 			balance: "Balance",
-			notStore: "We will not store your wallet key, nor can we use the currency in your wallet without your authorization.",
-			paymenttips: "Please note: Due to the limitation of Metamask, it is normal that the price will show 0 when you are using Metamask to process payment. But actually, you are paying the right price.",
 			regSuc: "registration success",
 			operationFailed: "operation failed",
 			// js部分
@@ -145,7 +122,8 @@ export default function Artwork() {
 			accomplish: "complete",
 			payment: "Pay now",
 			walletFirst: "Please connect your wallet first  ->",
-			paymentComing: "Function coming soon..."
+			paymentComing: "Function coming soon...",
+			tipscomfig : 'Since you are buying NFTs on the FLOW chain for the first time, authorization is required. Click OK to enter the authorization process.'
 		}
 	})
 	useEffect (()=>{
@@ -161,19 +139,11 @@ export default function Artwork() {
 	const initMediaCss = () => {
 		var dom = document.body;
 		let dom2 = document.querySelector('.details-right-btn');
-		// let dom3 = document.querySelector('.payment-close-mobile');
-		let dom4 = document.querySelector('.payment');
-		let dom5 = document.querySelector('video');
 		let dom6 = document.querySelector('.pre-mask');
-		// let dom7 = document.querySelector('.payment-page-right-balance');
 		var mobile_width = dom.style.width;
 		if (mobile_width <= 992) {
 			dom2.classList.remove("payment-btn-pc");
 			dom2.classList.add("payment-btn-mobile");
-			// dom3.onclick = function () {
-			// 	dom4.classList.remove("payment-active");
-			// 	dom5.classList.remove("video-hidden");
-			// }
 		}
 		var params = window.location.search.substr(1).split('&')
 		var arr = [];
@@ -198,26 +168,10 @@ export default function Artwork() {
 		}
 		if (success_status == 1) {
 			alert(chEnTextHtml[languageType].paySuc);
-			setTimeout(function () {
-				saveconfirm();
-			}, 1800)
 		} else if (success_status == 0) {
 			alert(chEnTextHtml[languageType].payErr);
 		}
-		// dom7.style.display = 'none';
 		getComditInfo()
-		// self.initAddress()
-	}
-	const saveconfirm = () =>{
-		var r= window.confirm(chEnTextHtml[languageType].asset)
-		if (r==true){
-			alert(chEnTextHtml[languageType].confirm);
-			setTimeout(function () {
-				window.location.href = 'myassets.html';
-			}, 1500)
-		}else{
-			alert(chEnTextHtml[languageType].cancel) 
-		}
 	}
 	const getComditInfo = async () => {
 		//商品详情业加载
@@ -226,12 +180,11 @@ export default function Artwork() {
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
 		if (res.code == 0) {
-			var content = res.data.content;
 			var saleStartTimeMillis = res.data.saleStartTimeMillis; //开始销售时间
 			var saleEndTimeMillis = res.data.saleEndTimeMillis; //销售结束时间
 			var systemTime = res.data.systemTime; //当前时间
 			var geshi = res.data.primaryPic.substr(res.data.primaryPic.lastIndexOf('.') + 1);
-			var maxeditionnum = res.data.edition > res.data.endEdition ? res.data.endEdition : res.data.edition;
+
 			var dom1 = document.querySelector('.detail-media');
 			var dom2 = document.querySelector('.order-img');
 			var dom4 = document.querySelector('.order-title');
@@ -242,13 +195,8 @@ export default function Artwork() {
 			var dom11 = document.querySelector('.details-right-time span:first-child');
 			var dom12 = document.querySelector('.details-right-time-djs');
 			var dom13 = document.querySelector('.details-right-time');
-			// setmaxbannum(res.data.endEdition);
-			// sethkdPrice(res.data.hkdPrice);
 			setBusdPrice(res.data.price);
 			setBasicId(res.data.basicId);
-			// setcurUserOwned(res.data.curUserOwned);
-			// setoneUserCountLimit(res.data.oneUserCountLimit);
-			// setonceCountLimit(res.data.onceCountLimit);
 			if (geshi == 'mp4') {
 				dom1.style.display = 'block';
 				var html = `<video style="width:100%;" autoplay="autoplay" loop="loop" src="` + process.env.REACT_APP_DAPPY_ARTLIST_TEST + res.data.primaryPic + `" webkit-playsinline="true" muted="muted" ></video>
@@ -271,6 +219,7 @@ export default function Artwork() {
 			}
 			if (res.data.storage - res.data.soldCount > 0) { //还有库存
 				if (systemTime < saleStartTimeMillis) {
+					setIsclickbtn(2);
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].comSoon;
 					dom10.setAttribute("status","1");
@@ -286,6 +235,7 @@ export default function Artwork() {
 					}, 1000);
 
 				} else if (systemTime >= saleStartTimeMillis && systemTime <= saleEndTimeMillis) {
+					setIsclickbtn(3);
 					var msTime = saleEndTimeMillis - systemTime;
 					var time = formatDuring(msTime);
 					let ycdjs = time.split('d')[0];
@@ -304,6 +254,7 @@ export default function Artwork() {
 						dom12.textContent = time;
 					}, 1000);
 				} else if (systemTime > saleEndTimeMillis) {
+					setIsclickbtn(4);
 					dom10.classList.add('unclick');
 					dom10.textContent = chEnTextHtml[languageType].salesClosed;
 					dom10.setAttribute("status","1");
@@ -313,6 +264,7 @@ export default function Artwork() {
 					dom10.style.pointerEvents = 'none';
 				}
 			} else { //没有库存
+				setIsclickbtn(1);
 				dom10.classList.add('unclick');
 				dom10.textContent = chEnTextHtml[languageType].sellOut;
 				dom10.setAttribute("status","1");
@@ -399,21 +351,46 @@ export default function Artwork() {
 		}
 	}
 	const toPay = async () => {
+		var dom1 = document.querySelector('.details-right-btn');
+		if (!collection) {
+			var r=window.confirm(chEnTextHtml[languageType].tipscomfig)
+			if (r==true){
+				createCollection(sussesfun,errorfun);
+				dom1.classList.add('unclick');
+				dom1.style.pointerEvents = 'none';
+			}
+			return;
+		}
+		let busdPriceprice = busdPrice.toFixed(2);
+		if (balance * 1< busdPriceprice * 1) {
+			alert(chEnTextHtml[languageType].balanceInsufficient);
+			return;
+		}
+		if (isclickbtn != 3) {
+			return;
+		}
 		const url = `${process.env.REACT_APP_DAPPY_ARTLIST_TEST}/v2/flow/commodity/checkItemStatus?commodityId=${id}`;
 		const listData = await fetch(url, { method: 'GET' })
 		const res = await listData.json();
-		var dom1 = document.querySelector('.details-right-btn');
+		
 		dom1.textContent = '購買中，請稍等';
 		dom1.classList.add('unclick');
 		dom1.style.pointerEvents = 'none';
+		setIsloading(true);
 		if (res.code == 0) {
 			let address = user?.addr;
-			let busdPriceprice = busdPrice.toFixed(2);
 			mintDappy(busdPriceprice, address,basicId,getComditInfo);
 		}else{
 			alert(res.message);
-			getComditInfo();
+			window.location.reload();
 		}
+	}
+	const sussesfun = () =>{
+	}
+	const errorfun = () =>{
+		var dom1 = document.querySelector('.details-right-btn');
+		dom1.classList.remove('unclick');
+		dom1.style.pointerEvents = 'auto';
 	}
 	const closeVideo = () => {
 		var dom1 = document.querySelector('.video-mask');
@@ -431,8 +408,8 @@ export default function Artwork() {
 				<div className="details center-80 flex">
 					<div className="details-left order-img">
 						<div onClick={(e) => playVideo(this, e)} className="detail-mask"></div>
-						<img className="full-screen detail-media" onClick={() => FullScreen()} src="./assets/fullscreen.png" />
-						<img onClick={() => toggleVideo()} className="voice detail-media" src="./assets/mute.png" />
+						<img className="full-screen detail-media" onClick={() => FullScreen()} src="./assets/fullscreen.png" alt='' />
+						<img onClick={() => toggleVideo()} className="voice detail-media" src="./assets/mute.png" alt='' />
 					</div>
 					<div className="details-right">
 						<div className="details-right-tit order-title">----</div>
@@ -473,6 +450,13 @@ export default function Artwork() {
 			<div className="hsycms-model-mask" id="mask-success"></div>
 			{/* 提交失败 */}
 			<div className="hsycms-model-mask" id="mask-error"></div>
+			{
+				isloading && 
+				<div className='masktopay'>
+					<img src='./assets/loading.gif'/>
+				</div>
+			}
+			
 		</div >
 	)
 }
