@@ -17,7 +17,7 @@ pub contract ATTANFT: NonFungibleToken {
     // Named Paths
     //
     pub let CollectionStoragePath: StoragePath
-    pub let CollectionPublicPath: PublicPath
+pub let CollectionPublicPath: PublicPath
     pub let AdminStoragePath: StoragePath
 
 
@@ -116,7 +116,7 @@ pub contract ATTANFT: NonFungibleToken {
         // so that the caller can read its metadata and call its methods
         //
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
-            return &self.ownedNFTs[id] as &NonFungibleToken.NFT
+            return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
         }
 
         // borrowATTA
@@ -126,7 +126,7 @@ pub contract ATTANFT: NonFungibleToken {
         //
         pub fun borrowATTA(id: UInt64): &ATTANFT.NFT? {
             if self.ownedNFTs[id] != nil {
-                let ref = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT
+                let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
                 return ref as! &ATTANFT.NFT
             } else {
                 return nil
